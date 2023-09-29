@@ -1,40 +1,28 @@
-# HR-API
+# Week 3 Project - Library Management System
 
 ## Problem Domain
-In the system of HR management, our project aims to fulfill multiple needs of companies when it comes to managing the 
-workforce. THe domain we choose is mainly to integrate the information in terms of HR activities and following 
-responsibilities, including but not limited to (a) types of employees, (b) Check-in/check-out, (c) resignation request,
-(d) Shift scheduling, (e) Payroll system.
+Our project centers around the development of a library management system, offering comprehensive solutions for library administrators and patrons alike. This domain encompasses various aspects of library operations, including:
 
 ## High-Level Description
-Our team aims to create a user-friendly HR management application that simplifies HR processes for organizations of 
-all sizes. This application will act as a central hub for both HR administrators and employees, offering the following 
-key features:
+Our team is dedicated to creating a user-friendly library management application that simplifies key aspects of library operations and enhances the overall library experience. This application will offer the following core functionalities:
 
-- **Employee Data Management:** 
-  - categorize employees based on job roles, departments, and employment types (full-time, part-time, 
-    contract, etc.).
-  - constructing an employee database that stores crucial information, 
-  - simplifying employee onboarding, performance tracking, and HR analytics.
+- **Catalog Management:** A robust system for librarians to add, update, and organize library materials, making it easier for patrons to find what they need.
 
-- **Leave Request System:** 
-  - An intuitive system for resignation request, allowing HR administrators to 
-    review and approve requests, and automated leave tracking.
+- **User Management:** An intuitive interface for managing library member accounts, including registration, access control, and communication.
 
-- **Shift Scheduler:** 
-  - An efficient system that optimizes shift assignments, respects employee preferences, 
-    and helps organizations meet staffing requirements.
+Our library management system aims to provide library staff with the tools they need to manage their collections efficiently while ensuring library users have a seamless experience accessing and browsing materials.
 
-- **Payroll Processing:** 
-  - A reliable payroll module that automates salary calculations, tax deductions, and generates 
-    payslips, minimizing errors and ensuring timely payments.
+## External Library APIs
+To enrich our library management system, we plan to integrate external library APIs for accessing book data, including information about authors, titles, and publication dates. We will utilize the "LibraryData API" to achieve this goal. You can find detailed API documentation: https://openlibrary.org/developers/api
 
-- **Check-In/Check-Out:** 
-  - A feature that enable employees to check in when they start work and check out when 
-    they finish. This helps in tracking attendance and work hours accurately.
+## API Testing
+Below is a screenshot illustrating the use of Postman to test the LibraryData API for retrieving book information:
 
-- **Bonus/Penalty Payroll:** 
-  - An extension of the payroll system that calculates and processes bonuses or penalties 
-    based on predefined criteria such as performance bonuses, overtime penalties, or other incentives/penalties.
+![Postman Screenshot](link-to-postman-screenshot.png)
 
-Our HR system's primary goal is to boost productivity, reduce administrative burdens, and create a more conducive work environment by allowing HR professionals to concentrate on strategic initiatives rather than routine paperwork.
+## Example Output
+Here is a minimal Java code example demonstrating how our application will interact with the LibraryData API to fetch book details:
+
+```java
+// Java code to call the LibraryData API and retrieve book information
+// ...
