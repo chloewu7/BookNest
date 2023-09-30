@@ -16,9 +16,9 @@ Our library management system aims to provide library staff with the tools they 
 To enrich our library management system, we plan to integrate external library APIs for accessing book data, including information about authors, titles, and publication dates. We will utilize the "LibraryData API" to achieve this goal. You can find detailed API documentation: https://openlibrary.org/developers/api
 
 ## API Testing
-Below is a screenshot illustrating the use of Postman to test the LibraryData API for retrieving book information:
+Below is a screenshot illustrating the use of Hoppscotch to test the LibraryData API for retrieving book information by using the key words "Vincent van Gogh":
 
-![Postman Screenshot](screenshot.png)
+![Hoppscotch Screenshot](screenshot.png)
 
 ## Example Output
 Here is a minimal Java code example demonstrating how our application will interact with the LibraryData API to fetch book details:
