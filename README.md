@@ -18,7 +18,7 @@ To enrich our library management system, we plan to integrate external library A
 ## API Testing
 Below is a screenshot illustrating the use of Postman to test the LibraryData API for retrieving book information:
 
-![Postman Screenshot](link-to-postman-screenshot.png)
+![Postman Screenshot](screenshot.png)
 
 ## Example Output
 Here is a minimal Java code example demonstrating how our application will interact with the LibraryData API to fetch book details:
