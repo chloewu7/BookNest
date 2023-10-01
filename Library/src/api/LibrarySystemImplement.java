@@ -13,31 +13,18 @@ public class LibrarySystemImplement implements LibrarySystem{
 
         public static void main(String[] args) {
             try {
-                // Define the API endpoint URL for book search
                 String apiUrl = "https://openlibrary.org/search.json?title=";
-
-                // Specify the book title you want to search for
                 String bookTitle = "Java Programming";
 
-                // Encode the book title for the URL
                 String encodedTitle = URLEncoder.encode(bookTitle, "UTF-8");
-
-                // Create the full API URL by combining the base URL and the encoded title
                 String fullApiUrl = apiUrl + encodedTitle;
+                URL url = new URL(fullApiUrl);  // Create a URL object
 
-                // Create a URL object
-                URL url = new URL(fullApiUrl);
-
-                // Open a connection to the URL
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                // Set the request method to GET
-                connection.setRequestMethod("GET");
+                connection.setRequestMethod("GET"); //request method to GET
+                int responseCode = connection.getResponseCode(); // Get the response code
 
-                // Get the response code
-                int responseCode = connection.getResponseCode();
-
-                // Check if the response code indicates success (HTTP 200)
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Create a BufferedReader to read the response
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
