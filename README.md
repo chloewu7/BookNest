@@ -23,6 +23,4 @@ Below is a screenshot illustrating the use of Hoppscotch to test the LibraryData
 ## Example Output
 Here is a minimal Java code example demonstrating how our application will interact with the LibraryData API to fetch book details:
 
-```java
-// Java code to call the LibraryData API and retrieve book information
-// ...
+![Output Screenshot](output.png)
