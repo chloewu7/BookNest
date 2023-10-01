@@ -37,8 +37,7 @@ public class LibrarySystemImplement implements LibrarySystem{
                     }
                     reader.close();
 
-                    // Print the API response
-                    System.out.println(response.toString());
+                    System.out.println(response.toString()); // Print the API response
                 } else {
                     System.out.println("Error: " + responseCode);
                 }
