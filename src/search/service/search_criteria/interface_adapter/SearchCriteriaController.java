@@ -1,4 +1,4 @@
-package search.service.search_service2.interface_adapter;
+package search.service.search_criteria.interface_adapter;
 
 public class SearchCriteriaController {
 }

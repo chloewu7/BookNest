@@ -1,4 +1,4 @@
-package search.service.search_service3.interface_adapter;
+package search.service.search_response.interface_adapter;
 
 public class SearchResponseController {
 }

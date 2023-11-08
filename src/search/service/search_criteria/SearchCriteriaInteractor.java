@@ -1,4 +1,4 @@
-package search.service.search_service2;
+package search.service.search_criteria;
 
 public class SearchCriteriaInteractor {
 }

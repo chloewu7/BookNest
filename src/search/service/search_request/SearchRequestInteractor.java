@@ -1,4 +1,4 @@
-package search.service.search_service1;
+package search.service.search_request;
 
 public class SearchRequestInteractor {
 }
