@@ -1,5 +1,6 @@
 package user_manage.service.login.interface_adapter;
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.login.LoginOutputBoundary;
 
 public class LoginPresenter implements LoginOutputBoundary {
