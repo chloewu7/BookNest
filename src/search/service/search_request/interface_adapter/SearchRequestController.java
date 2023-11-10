@@ -8,9 +8,9 @@ public class SearchRequestController {
     public SearchRequestController(SearchRequestInputBoundary requestInteractor){
         this.requestInteractor = requestInteractor;
     }
-    public void execute(String keyword){
+    public void execute(String keyword, String choice){
         SearchRequestInputData searchRequestInputData = new SearchRequestInputData(
-                keyword
+                keyword, choice
         );
         requestInteractor.execute(searchRequestInputData);
     }
