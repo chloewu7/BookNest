@@ -3,12 +3,12 @@ package user_manage.service.signup;
 public class SignupInputData {
     final private String username;
     final private String password;
-    final private String repeatpassword;
+    final private String repeatedpassword;
 
     public SignupInputData(String name, String password, String repeatpasword){
         this.username = name;
         this.password = password;
-        this.repeatpassword = repeatpasword;
+        this.repeatedpassword = repeatpasword;
     }
 
     public String getUsername(){
@@ -19,7 +19,7 @@ public class SignupInputData {
         return password;
     }
 
-    public String getRepeatpassword(){
-        return repeatpassword;
+    public String getRepeatedpassword(){
+        return repeatedpassword;
     }
 }
