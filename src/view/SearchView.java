@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SearchView extends JFrame {
-    private final JComboBox<String> searchCriteria;
+    private final JComboBox<String> searchChoice;
     private final JTextField keywordField;
     private final JButton searchButton;
 
@@ -19,8 +19,8 @@ public class SearchView extends JFrame {
         setLocationRelativeTo(null);
 
 
-        searchCriteria = new JComboBox<>(new String[]{"Title","Author", "Subject", "ISBN"});
-        searchCriteria.setSelectedItem("Title"); // Default selection
+        searchChoice = new JComboBox<>(new String[]{"Title","Author", "Subject", "ISBN"});
+        searchChoice.setSelectedItem("Title"); // Default selection
         keywordField = new JTextField();
         searchButton = new JButton("Search");
 
@@ -29,7 +29,7 @@ public class SearchView extends JFrame {
 
 
         add(new JLabel("Search By:"));
-        add(searchCriteria);
+        add(searchChoice);
         add(new JLabel("Please enter keywords here:"));
         add(keywordField);
         add(new JLabel());
@@ -39,16 +39,16 @@ public class SearchView extends JFrame {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedCriteria = (String) searchCriteria.getSelectedItem();
+                String selectedChoice = (String) searchChoice.getSelectedItem();
                 String keyword = keywordField.getText();
-                performSearch(selectedCriteria, keyword);
+                performSearch(selectedChoice, keyword);
             }
         });
     }
 
-    private void performSearch(String searchCriteria, String keyword) {
+    private void performSearch(String searchChoice, String keyword) {
         // connect to search request output boundary
-        System.out.println("Search Option: " + searchCriteria);
+        System.out.println("Search Option: " + searchChoice);
         System.out.println("Keyword: " + keyword);
     }
 
