@@ -1,11 +1,10 @@
 package user_manage.entity;
 
-import java.time.LocalDateTime;
-
 public interface Book {
-    String getName();
+    String getTitle();
 
     String getAuthor();
 
-    String getDescrption();
+    String getCategory();
+    String getISBN();
 }
