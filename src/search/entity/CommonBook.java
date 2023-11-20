@@ -1,7 +1,5 @@
 package search.entity;
 
-import search.entity.Book;
-
 public class CommonBook implements Book {
     private String title;
     private String author;
