@@ -16,7 +16,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.searchViewModel =searchViewModel
+        this.searchViewModel =searchViewModel;
 
 
         this.loginViewModel = loginViewModel;

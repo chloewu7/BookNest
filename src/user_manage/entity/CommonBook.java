@@ -5,6 +5,7 @@ public class CommonBook implements Book {
     private String author;
     private String category;
     private String ISBN;
+
     public CommonBook(String title, String author, String category, String ISBN){
         this.title = title;
         this.author = author;
