@@ -1,4 +1,4 @@
-package user_manage.entity;
+package search.entity;
 
 public class CommonBook implements Book {
     private String title;

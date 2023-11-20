@@ -1,4 +1,4 @@
-package user_manage.entity;
+package search.entity;
 
 public interface Book {
     String getTitle();
