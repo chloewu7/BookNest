@@ -1,4 +1,4 @@
-package user_manage.service.reading_history;
+package user_manage.service.history.read_history;
 
 public interface ReadingHistoryDataAccessInterface {
 }
