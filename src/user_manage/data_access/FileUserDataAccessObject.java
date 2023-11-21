@@ -64,7 +64,7 @@ public class FileUserDataAccessObject implements SignupDataAccessInterface {
 
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))){
-            writer.write(String.join(",", userAccounts.keySet()));
+            writer.write(String.join(",", header.keySet()));
             writer.newLine();
 
             for (User users : userAccounts.values()){
