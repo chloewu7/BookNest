@@ -1,6 +1,8 @@
 package user_manage.service.login.interface_adapter;
 
 import interface_adapter.ViewManagerModel;
+import search.service.interface_adapter.SearchState;
+import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.login.LoginOutputBoundary;
 import user_manage.service.login.LoginOutputData;
 
@@ -26,13 +28,13 @@ public class LoginPresenter implements LoginOutputBoundary {
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
 
-        SearchState searchState = SearchViewModel.getState();
-        searchState.setUsername(response.getUsername());
-        this.searchViewModel.setState(searchState);
-        this.searchViewModel.firePropertyChanged();
+        //SearchState searchState = SearchViewModel.getState();
+        //searchState.setUsername(response.getUsername());
+        //this.searchViewModel.setState(searchState);
+        //this.searchViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setActiveView((searchViewModel.getViewName()));
-        this.viewManagerModel.firePropertyChanged();
+        //this.viewManagerModel.setActiveView((searchViewModel.getViewName()));
+        //this.viewManagerModel.firePropertyChanged();
 
     }
 
