@@ -6,7 +6,7 @@ import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.login.LoginOutputBoundary;
 import user_manage.service.login.LoginOutputData;
 
-public class LoginPresenter implements LoginOutputBoundary {
+/*public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
 
@@ -44,4 +44,4 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginState.setUsernameError(error);
         loginViewModel.firePropertyChanged();
     }
-}
+}*/
