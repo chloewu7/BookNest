@@ -1,13 +1,13 @@
 package user_manage.service.reading_review.show_my_reviews;
 
 public class ShowMyReviewsInputData {
-    final private String bookTitle;
+    final private String username;
 
-    public ShowMyReviewsInputData(String bookTitle) {
-        this.bookTitle = bookTitle;
+    public ShowMyReviewsInputData(String username) {
+        this.username = username;
     }
 
-    String getBookTitle() {
-        return bookTitle;
+    String getUsername() {
+        return username;
     }
 }

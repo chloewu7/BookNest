@@ -2,13 +2,15 @@ package user_manage.data_access;
 
 import user_manage.entity.Review;
 import user_manage.entity.ReviewFactory;
+import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsDataAccessInterface;
+import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsDataAccessInterface;
 import user_manage.service.reading_review.write_reviews.WriteReviewsDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterface {
+public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterface, ShowMyReviewsDataAccessInterface, ShowAllReviewsDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> header = new LinkedHashMap<>();
     private Map<String, Map<String, Review>> reviewsByUser = new HashMap<>();
@@ -118,4 +120,61 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         }
     }
 
+    @Override
+    public boolean book_review_exists(String bookTitle) {
+        return reviewsByBook.containsKey(bookTitle);
+    }
+
+    @Override
+    public List<String> retrieveAllBookReviews(String bookTitle) {
+        if (!book_review_exists(bookTitle)){
+            return new ArrayList<>();
+        }
+        List<Review> bookReviewList = reviewsByBook.get(bookTitle);
+        List<String> bookReviewStringList = new ArrayList<>();
+        for (Review review: bookReviewList) {
+            String bookReviewString = "";
+            bookReviewString = review.getReviewer() + "\n" + "rating:" + review.getRating() +
+                    "\n" + review.getReviewContent() + "\n" + review.getCreationTime();
+            bookReviewStringList.add(bookReviewString);
+        }
+        return bookReviewStringList;
+    }
+
+    @Override
+    public float retrieveRating(String bookTitle) {
+        if (!book_review_exists(bookTitle)){
+            return 0;
+        }
+        List<Review> bookReviewList = reviewsByBook.get(bookTitle);
+        float rating = 0.0F;
+        int numReview = 0;
+        for (Review review: bookReviewList) {
+            numReview += 1;
+            rating = (rating + review.getRating()) / numReview;
+        }
+        return rating;
+    }
+
+    @Override
+    public boolean user_review_exists(String username) {
+        return reviewsByUser.containsKey(username);
+    }
+
+    @Override
+    public List<String> retrieveAllMyReviews(String username) {
+        if (!user_review_exists(username)){
+            return new ArrayList<>();
+        }
+        Map<String, Review> userReviewList = reviewsByUser.get(username);
+        List<String> userReviewStringList = new ArrayList<>();
+        for (String books: userReviewList.keySet()) {
+            String bookReviewString = "";
+            Review review = userReviewList.get(books);
+            bookReviewString = review.getReviewedBook() + "  by" + review.getBookAuthor() +"\n" + "rating:"
+                    + review.getRating() + "\n" + review.getReviewContent() + "\n" + review.getCreationTime();
+            userReviewStringList.add(bookReviewString);
+        }
+        return userReviewStringList;
+    }
 }

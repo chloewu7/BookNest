@@ -16,8 +16,8 @@ public class ShowAllReviewsInteractor implements ShowAllReviewsInputBoundary{
     @Override
     public void execute(ShowAllReviewsInputData showAllReviewsInputData) {
         String bookTitle = showAllReviewsInputData.getBookTitle();
-        if(showAllReviewsDataAccessObject.review_exists(bookTitle)){
-            List<String> reviewList = showAllReviewsDataAccessObject.retrieveAllReviews(bookTitle);
+        if(showAllReviewsDataAccessObject.book_review_exists(bookTitle)){
+            List<String> reviewList = showAllReviewsDataAccessObject.retrieveAllBookReviews(bookTitle);
             float rating = showAllReviewsDataAccessObject.retrieveRating(bookTitle);
             ShowAllReviewsOutputData showAllReviewsOutputData = new ShowAllReviewsOutputData(reviewList, rating);
             showAllReviewsPresenter.prepareSuccessView(showAllReviewsOutputData);
