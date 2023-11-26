@@ -22,19 +22,14 @@ public class WriteReviewsInteractor implements WriteReviewsInputBoundary {
 
     @Override
     public void execute(WriteReviewsInputData writeReviewsInputData) {
-        Book reviewedBook = writeReviewsInputData.getReviewedBook();
-        String bookTitle = reviewedBook.getTitle();
-        String bookAuthor = reviewedBook.getAuthor();
+        String bookTitle = writeReviewsInputData.getReviewedBook();
+        String bookAuthor = writeReviewsInputData.getAuthor();
+        String reviewer = writeReviewsInputData.getReviewer();
         Integer rating = writeReviewsInputData.getRating();
         String reviewContent = writeReviewsInputData.getReviewContent();
         LocalDateTime current = LocalDateTime.now();
-        if (writeReviewsDataAccessObject.review_exists(bookTitle)){
-            Review updatedReview = reviewFactory.create(bookTitle, bookAuthor, rating, reviewContent, current);
-            writeReviewsDataAccessObject.updateReview(updatedReview);
-        } else {
-            Review newReview = reviewFactory.create(bookTitle, bookAuthor, rating, reviewContent, current);
-            writeReviewsDataAccessObject.saveNewReview(newReview);
-        }
+        Review newReview = reviewFactory.create(bookTitle, reviewer, bookAuthor, rating, reviewContent, current);
+        writeReviewsDataAccessObject.saveNewReview(newReview);
         WriteReviewsOutputData writeReviewsOutputData = new WriteReviewsOutputData(bookTitle, current.toString());
         writeReviewsPresenter.prepareSuccessView(writeReviewsOutputData);
     }

@@ -1,10 +1,6 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import user_manage.data_access.FileReviewDataAccessObject;
-import user_manage.entity.CommonReviewFactory;
-import user_manage.entity.Review;
-import user_manage.entity.ReviewFactory;
 import user_manage.service.reading_review.write_reviews.*;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsController;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsPresenter;
@@ -13,7 +9,6 @@ import view.WriteReviewsView;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class WriteReviewsUseCaseFactory {
 

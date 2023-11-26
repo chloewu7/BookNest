@@ -8,6 +8,8 @@ public interface Review {
 
     String getBookAuthor();
 
+    String getReviewer();
+
     Integer getRating();
 
     String getReviewContent();

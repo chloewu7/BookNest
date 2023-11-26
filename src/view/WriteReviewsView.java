@@ -1,6 +1,5 @@
 package view;
 
-import user_manage.service.reading_review.write_reviews.WriteReviewsInteractor;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsController;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 

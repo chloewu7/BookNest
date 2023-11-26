@@ -13,9 +13,9 @@ public class CommonReviewFactory implements ReviewFactory{
      * @param reviewContent
      * @return
      */
-    public Review create(String reviewedBook, String bookAuthor, Integer rating,
-                         String reviewContent, LocalDateTime creationTime){
-        return new CommonReview(reviewedBook, bookAuthor, rating, reviewContent,
-                creationTime);
+
+    @Override
+    public Review create(String reviewedBook, String bookAuthor, String reviewer,  Integer rating, String reviewContent, LocalDateTime creationTime) {
+        return new CommonReview(reviewedBook, bookAuthor, reviewer, rating, reviewContent, creationTime);
     }
 }

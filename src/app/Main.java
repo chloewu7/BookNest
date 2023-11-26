@@ -1,9 +1,7 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
-import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 import view.ViewManager;
