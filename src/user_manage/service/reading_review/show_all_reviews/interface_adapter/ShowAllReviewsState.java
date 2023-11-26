@@ -1,4 +1,4 @@
-package user_manage.service.reading_history.show_all_reviews.interface_adapter;
+package user_manage.service.reading_review.show_all_reviews.interface_adapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,16 +1,16 @@
-package user_manage.service.reading_history.show_my_reviews.interface_adapter;
+package user_manage.service.reading_review.show_all_reviews.interface_adapter;
 
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ShowMyReviewsViewModel extends ViewModel{
+public class ShowAllReviewsViewModel extends ViewModel{
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    private ShowMyReviewsState state = new ShowMyReviewsState();
+    private ShowAllReviewsState state = new ShowAllReviewsState();
 
-    public ShowMyReviewsViewModel(){
-        super("show my reviews");
+    public ShowAllReviewsViewModel(){
+        super("show all reviews");
     }
 
     @Override
@@ -23,10 +23,11 @@ public class ShowMyReviewsViewModel extends ViewModel{
         support.addPropertyChangeListener(listener);
     }
 
-    public ShowMyReviewsState getState() {
+    public ShowAllReviewsState getState() {
         return state;
     }
-    public void setState(ShowMyReviewsState newState) {
+    public void setState(ShowAllReviewsState newState) {
         this.state = newState;
     }
+
 }

@@ -1,6 +1,5 @@
 package user_manage.service.reading_review.write_reviews.interface_adapter;
 
-import search.entity.Book;
 import user_manage.service.reading_review.write_reviews.WriteReviewsInputBoundary;
 import user_manage.service.reading_review.write_reviews.WriteReviewsInputData;
 

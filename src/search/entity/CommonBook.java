@@ -1,5 +1,7 @@
 package search.entity;
 
+import user_manage.entity.Review;
+
 import java.util.ArrayList;
 import java.util.List;
 

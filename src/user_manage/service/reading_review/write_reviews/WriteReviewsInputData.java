@@ -1,7 +1,5 @@
 package user_manage.service.reading_review.write_reviews;
 
-import search.entity.Book;
-
 public class WriteReviewsInputData {
     final private String reviewedBook;
     final private String reviewContent;

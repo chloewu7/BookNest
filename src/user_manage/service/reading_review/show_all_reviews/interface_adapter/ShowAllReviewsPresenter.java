@@ -1,8 +1,8 @@
-package user_manage.service.reading_history.show_all_reviews.interface_adapter;
+package user_manage.service.reading_review.show_all_reviews.interface_adapter;
 
 import interface_adapter.ViewManagerModel;
-import user_manage.service.reading_history.show_all_reviews.ShowAllReviewsOutputBoundary;
-import user_manage.service.reading_history.show_all_reviews.ShowAllReviewsOutputData;
+import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsOutputBoundary;
+import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsOutputData;
 
 public class ShowAllReviewsPresenter implements ShowAllReviewsOutputBoundary {
 

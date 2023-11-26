@@ -1,9 +1,8 @@
-package user_manage.service.reading_history.show_all_reviews.interface_adapter;
+package user_manage.service.reading_review.show_all_reviews.interface_adapter;
 
 
-import user_manage.service.reading_history.show_all_reviews.ShowAllReviewsInputBoundary;
-import user_manage.service.reading_history.show_all_reviews.ShowAllReviewsInputData;
-import user_manage.service.reading_history.show_my_reviews.ShowMyReviewsInputBoundary;
+import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsInputBoundary;
+import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsInputData;
 
 public class ShowAllReviewsController {
     final ShowAllReviewsInputBoundary showAllReviewsInteractor;
