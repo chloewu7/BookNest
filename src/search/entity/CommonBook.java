@@ -31,23 +31,4 @@ public class CommonBook implements Book {
     public String getISBN(){
         return ISBN;
     }
-    @Override
-    public float getRating() {
-        return rating;
-    }
-    @Override
-    public List<Review> getReviewList() {
-        return reviewlist;
-    }
-
-    @Override
-    public void setRating(Integer newRating) {
-        this.rating = (rating + newRating) / reviewlist.size();
-    }
-
-    @Override
-    public void setReviewList(Review newReview) {
-        this.reviewlist.add(newReview);
-    }
-
 }

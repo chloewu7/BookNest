@@ -9,10 +9,5 @@ public interface Book {
     String getAuthor();
     String getCategory();
     String getISBN();
-    float getRating();
-    List<Review> getReviewList();
-    void setRating(Integer newRating);
-
-    void setReviewList(Review newReview);
 
 }
