@@ -1,7 +1,13 @@
 package search.service;
 
+import search.entity.Book;
+import java.util.List;
+
 public class SearchOutputData {
-    private final String response;
-    public SearchOutputData(String response){this.response = response;}
-    public String getResponse(){return response;}
+    private final List<Book> response;
+    private boolean useCaseFailed;
+    public SearchOutputData(List<Book> response, boolean useCaseFailed){
+        this.response = response;
+        this.useCaseFailed = useCaseFailed;}
+    public List<Book> getResponse(){return response;}
 }

@@ -1,6 +1,7 @@
 package search.service;
 
 public interface SearchOutputBoundary {
-    void sendResponseView(SearchOutputData response);
-    void invalidRequestView(String error);
+    void prepareSuccessView(SearchOutputData response);
+    void prepareNotFoundView(String message);
+    void prepareFailView(String error);
 }
