@@ -1,5 +1,6 @@
 package user_manage.service.history.read_history.interface_adpter;
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.history.read_history.ReadingHistoryOutputBoundary;
 import user_manage.service.history.read_history.ReadingHistoryOutputData;
 import view.ViewManager;
@@ -14,9 +15,9 @@ import java.util.stream.Collectors;
 public class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
     private final ReadingHistoryViewModel viewModel;
 
-    private final ViewManager viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
-    public ReadingHistoryPresenter(ReadingHistoryViewModel viewModel, ViewManager viewManagerModel) {
+    public ReadingHistoryPresenter(ReadingHistoryViewModel viewModel, ViewManagerModel viewManagerModel) {
         this.viewModel = viewModel;
         this.viewManagerModel = viewManagerModel;
     }

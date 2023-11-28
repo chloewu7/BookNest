@@ -1,24 +1,24 @@
 package user_manage.service.login.interface_adapter;
 
 import interface_adapter.ViewManagerModel;
+import search.service.search_criteria.interface_adapter.SearchCriteriaState;
+import search.service.search_criteria.interface_adapter.SearchCriteriaViewModel;
 import user_manage.service.login.LoginOutputBoundary;
 import user_manage.service.login.LoginOutputData;
 
-/*public class LoginPresenter implements LoginOutputBoundary {
+public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
 
-    private final SearchViewModel searchViewModel;
+    private final SearchCriteriaViewModel searchViewModel;
 
     private ViewManagerModel viewManagerModel;
 
-    public LoginPresenter(ViewManagerModel viewManagerModel,SearchViewModel searchViewModel,
+    public LoginPresenter(ViewManagerModel viewManagerModel,SearchCriteriaViewModel searchViewModel,
 
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.searchViewModel =searchViewModel
-
-
+        this.searchViewModel =searchViewModel;
         this.loginViewModel = loginViewModel;
     }
 
@@ -26,8 +26,7 @@ import user_manage.service.login.LoginOutputData;
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
 
-        SearchState searchState = SearchViewModel.getState();
-        searchState.setUsername(response.getUsername());
+        SearchCriteriaState searchState = SearchCriteriaViewModel.getState();
         this.searchViewModel.setState(searchState);
         this.searchViewModel.firePropertyChanged();
 
@@ -42,4 +41,4 @@ import user_manage.service.login.LoginOutputData;
         loginState.setUsernameError(error);
         loginViewModel.firePropertyChanged();
     }
-}*/
+}

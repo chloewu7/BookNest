@@ -1,20 +1,25 @@
 package search.service.search_criteria.interface_adapter;
 
 
+import interface_adapter.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 
-public class SearchCriteriaViewModel {
+public class SearchCriteriaViewModel extends ViewModel {
     private SearchCriteriaState state;
     private final PropertyChangeSupport support;
+    private final String viewName;
 
-    public SearchCriteriaViewModel() {
+    public SearchCriteriaViewModel(String viewName) {
+        super("Search Criteria");
         this.state = new SearchCriteriaState();
         this.support = new PropertyChangeSupport(this);
+        this.viewName = viewName;
     }
 
-    public SearchCriteriaState getState() {
+    public static SearchCriteriaState getState() {
         return state;
     }
 
@@ -28,5 +33,8 @@ public class SearchCriteriaViewModel {
     }
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
+    }
+    public String getViewName() {
+        return this.viewName;
     }
 }
