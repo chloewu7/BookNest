@@ -26,4 +26,12 @@ public class ViewManager implements PropertyChangeListener {
             cardLayout.show(views, viewModelName);
         }
     }
+
+    /**
+     * Updates the current view based on the given view name.
+     * @param viewName The name of the view to be displayed.
+     */
+    public void updateView(String viewName) {
+        viewManagerModel.setActiveView(viewName);
+    }
 }
