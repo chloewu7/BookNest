@@ -1,4 +1,5 @@
 package user_manage.service.history.add_history;
 
-public class AddingHistoryInputBoundary {
+public interface AddingHistoryInputBoundary {
+    void execute (AddingHistoryInputData addingHistoryInputData);
 }
