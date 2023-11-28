@@ -1,4 +1,45 @@
 package user_manage.service.history.read_history.interface_adpter;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+
 public class ReadingHistoryViewModel {
+    private ReadingHistoryState state;
+    private final PropertyChangeSupport support;
+
+    public ReadingHistoryViewModel() {
+        this.state = new ReadingHistoryState();
+        this.support = new PropertyChangeSupport(this);
+    }
+
+    public ReadingHistoryState getState() {
+        return state;
+    }
+
+    public void setState(ReadingHistoryState state) {
+        this.state = state;
+        notifyUpdate();
+    }
+
+    public void setHistory(LinkedHashMap<LocalDateTime, String> history) {
+        state.setHistory(history);
+        notifyUpdate();
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        state.setErrorMessage(errorMessage);
+        notifyUpdate();
+    }
+
+    // This method notifies the view of any changes in the state
+    public void notifyUpdate() {
+        support.firePropertyChange("state", null, this.state);
+    }
+
+    // Method to add a property change listener, typically the view will register itself as a listener
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
 }
