@@ -16,6 +16,15 @@ public class ViewManagerModel {
         this.activeViewName = activeView;
     }
 
+    /**
+     * Updates the current view and notifies listeners about the change.
+     * @param viewName The name of the view to be displayed.
+     */
+    public void updateView(String viewName) {
+        setActiveView(viewName);
+        firePropertyChanged();
+    }
+
     // This is what the Signup Presenter will call to let the ViewModel know
     // to alert the View
     public void firePropertyChanged() {
@@ -25,6 +34,4 @@ public class ViewManagerModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
-
 }

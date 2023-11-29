@@ -1,5 +1,6 @@
 package user_manage.service.history.add_history.Interface_adapter;
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.history.add_history.AddingHistoryOutputBoundary;
 import user_manage.service.history.add_history.AddingHistoryOutputData;
 import view.ViewManager;
@@ -7,9 +8,9 @@ import view.ViewManager;
 public class AddingHistoryPresenter implements AddingHistoryOutputBoundary {
 
     private final AddingHistoryViewModel addingHistoryViewModel;
-    private final ViewManager viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
-    public AddingHistoryPresenter(ViewManager viewManagerModel, AddingHistoryViewModel addingHistoryViewModel) {
+    public AddingHistoryPresenter(ViewManagerModel viewManagerModel, AddingHistoryViewModel addingHistoryViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.addingHistoryViewModel = addingHistoryViewModel;
     }
