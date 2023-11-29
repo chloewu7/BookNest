@@ -78,4 +78,10 @@ public class FileUserDataAccessObject implements SignupDataAccessInterface {
 
     }
 
+    public User getUserByName(String username) {
+        if (existsByName(username)) {
+            return userAccounts.get(username);
+        }
+        else {return null;}
+    }
 }
