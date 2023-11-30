@@ -2,6 +2,6 @@ package view;
 
 import javax.swing.*;
 
-public class SignupView {
-    private JPanel panel1;
+public class SignupView extends JPanel{
+
 }
