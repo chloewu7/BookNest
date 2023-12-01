@@ -5,6 +5,7 @@ import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
+import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 import view.ViewManager;
 import view.WriteReviewsView;
@@ -55,10 +56,11 @@ public class Main {
         // create WriteReview View
         WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
 
-        WriteReviewsView writeReviewsView = WriteReviewsUseCaseFactory.creat(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
+        WriteReviewsView writeReviewsView = WriteReviewsUseCaseFactory.create(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
         views.add(writeReviewsView, writeReviewsView.viewName);
 
         application.pack();
         application.setVisible(true);
+    }
     }
 }

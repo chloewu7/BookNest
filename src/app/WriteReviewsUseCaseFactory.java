@@ -19,7 +19,7 @@ public class WriteReviewsUseCaseFactory {
 
     private WriteReviewsUseCaseFactory(){}
 
-    public static WriteReviewsView creat(ViewManagerModel viewManagerModel, WriteReviewsViewModel writeReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject) {
+    public static WriteReviewsView create(ViewManagerModel viewManagerModel, WriteReviewsViewModel writeReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject) {
         try {
             WriteReviewsController writeReviewsController = createWriteReviewUseCase(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
             return new WriteReviewsView(writeReviewsController, writeReviewsViewModel);
