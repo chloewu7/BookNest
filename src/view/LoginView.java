@@ -2,7 +2,7 @@ package view;
 
 
 
-/*import user_manage.service.login.interface_adapter.LoginController;
+import user_manage.service.login.interface_adapter.LoginController;
 import user_manage.service.login.interface_adapter.LoginState;
 import user_manage.service.login.interface_adapter.LoginViewModel;
 
@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-/*public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
     private final LoginViewModel loginViewModel;
@@ -101,9 +101,9 @@ import java.beans.PropertyChangeListener;
                 });
 
         this.add(title);
-        /*this.add(usernameInfo);
+        this.add(usernameInfo);
         this.add(usernameErrorField);
-        /*this.add(passwordInfo);
+        this.add(passwordInfo);
         this.add(passwordErrorField);
         this.add(buttons);
     }
@@ -120,4 +120,4 @@ import java.beans.PropertyChangeListener;
 
     private void setFields(LoginState state) {
         usernameInputField.setText(state.getUsername());
-    }}*/
+    }}
