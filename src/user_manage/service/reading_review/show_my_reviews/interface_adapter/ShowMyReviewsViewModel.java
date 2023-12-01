@@ -8,6 +8,8 @@ import java.beans.PropertyChangeSupport;
 public class ShowMyReviewsViewModel extends ViewModel{
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private ShowMyReviewsState state = new ShowMyReviewsState();
+    public static final String TITLE_LABEL = "My Reviews";
+    public static final String RETURN_BUTTON_LABEL = "Return to User Center";
 
     public ShowMyReviewsViewModel(){
         super("show my reviews");
