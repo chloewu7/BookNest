@@ -1,6 +1,7 @@
 package view;
 
 
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 
 import javax.swing.*;
@@ -13,51 +14,50 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class HistoryView extends JPanel implements ActionListener, PropertyChangeListener {
+public class ReadingHistoryView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    public final String viewName = "History";
-    private final ReadingHistoryViewModel historyViewModel;
-    private final HistoryController historyController;
+    private final ReadingHistoryViewModel readingHistoryViewModel;
+    private final ReadingHistoryController readingHistoryController;
 
-    private final JTextArea historyTextArea = new JTextArea(20, 40);
-    private final JScrollPane scrollPane = new JScrollPane(historyTextArea);
+    private final JButton historyButton = new JButton("History");
+    private JTextArea historyTextArea;
 
-    // New components for filtering
-    private final JTextField filterTextField = new JTextField(15);
-    private final JButton filterButton = new JButton("Filter");
+    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller) {
+        this.readingHistoryViewModel = readingHistoryViewModel;
+        this.readingHistoryController = controller;
+        this.readingHistoryViewModel.addPropertyChangeListener(this);
 
-    public HistoryView(HistoryViewModel historyViewModel, HistoryController controller) {
-        this.historyViewModel = historyViewModel;
-        this.historyController = controller;
-        this.historyViewModel.addPropertyChangeListener(this);
-
-        JLabel title = new JLabel("User History");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        historyTextArea.setEditable(false);
-        historyTextArea.setLineWrap(true);
-        historyTextArea.setWrapStyleWord(true);
-
-        // Setting up the filter panel
-        LabelTextPanel filterPanel = new LabelTextPanel(new JLabel("Filter:"), filterTextField);
-        filterButton.addActionListener(this);
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
-        this.add(filterPanel);
-        this.add(filterButton);
-        this.add(scrollPane);
+        historyButton.addActionListener(this);
+        this.add(historyButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == filterButton) {
-            // Implement filtering logic based on filterTextField's text
-            // For example, you can request the controller to update the view model with filtered data
-            System.out.println("Filtering history with criteria: " + filterTextField.getText());
-        } else {
-            System.out.println("Action performed: " + evt.getActionCommand());
+        if (evt.getSource() == historyButton) {
+            createHistoryWindow();
         }
+    }
+
+    private void createHistoryWindow() {
+        JDialog historyDialog = new JDialog();
+        historyDialog.setTitle("User Reading History");
+        historyDialog.setSize(500, 400);
+        historyDialog.setLayout(new BorderLayout());
+
+        historyTextArea = new JTextArea();
+        historyTextArea.setEditable(false);
+        historyTextArea.setLineWrap(true);
+        historyTextArea.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(historyTextArea);
+        historyDialog.add(scrollPane, BorderLayout.CENTER);
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.addActionListener(e -> historyDialog.dispose());
+        historyDialog.add(exitButton, BorderLayout.PAGE_END);
+
+        historyDialog.setVisible(true);
+        readingHistoryController.fetchUserHistory();
     }
 
     @Override
