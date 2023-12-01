@@ -20,7 +20,7 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
             // For example, validate input data, interact with the database, etc.
 
             // Assuming we have a method to get the User object by ID
-            User user = userDataAccessObject.getUserById(addingHistoryInputData.getUserId());
+            User user = userDataAccessObject.getUserByName(addingHistoryInputData.getUserName());
             if (user == null) {
                 addingHistoryPresenter.prepareFailView("User not found.");
             }
@@ -30,7 +30,7 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
             userDataAccessObject.addHistoryToUser(user, historyRecord);
 
             // If successful, prepare the success view
-            AddingHistoryOutputData addingHistoryOutputData = new AddingHistoryOutputData(true, "History added successfully for user " + addingHistoryInputData.getUserId());
+            AddingHistoryOutputData addingHistoryOutputData = new AddingHistoryOutputData(true, "History added successfully for user " + addingHistoryInputData.getUserName());
             addingHistoryPresenter.prepareSuccessView(addingHistoryOutputData);
         } catch (Exception e) {
             // Handle any exceptions or failure scenarios

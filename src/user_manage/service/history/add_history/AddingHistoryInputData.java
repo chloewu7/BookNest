@@ -3,22 +3,22 @@ package user_manage.service.history.add_history;
 import java.time.LocalDateTime;
 
 public class AddingHistoryInputData{
-    private String userId;
+    private String userName;
     private String bookId;
     private String actionType; // Consider using an enum for predefined actions
     private LocalDateTime timestamp;
 
     // Constructor
-    public AddingHistoryInputData(String userId, String bookId, String actionType, LocalDateTime timestamp) {
-        this.userId = userId;
+    public AddingHistoryInputData(String userName, String bookId, String actionType, LocalDateTime timestamp) {
+        this.userName = userName;
         this.bookId = bookId;
         this.actionType = actionType;
         this.timestamp = timestamp;
     }
 
     // Getters
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
     public String getBookId() {
@@ -35,7 +35,7 @@ public class AddingHistoryInputData{
 
     // Setters
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userName = userName;
     }
 
     public void setBookId(String bookId) {
