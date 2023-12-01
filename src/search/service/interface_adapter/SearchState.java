@@ -3,7 +3,7 @@ import search.entity.Book;
 import java.util.List;
 
 public class SearchState {
-    private String books = "";
+    private List<Book> books;
     private String notFound = null;
     private String keywordError = null;
     public SearchState(SearchState copy){
@@ -12,10 +12,10 @@ public class SearchState {
         keywordError = copy.keywordError;
     }
     public SearchState(){}
-    public String getBooks(){return books;}
+    public List<Book> getBooks(){return books;}
     public String getNotFound(){return notFound;}
     public String getKeywordError(){return keywordError;}
-    public void setBooks(String books){this.books = books;}
+    public void setBooks(List<Book> books){this.books = books;}
     public void setNotFound(String notFound){this.notFound = notFound;}
     public void setKeywordError(String keywordError){this.keywordError = keywordError;}
 
