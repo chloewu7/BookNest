@@ -2,15 +2,16 @@ package user_manage.service.history.read_history;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ReadingHistoryOutputData {
-    private final HashMap<LocalDateTime, String> history;
+    private final Map<LocalDateTime, String> history;
 
-    public ReadingHistoryOutputData(HashMap<LocalDateTime, String> history) {
+    public ReadingHistoryOutputData(Map<LocalDateTime, String> history) {
         this.history = history;
     }
 
-    public HashMap<LocalDateTime, String> getHistory() {
+    public Map<LocalDateTime, String> getHistory() {
         return history;
     }
 
