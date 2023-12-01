@@ -33,11 +33,14 @@ public class SearchView extends JFrame{
 
     private String viewName = "search";
 
+    private JLabel searchInstructionLabel;
+
 
     public SearchView(){
         createUI();
     }
     private void createUI(){
+
         setTitle("Book Search");
         setSize(1000, 600);
         setLocationRelativeTo(null);
@@ -55,6 +58,7 @@ public class SearchView extends JFrame{
         searchButton.setPreferredSize(new Dimension(100, 80));
 
         searchButton.setBackground(lightYellow);
+        searchButton.setFont(new Font("SansSerif", Font.BOLD, 14));
         searchTextField.setBackground(lightYellow);
         searchTypeComboBox.setBackground(lightYellow);
 
@@ -76,6 +80,24 @@ public class SearchView extends JFrame{
         add(scrollPane, BorderLayout.CENTER);
 
         resultsPanel.setBackground(lightBlue);
+
+        searchInstructionLabel = new JLabel("Search Instructions: " + "\n" +
+                "Please choose Search Criteria -> " + "\n" +
+                "Enter search keywords and press 'Search'. " + "\n" +
+                "Click 'User Center' to manage account", SwingConstants.CENTER);
+
+        searchInstructionLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
+        resultsPanel.add(searchInstructionLabel);
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton userCenterButton = new JButton("User Center");
+        userCenterButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+
+        bottomPanel.add(userCenterButton);
+
+        add(bottomPanel, BorderLayout.SOUTH);
 
 
         searchButton.addActionListener(new ActionListener() {
