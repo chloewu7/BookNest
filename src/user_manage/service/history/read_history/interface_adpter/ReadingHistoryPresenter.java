@@ -24,7 +24,7 @@ public class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
 
     @Override
     public void presentHistory(ReadingHistoryOutputData outputData) {
-        HashMap<LocalDateTime, String> history = outputData.getHistory();
+        Map<LocalDateTime, String> history = outputData.getHistory();
 
         // Sort the history by timestamp and format it for display
         LinkedHashMap<LocalDateTime, String> sortedHistory = history.entrySet().stream()
