@@ -1,63 +1,143 @@
 package view;
 
 
+import interface_adapter.ViewManagerModel;
+import search.entity.Book;
+import search.entity.NewResponseFactory;
+import search.entity.ResponseFactory;
+import search.service.SearchInteractor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class SearchView extends JFrame {
-    private final JComboBox<String> searchChoice;
-    private final JTextField keywordField;
-    private final JButton searchButton;
+import search.service.SearchInputData;
+import search.service.SearchDataAccessInterface;
+import search.data_access.SearchDataAccessObject;
+import search.service.SearchOutputBoundary;
+import search.service.interface_adapter.SearchController;
+import search.service.interface_adapter.SearchPresenter;
+import search.service.interface_adapter.SearchState;
+import search.service.interface_adapter.SearchViewModel;
 
-    public SearchView() {
+public class SearchView extends JFrame{
+    JComboBox<String> searchTypeComboBox;
+    private JTextField searchTextField;
+    private JButton searchButton;
+    private JPanel resultsPanel;
 
+
+    public SearchView(){
+        createUI();
+    }
+    private void createUI(){
         setTitle("Book Search");
-        setSize(400, 150);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        searchTypeComboBox = new JComboBox<>(new String[]{"Title", "Author", "Category", "ISBN"});
+        searchTextField = new JTextField(20);
+        Font font = new Font("SansSerif", Font.PLAIN, 24);
+        searchTextField.setFont(font);
 
-        searchChoice = new JComboBox<>(new String[]{"Title","Author", "Subject", "ISBN"});
-        searchChoice.setSelectedItem("Title"); // Default selection
-        keywordField = new JTextField();
+        Color lightYellow = new Color(255, 255, 224);
+
         searchButton = new JButton("Search");
 
+        searchButton.setPreferredSize(new Dimension(100, 80));
 
-        setLayout(new GridLayout(3, 2));
+        searchButton.setBackground(lightYellow);
+        searchTextField.setBackground(lightYellow);
+        searchTypeComboBox.setBackground(lightYellow);
+
+        searchTextField.setPreferredSize(new Dimension(200, 80));
+        Color lightBlue = new Color(173, 216, 230);
 
 
-        add(new JLabel("Search By:"));
-        add(searchChoice);
-        add(new JLabel("Please enter keywords here:"));
-        add(keywordField);
-        add(new JLabel());
-        add(searchButton);
+        resultsPanel = new JPanel();
+        resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(resultsPanel);
+        add(scrollPane, BorderLayout.CENTER);
+
+        JPanel inputPanel = new JPanel(new BorderLayout());
+        inputPanel.add(searchTypeComboBox, BorderLayout.WEST);
+        inputPanel.add(searchTextField, BorderLayout.CENTER);
+        inputPanel.add(searchButton, BorderLayout.EAST);
+        //JScrollPane scrollPane = new JScrollPane(resultsPanel);
+        add(inputPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+
+        resultsPanel.setBackground(lightBlue);
 
 
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedChoice = (String) searchChoice.getSelectedItem();
-                String keyword = keywordField.getText();
-                performSearch(selectedChoice, keyword);
+                performSearch();
             }
         });
+
+    }
+    private void performSearch(){
+        resultsPanel.removeAll();
+        String searchType = (String) searchTypeComboBox.getSelectedItem();
+        String keyword = searchTextField.getText();
+
+        SearchState searchState = getSearchState(searchType, keyword);
+
+        System.out.println("Performing search for type: " + searchType + " with keyword: " + keyword);
+
+        for(Book book: searchState.getBooks()) {
+
+            JButton collectButton = new JButton("Collect");
+            JButton readButton = new JButton("Read");
+            JButton commentButton = new JButton("Comment");
+
+            JPanel bookLinePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            bookLinePanel.setBackground(new Color(173, 216, 230));
+            bookLinePanel.setBorder(BorderFactory.createLineBorder(Color.gray));
+
+            bookLinePanel.add(collectButton);
+            bookLinePanel.add(readButton);
+            bookLinePanel.add(commentButton);
+
+            bookLinePanel.add(new JLabel("Title: " + book.getTitle() + ", Author: " + book.getAuthor() +
+                    ", Category: " + book.getCategory() + ", ISBN: " + book.getISBN() + "\n\n\n"));
+
+            resultsPanel.add(bookLinePanel);
+
+        }
+        resultsPanel.revalidate();
+        resultsPanel.repaint();
+        searchTextField.setText("");
     }
 
-    private void performSearch(String searchChoice, String keyword) {
-        // connect to search request output boundary
-        System.out.println("Search Option: " + searchChoice);
-        System.out.println("Keyword: " + keyword);
+    private static SearchState getSearchState(String searchType, String keyword) {
+        SearchInputData inputData = new SearchInputData(searchType, keyword);
+        SearchDataAccessInterface searchDAO = new SearchDataAccessObject();
+        SearchViewModel searchViewModel = new SearchViewModel();
+        SearchOutputBoundary searchPresenter = new SearchPresenter(searchViewModel);
+        ResponseFactory responseFactory = new NewResponseFactory();
+        SearchInteractor searchInteractor = new SearchInteractor(searchDAO, searchPresenter,responseFactory);
+        searchInteractor.execute(inputData);
+        return searchViewModel.getState();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new SearchView().setVisible(true);
+                SearchView view = new SearchView();
+                view.setVisible(true);
             }
         });
     }
+
+
 }

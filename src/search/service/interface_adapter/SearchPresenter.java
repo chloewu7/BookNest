@@ -11,24 +11,22 @@ import java.util.List;
 
 public class SearchPresenter implements SearchOutputBoundary {
     private final SearchViewModel searchViewModel;
-    private ViewManagerModel viewManagerModel;
+    //private ViewManagerModel viewManagerModel;
 
-    public SearchPresenter(ViewManagerModel viewManagerModel,
-                           SearchViewModel searchViewModel){
-        this.viewManagerModel = viewManagerModel;
+    public SearchPresenter(SearchViewModel searchViewModel){
+        //this.viewManagerModel = viewManagerModel;
         this.searchViewModel = searchViewModel;
     }
 
     public void prepareSuccessView(SearchOutputData response){
         SearchState searchState = searchViewModel.getState();
-        String booksString = convertBooksList(response.getResponse());
-        searchState.setBooks(booksString);
+        searchState.setBooks(response.getResponse());
 
         this.searchViewModel.setState(searchState);
         searchViewModel.firePropertyChanged();
 
         // viewManagerModel.setActiveView(searchState.getViewName());
-        viewManagerModel.firePropertyChanged();
+        //viewManagerModel.firePropertyChanged();
     }
     public void prepareNotFoundView(String message){
         SearchState searchState = searchViewModel.getState();
@@ -45,8 +43,8 @@ public class SearchPresenter implements SearchOutputBoundary {
     private String convertBooksList(List<Book> books){
         StringBuilder st = new StringBuilder();
         for (Book book: books){
-            st.append(book.getTitle()).append(" by ").append(book.getAuthor()).append(", category: ")
-                    .append(book.getCategory()).append(", ISBN: #").append(book.getISBN()).append(" \n");
+            st.append("Title: ").append(book.getTitle()).append(" by ").append(book.getAuthor()).append(" Category: ")
+                    .append(book.getCategory()).append(" ISBN: #").append(book.getISBN()).append(" \n\n\n");
         }
         return st.toString().trim();
     }
