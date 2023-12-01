@@ -31,6 +31,8 @@ public class SearchView extends JFrame{
     private JButton searchButton;
     private JPanel resultsPanel;
 
+    private String viewName = "search";
+
 
     public SearchView(){
         createUI();
@@ -89,7 +91,7 @@ public class SearchView extends JFrame{
         String searchType = (String) searchTypeComboBox.getSelectedItem();
         String keyword = searchTextField.getText();
 
-        SearchState searchState = getSearchState(searchType, keyword);
+        SearchState searchState = getSearchState(searchType, keyword, viewName);
 
         System.out.println("Performing search for type: " + searchType + " with keyword: " + keyword);
 
@@ -118,10 +120,10 @@ public class SearchView extends JFrame{
         searchTextField.setText("");
     }
 
-    private static SearchState getSearchState(String searchType, String keyword) {
+    private static SearchState getSearchState(String searchType, String keyword, String viewName) {
         SearchInputData inputData = new SearchInputData(searchType, keyword);
         SearchDataAccessInterface searchDAO = new SearchDataAccessObject();
-        SearchViewModel searchViewModel = new SearchViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel(viewName);
         SearchOutputBoundary searchPresenter = new SearchPresenter(searchViewModel);
         ResponseFactory responseFactory = new NewResponseFactory();
         SearchInteractor searchInteractor = new SearchInteractor(searchDAO, searchPresenter,responseFactory);
