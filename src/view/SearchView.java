@@ -35,15 +35,18 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private JLabel searchInstructionLabel;
     private SearchInteractor searchInteractor;
     private SearchViewModel searchViewModel;
+    private ViewManagerModel viewManagerModel;
 
     public final String viewName = "Search";
 
 
 
     public SearchView(SearchInteractor searchInteractor,
-                      SearchViewModel searchViewModel){
+                      SearchViewModel searchViewModel,
+                      ViewManagerModel viewManagerModel){
         this.searchInteractor = searchInteractor;
         this.searchViewModel = searchViewModel;
+        this.viewManagerModel = viewManagerModel;
         createUI();
     }
 
@@ -108,7 +111,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
-        //userCenterButton.addActionListener(new ActionListener()
+        userCenterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchViewModel.firePropertyChanged();
+
+                viewManagerModel.setActiveView("User Center");
+                viewManagerModel.firePropertyChanged();
+            }
+        });
 
     }
     private void performSearch(){
