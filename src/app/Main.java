@@ -1,7 +1,6 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import search.service.SearchInteractor;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchViewModel;
 import user_manage.data_access.FileReviewDataAccessObject;
@@ -14,10 +13,13 @@ import user_manage.service.reading_review.show_my_reviews.interface_adapter.Show
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 import user_manage.service.signup.interface_adapter.SignupViewModel;
 import view.*;
+import view.UserCenter.UserCenterView;
+import view.UserCenter.UserCenterViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Main {
@@ -57,10 +59,6 @@ public class Main {
         SearchView searchView = new SearchView(searchController, searchViewModel, viewManagerModel);
         views.add(searchView, searchView.viewName);
 
-        // create UserCenter View
-        UserCenterView userCenterView = new UserCenterView(viewManagerModel);
-        views.add(userCenterView, userCenterView.viewName);
-
         // create Signup View
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
@@ -72,7 +70,7 @@ public class Main {
         LoginViewModel loginViewModel1 = new LoginViewModel();
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,userDataAccessObject);
-        views.add(loginView,searchView.viewName);
+        views.add(loginView,loginView.viewName);
 
         // create Logout View
 
@@ -89,8 +87,8 @@ public class Main {
 
         // create ShowMyReview View
         ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
-        ShowMyReviewsView showMyReviewsView = ShowMyReviewsUseCaseFactory.create(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
-        views.add(showMyReviewsView, showMyReviewsView.viewName);
+        //ShowMyReviewsView showMyReviewsView = ShowMyReviewsUseCaseFactory.create(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
+        //views.add(showMyReviewsView, showMyReviewsView.viewName);
 
         //uncomment to see searchView
         //viewManagerModel.setActiveView(searchView.viewName);
@@ -104,6 +102,21 @@ public class Main {
         //uncomment to see writeReviewsView
         //viewManagerModel.setActiveView(writeReviewsView.viewName);
 
+        //uncomment to see loginView
+        //viewManagerModel.setActiveView(loginView.viewName);
+
+        // create UserCenter View
+        UserCenterViewModel userCenterViewModel = new UserCenterViewModel();
+        java.util.List<JPanel> userManageViewList = new ArrayList<>();
+        userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel, reviewDataAccessObject);
+
+        UserCenterView userCenterView = (UserCenterView) userManageViewList.get(0);
+        views.add(userCenterView, userCenterView.viewName);
+
+        ShowMyReviewsView showMyReviewsView = (ShowMyReviewsView) userManageViewList.get(1);
+        views.add(showMyReviewsView, showMyReviewsView.viewName);
+
+        //TODO: 把个自的View从userManageViewList拿出来 添加到views里
 
         viewManagerModel.firePropertyChanged();
 
