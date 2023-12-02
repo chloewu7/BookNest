@@ -78,11 +78,21 @@ public class Main {
         ShowAllReviewsView showAllReviewsView = ShowAllReviewsUseCaseFactory.create(viewManagerModel, showAllReviewsViewModel, reviewDataAccessObject);
         views.add(showAllReviewsView, showAllReviewsView.viewName);
 
+        // create ShowMyReview View
+        ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
+        ShowMyReviewsView showMyReviewsView = ShowMyReviewsUseCaseFactory.create(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
+        views.add(showMyReviewsView, showMyReviewsView.viewName);
+
         //uncomment to see searchView
         //viewManagerModel.setActiveView(searchView.viewName);
 
-        // uncomment to see showAllReviewsView
+        //uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
+
+        //uncomment to see showMyReviewsView
+        //viewManagerModel.setActiveView(showMyReviewsView.viewName);
+
+
         viewManagerModel.firePropertyChanged();
 
         application.pack();

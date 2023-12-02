@@ -64,6 +64,16 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         button.add(returnButton, BorderLayout.EAST);
         button.setBackground(lightBlue);
         button.setPreferredSize(new Dimension(1000, 70));
+        returnButton.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(returnButton)) {
+                            //TODO：跳转Write My Review
+                        }
+                    }
+                }
+        );
 
         JPanel allReviewsPanel = new JPanel();
         allReviewsPanel.setLayout(new BoxLayout(allReviewsPanel, BoxLayout.Y_AXIS));
@@ -73,6 +83,7 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
 
         if (state.getNoReviewMessage() != null){
             JLabel nonReviewMessage = new JLabel(state.getNoReviewMessage());
+            nonReviewMessage.setFont(new Font("SansSerif", Font.PLAIN, 20));
             allReviewsPanel.add(nonReviewMessage);
         } else {
             for (String reviews : state.getReviewList()) {
