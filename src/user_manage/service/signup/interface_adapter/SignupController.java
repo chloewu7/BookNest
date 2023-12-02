@@ -11,7 +11,7 @@ public class SignupController {
         this.signupInputBoundary = signupInputBoundary;
     }
 
-    private void execute(String username, String password, String repeatPassword){
+    public void execute(String username, String password, String repeatPassword){
         SignupInputData signupInputData = new SignupInputData(username, password, repeatPassword);
 
         signupInputBoundary.execute(signupInputData);
