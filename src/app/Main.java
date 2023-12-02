@@ -53,8 +53,12 @@ public class Main {
         // create Search View
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchInteractor searchInteractor = SearchUseCaseFactory.createSearchInteractor(searchViewModel);
-        SearchView searchView = new SearchView(searchInteractor, searchViewModel);
+        SearchView searchView = new SearchView(searchInteractor, searchViewModel, viewManagerModel);
         views.add(searchView, searchView.viewName);
+
+        // create UserCenter View
+        UserCenterView userCenterView = new UserCenterView();
+        views.add(userCenterView, userCenterView.viewName);
 
         // create Signup View
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -79,7 +83,7 @@ public class Main {
         views.add(showAllReviewsView, showAllReviewsView.viewName);
 
         //uncomment to see searchView
-        //viewManagerModel.setActiveView(searchView.viewName);
+        viewManagerModel.setActiveView(searchView.viewName);
 
         // uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
