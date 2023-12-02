@@ -2,6 +2,7 @@ package app;
 
 import interface_adapter.ViewManagerModel;
 import search.service.SearchInteractor;
+import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchViewModel;
 import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
@@ -52,9 +53,13 @@ public class Main {
 
         // create Search View
         SearchViewModel searchViewModel = new SearchViewModel();
-        SearchInteractor searchInteractor = SearchUseCaseFactory.createSearchInteractor(searchViewModel);
-        SearchView searchView = new SearchView(searchInteractor, searchViewModel);
+        SearchController searchController = SearchUseCaseFactory.createSearchController(searchViewModel);
+        SearchView searchView = new SearchView(searchController, searchViewModel, viewManagerModel);
         views.add(searchView, searchView.viewName);
+
+        // create UserCenter View
+        UserCenterView userCenterView = new UserCenterView(viewManagerModel);
+        views.add(userCenterView, userCenterView.viewName);
 
         // create Signup View
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -78,14 +83,20 @@ public class Main {
         ShowAllReviewsView showAllReviewsView = ShowAllReviewsUseCaseFactory.create(viewManagerModel, showAllReviewsViewModel, reviewDataAccessObject);
         views.add(showAllReviewsView, showAllReviewsView.viewName);
 
+        // create ShowMyReview View
+        ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
+        ShowMyReviewsView showMyReviewsView = ShowMyReviewsUseCaseFactory.create(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
+        views.add(showMyReviewsView, showMyReviewsView.viewName);
+
         //uncomment to see searchView
         //viewManagerModel.setActiveView(searchView.viewName);
 
         //uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
 
-        //uncomment to see writeReviewsView
-        //viewManagerModel.setActiveView(writeReviewsView.viewName);
+        //uncomment to see showMyReviewsView
+        //viewManagerModel.setActiveView(showMyReviewsView.viewName);
+
 
         viewManagerModel.firePropertyChanged();
 
