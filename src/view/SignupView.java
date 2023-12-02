@@ -1,8 +1,5 @@
 package view;
 
-import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsController;
-import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
-import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 import user_manage.service.signup.interface_adapter.SignupController;
 import user_manage.service.signup.interface_adapter.SignupState;
 import user_manage.service.signup.interface_adapter.SignupViewModel;
@@ -21,11 +18,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public final String viewName = "my reviews";
     private final SignupController signupController;
     private final SignupViewModel signupViewModel;
-    private final JTextField reviewContentInputField = new JTextField(30);
     private final JButton signupButton;
-    private final JTextField usernameInputField = new JTextField(15);
-    private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    private final JTextField usernameInputField = new JTextField(20);
+    private final JPasswordField passwordInputField = new JPasswordField(20);
+    private final JPasswordField repeatPasswordInputField = new JPasswordField(20);
 
 
 
@@ -34,36 +30,87 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.signupController = signupController;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
-        this.setSize(1000, 1000);
+        this.setSize(1000, 600);
         Color lightBlue = new Color(173, 216, 230);
         Color darkBlue = new Color(80, 100, 230);
         Color lightYellow = new Color(255, 255, 224);
+        this.setBackground(lightBlue);
 
         JLabel signupTitle = new JLabel(SignupViewModel.TITLE_LABEL);
-        signupTitle.setFont(new Font("Lucida Grande", 0, 15));
+        signupTitle.setFont(new Font("Lucida Grande", 0, 20));
         JPanel title = new JPanel();
-        title.add(signupTitle);
-        title.setPreferredSize(new Dimension(1000, 40));
+        title.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0; // Expand horizontally
+        gbc.weighty = 1.0; // Expand vertically
+        gbc.anchor = GridBagConstraints.CENTER; // Center the label
+        title.add(signupTitle, gbc);
+        title.setPreferredSize(new Dimension(1000, 100));
+
         title.setBackground(lightYellow);
 
+        usernameInputField.setPreferredSize(new Dimension(20, 40));
+        passwordInputField.setPreferredSize(new Dimension(20, 40));
+        repeatPasswordInputField.setPreferredSize(new Dimension(20, 40));
+
+        JLabel username = new JLabel(SignupViewModel.USERNAME_LABEL);
+        username.setFont(new Font("Lucida Grande", 0, 15));
+
+        JLabel password = new JLabel(SignupViewModel.PASSWORD_LABEL);
+        password.setFont(new Font("Lucida Grande", 0, 15));
+
+        JLabel repeatPassword = new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL);
+        repeatPassword.setFont(new Font("Lucida Grande", 0, 15));
+
         LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
+                username, usernameInputField);
         LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
+                password, passwordInputField);
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+                repeatPassword, repeatPasswordInputField);
 
         usernameInfo.setBackground(lightBlue);
+        //usernameInfo.setPreferredSize(new Dimension(1000, 80));
         passwordInfo.setBackground(lightBlue);
+        //passwordInfo.setPreferredSize(new Dimension(1000, 80));
         repeatPasswordInfo.setBackground(lightBlue);
+        //repeatPasswordInfo.setPreferredSize(new Dimension(1000, 80));
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setPreferredSize(new Dimension(1000, 330));
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.add(usernameInfo);
+        infoPanel.add(passwordInfo);
+        infoPanel.add(repeatPasswordInfo);
+
+        JPanel bigInfoPanel = new JPanel();
+        bigInfoPanel.setPreferredSize(new Dimension(1000, 380));
+        bigInfoPanel.setLayout(new BorderLayout());
+        bigInfoPanel.setBackground(lightBlue);
+        bigInfoPanel.add(infoPanel, BorderLayout.CENTER);
+
+        JPanel top = new JPanel();
+        top.setPreferredSize(new Dimension(1000, 60));
+        top.setBackground(lightBlue);
+        bigInfoPanel.add(top, BorderLayout.NORTH);
+
+        JPanel bottom = new JPanel();
+        bottom.setPreferredSize(new Dimension(1000, 80));
+        bottom.setBackground(lightBlue);
+        bigInfoPanel.add(bottom, BorderLayout.SOUTH);
+
 
 
         signupButton = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
-        signupButton.setPreferredSize(new Dimension(200, 40));
+        signupButton.setPreferredSize(new Dimension(200, 50));
+        signupButton.setFont(new Font("Lucida Grande", 0, 15));
         signupButton.setBackground(lightYellow);
         JPanel button = new JPanel();
-        button.add(signupButton);
+        button.add(signupButton, BorderLayout.NORTH);
         button.setBackground(lightBlue);
+        button.setPreferredSize(new Dimension(1000, 120));
 
         signupButton.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -146,9 +193,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title, BorderLayout.NORTH);
-        this.add(usernameInfo);
-        this.add(passwordInfo);
-        this.add(repeatPasswordInfo);
+        //this.add(usernameInfo);
+        //this.add(passwordInfo);
+        //this.add(repeatPasswordInfo);
+        this.add(bigInfoPanel);
         this.add(button, BorderLayout.SOUTH);
     }
 
