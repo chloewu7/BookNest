@@ -24,6 +24,7 @@ import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchPresenter;
 import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
+import view.UserCenterView;
 
 public class SearchView extends JFrame{
     JComboBox<String> searchTypeComboBox;
@@ -34,9 +35,15 @@ public class SearchView extends JFrame{
     private String viewName = "search";
 
     private JLabel searchInstructionLabel;
+    private SearchInteractor searchInteractor;
+    private SearchViewModel searchViewModel;
 
 
-    public SearchView(){
+
+    public SearchView(SearchInteractor searchInteractor,
+                      SearchViewModel searchViewModel){
+        this.searchInteractor = searchInteractor;
+        this.searchViewModel = searchViewModel;
         createUI();
     }
     private void createUI(){
@@ -107,13 +114,24 @@ public class SearchView extends JFrame{
             }
         });
 
+        userCenterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserCenterView userCenterView = new UserCenterView();
+                userCenterView.setVisible(true);
+                SearchView.this.dispose();
+            }
+        });
+
     }
     private void performSearch(){
         resultsPanel.removeAll();
         String searchType = (String) searchTypeComboBox.getSelectedItem();
         String keyword = searchTextField.getText();
 
-        SearchState searchState = getSearchState(searchType, keyword, viewName);
+        SearchInputData inputData = new SearchInputData(searchType, keyword);
+        searchInteractor.execute(inputData);
+        SearchState searchState = searchViewModel.getState();
 
         System.out.println("Performing search for type: " + searchType + " with keyword: " + keyword);
 
@@ -142,26 +160,7 @@ public class SearchView extends JFrame{
         searchTextField.setText("");
     }
 
-    private static SearchState getSearchState(String searchType, String keyword, String viewName) {
-        SearchInputData inputData = new SearchInputData(searchType, keyword);
-        SearchDataAccessInterface searchDAO = new SearchDataAccessObject();
-        SearchViewModel searchViewModel = new SearchViewModel(viewName);
-        SearchOutputBoundary searchPresenter = new SearchPresenter(searchViewModel);
-        ResponseFactory responseFactory = new NewResponseFactory();
-        SearchInteractor searchInteractor = new SearchInteractor(searchDAO, searchPresenter,responseFactory);
-        searchInteractor.execute(inputData);
-        return searchViewModel.getState();
-    }
 
-    public static void main(String[] args){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                SearchView view = new SearchView();
-                view.setVisible(true);
-            }
-        });
-    }
 
 
 }

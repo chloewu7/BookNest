@@ -1,6 +1,8 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import search.service.SearchInteractor;
+import search.service.interface_adapter.SearchViewModel;
 import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
 import user_manage.entity.CommonReviewFactory;
@@ -8,8 +10,7 @@ import user_manage.entity.CommonUserFactory;
 import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
-import user_manage.service.signup.interface_adapter.SignupViewModel;
-import view.SignupView;
+import view.SearchView;
 import view.ViewManager;
 import view.WriteReviewsView;
 
@@ -50,6 +51,9 @@ public class Main {
         }
 
         // create Search View
+        SearchViewModel searchViewModel = new SearchViewModel();
+        SearchInteractor searchInteractor = SearchUseCaseFactory.createSearchInteractor(searchViewModel);
+        SearchView searchView = new SearchView(searchInteractor, searchViewModel);
 
         // create Signup View
         SignupViewModel signupViewModel = new SignupViewModel();
