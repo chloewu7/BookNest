@@ -1,6 +1,8 @@
 package view;
 
 import app.ShowMyReviewsUseCaseFactory;
+import interface_adapter.ViewManagerModel;
+import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 
 import javax.swing.*;
@@ -10,24 +12,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class UserCenterView extends JFrame {
+public class UserCenterView extends JPanel {
 
-    private String viewName = "userCenter";
+    public final String viewName = "User Center";
     private JButton collectionButton;
     private JButton historyButton;
     private JButton reviewButton;
     private JButton searchButton;
 
+    private ViewManagerModel viewManagerModel;
 
-    public UserCenterView(){
+
+    public UserCenterView(ViewManagerModel viewManagerModel){
+        this.viewManagerModel = viewManagerModel;
         createUI();
     }
 
     private void createUI(){
-        setTitle("User Center");
-        setSize(1000, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new GridLayout(4, 1, 10, 10));
+        this.setSize(1000, 600);
+        this.setLayout(new GridLayout(4, 1, 10, 10));
 
         Color lightYellow = new Color(255, 255, 224);
         Color lightBlue = new Color(173, 216, 230);
@@ -58,7 +61,17 @@ public class UserCenterView extends JFrame {
 
         //collectionButton.addActionListener to be completed
 
-        //reviewButton.addActionListener
+        //historyButton.addActionListener to be completed
+
+        //reviewButton.addActionListener to be completed
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewManagerModel.setActiveView("Search");
+                viewManagerModel.firePropertyChanged();
+            }
+        });
 
 
 
@@ -66,10 +79,6 @@ public class UserCenterView extends JFrame {
         add(historyButton);
         add(reviewButton);
         add(searchButton);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new UserCenterView().setVisible(true));
     }
 
 
