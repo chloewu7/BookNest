@@ -12,7 +12,7 @@ public class ReadingHistoryViewModel extends ViewModel {
     private final PropertyChangeSupport support;
 
     public ReadingHistoryViewModel() {
-        super("reading history");
+        super("history");
         this.state = new ReadingHistoryState();
         this.support = new PropertyChangeSupport(this);
     }

@@ -69,6 +69,10 @@ public class Main {
         views.add(signupView, signupView.viewName);
 
         // create Login View
+        LoginViewModel loginViewModel1 = new LoginViewModel();
+
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,userDataAccessObject);
+        views.add(loginView,searchView.viewName);
 
         // create Logout View
 
