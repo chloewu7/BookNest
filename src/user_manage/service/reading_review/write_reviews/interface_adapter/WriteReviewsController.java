@@ -10,7 +10,7 @@ public class WriteReviewsController {
         this.writeReviewsInputBoundary = writeReviewsInputBoundary;
     }
 
-    private void execute(String reviewedBook, String author, String reviewer, String reviewContent, Integer rating){
+    public void execute(String reviewedBook, String author, String reviewer, String reviewContent, Integer rating){
         WriteReviewsInputData writeReviewsInputData = new WriteReviewsInputData(reviewedBook, author, reviewer, reviewContent, rating);
         writeReviewsInputBoundary.execute(writeReviewsInputData);
     }

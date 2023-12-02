@@ -81,8 +81,12 @@ public class Main {
         //uncomment to see searchView
         //viewManagerModel.setActiveView(searchView.viewName);
 
-        // uncomment to see showAllReviewsView
+        //uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
+
+        //uncomment to see writeReviewsView
+        //viewManagerModel.setActiveView(writeReviewsView.viewName);
+
         viewManagerModel.firePropertyChanged();
 
         application.pack();
