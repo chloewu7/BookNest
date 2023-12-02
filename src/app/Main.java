@@ -54,6 +54,7 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchInteractor searchInteractor = SearchUseCaseFactory.createSearchInteractor(searchViewModel);
         SearchView searchView = new SearchView(searchInteractor, searchViewModel);
+        views.add(searchView, searchView.viewName);
 
         // create Signup View
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -76,6 +77,9 @@ public class Main {
         ShowAllReviewsViewModel showAllReviewsViewModel = new ShowAllReviewsViewModel();
         ShowAllReviewsView showAllReviewsView = ShowAllReviewsUseCaseFactory.create(viewManagerModel, showAllReviewsViewModel, reviewDataAccessObject);
         views.add(showAllReviewsView, showAllReviewsView.viewName);
+
+        //uncomment to see searchView
+        //viewManagerModel.setActiveView(searchView.viewName);
 
         // uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
