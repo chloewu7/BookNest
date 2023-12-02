@@ -10,5 +10,6 @@ public class SearchController {
     }
     public void execute(String choice, String keyword){
         SearchInputData searchInputData = new SearchInputData(choice, keyword);
+        searchInteractor.execute(searchInputData);
     }
 }
