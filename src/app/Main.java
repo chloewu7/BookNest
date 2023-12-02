@@ -8,11 +8,11 @@ import user_manage.data_access.FileUserDataAccessObject;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
 import user_manage.service.login.interface_adapter.LoginViewModel;
+import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
-import view.SearchView;
-import view.ViewManager;
-import view.WriteReviewsView;
+import user_manage.service.signup.interface_adapter.SignupViewModel;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,7 +72,13 @@ public class Main {
         WriteReviewsView writeReviewsView = WriteReviewsUseCaseFactory.create(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
         views.add(writeReviewsView, writeReviewsView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        // create ShowAllReview View
+        ShowAllReviewsViewModel showAllReviewsViewModel = new ShowAllReviewsViewModel();
+        ShowAllReviewsView showAllReviewsView = ShowAllReviewsUseCaseFactory.create(viewManagerModel, showAllReviewsViewModel, reviewDataAccessObject);
+        views.add(showAllReviewsView, showAllReviewsView.viewName);
+
+        // uncomment to see showAllReviewsView
+        //viewManagerModel.setActiveView(showAllReviewsView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

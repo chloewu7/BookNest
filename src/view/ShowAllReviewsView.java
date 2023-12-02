@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class ShowAllReviewsView extends JFrame implements ActionListener, PropertyChangeListener {
+public class ShowAllReviewsView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "my reviews";
     private String bookTitle = "";
     private float rating;
@@ -24,10 +24,7 @@ public class ShowAllReviewsView extends JFrame implements ActionListener, Proper
                              ShowAllReviewsViewModel showAllReviewsViewModel){
         this.showAllReviewsController = showAllReviewsController;
         this.showAllReviewsViewModel = showAllReviewsViewModel;
-        setTitle("All Reviews");
-        setSize(1000, 600);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(1000, 600);
         Color lightBlue = new Color(173, 216, 230);
         Color lightYellow = new Color(255, 255, 224);
         Color Orange = new Color(248, 152, 32);
@@ -43,36 +40,56 @@ public class ShowAllReviewsView extends JFrame implements ActionListener, Proper
                 + "                                                                                             ");
         myReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
         JPanel titleAndRating = new JPanel();
+
         titleAndRating.add(myReviewTitle);
         titleAndRating.add(rating);
-        titleAndRating.setPreferredSize(new Dimension(1000, 40));
+        titleAndRating.setPreferredSize(new Dimension(1000, 80));
         titleAndRating.setBackground(lightYellow);
         myReviewTitle.setForeground(Color.black);
 
+        JPanel titleAndRatingPanel  = new JPanel();
+        titleAndRatingPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0; // Expand horizontally
+        gbc.weighty = 1.0; // Expand vertically
+        gbc.anchor = GridBagConstraints.CENTER; // Center the label
+        titleAndRatingPanel.add(titleAndRating, gbc);
+
         returnButton = new JButton(ShowAllReviewsViewModel.RETURN_BUTTON_LABEL);
-        returnButton.setPreferredSize(new Dimension(80, 40));
+        returnButton.setPreferredSize(new Dimension(130, 40));
+        returnButton.setBackground(lightYellow);
         JPanel button = new JPanel();
-        button.add(returnButton);
+        button.add(returnButton, BorderLayout.EAST);
+        button.setBackground(lightBlue);
+        button.setPreferredSize(new Dimension(1000, 70));
 
         JPanel allReviewsPanel = new JPanel();
         allReviewsPanel.setLayout(new BoxLayout(allReviewsPanel, BoxLayout.Y_AXIS));
         JScrollPane reviewsScrollPane = new JScrollPane(allReviewsPanel);
-        add(reviewsScrollPane, BorderLayout.CENTER);
+        reviewsScrollPane.setPreferredSize(new Dimension(1000, 450));
         allReviewsPanel.setBackground(lightBlue);
 
+        if (state.getNoReviewMessage() != null){
+            JLabel nonReviewMessage = new JLabel(state.getNoReviewMessage());
+            allReviewsPanel.add(nonReviewMessage);
+        } else {
+            for (String reviews : state.getReviewList()) {
+                JPanel reviewPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                reviewPanel.setBackground(lightBlue);
+                reviewPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
 
-        for (String reviews: state.getReviewList()){
-            JPanel reviewPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            reviewPanel.setBackground(lightBlue);
-            reviewPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
-
-            reviewPanel.add(new JLabel(reviews));
-            allReviewsPanel.add(reviewPanel);
+                reviewPanel.add(new JLabel(reviews));
+                allReviewsPanel.add(reviewPanel);
+            }
         }
 
-        add(titleAndRating, BorderLayout.NORTH);
-        add(reviewsScrollPane, BorderLayout.CENTER);
-        add(button, BorderLayout.SOUTH);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBackground(lightBlue);
+        this.add(titleAndRatingPanel);
+        this.add(reviewsScrollPane);
+        this.add(button);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
