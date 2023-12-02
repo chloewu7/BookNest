@@ -36,6 +36,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private SearchInteractor searchInteractor;
     private SearchViewModel searchViewModel;
 
+    public final String viewName = "Search";
+
 
 
     public SearchView(SearchInteractor searchInteractor,
@@ -49,6 +51,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         this.setLayout(new BorderLayout());
         this.setSize(1000, 600);
+        searchViewModel.addPropertyChangeListener(this);
 
         searchTypeComboBox = new JComboBox<>(new String[]{"Title", "Author", "Category", "ISBN"});
         searchTextField = new JTextField(20);
