@@ -9,7 +9,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListener {
+public class
+WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "write review";
     private final WriteReviewsController writeReviewsController;
     private final WriteReviewsViewModel writeReviewsViewModel;

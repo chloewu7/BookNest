@@ -30,8 +30,9 @@ public class ShowMyReviewsView extends JFrame implements ActionListener, Propert
         Color lightYellow = new Color(255, 255, 224);
 
         JLabel myReviewTitle = new JLabel(ShowMyReviewsViewModel.TITLE_LABEL);
+        myReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
         JPanel title = new JPanel();
-        title.add(myReviewTitle);
+        title.add(myReviewTitle, BorderLayout.EAST);
         title.setPreferredSize(new Dimension(1000, 40));
         title.setBackground(lightYellow);
         myReviewTitle.setForeground(Color.black);

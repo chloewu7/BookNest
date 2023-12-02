@@ -7,6 +7,7 @@ import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
+import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 import view.SearchView;
@@ -25,6 +26,7 @@ public class Main {
         // The main application window.
         JFrame application = new JFrame("Library Software");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setSize(1000, 600);
 
         //TODO: Layout might need to be changed in the future. line27-35 are tentative.
         CardLayout cardLayout = new CardLayout();
@@ -54,6 +56,11 @@ public class Main {
         SearchView searchView = new SearchView(searchInteractor, searchViewModel);
 
         // create Signup View
+        SignupViewModel signupViewModel = new SignupViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
+        views.add(signupView, signupView.viewName);
 
         // create Login View
 
@@ -64,6 +71,9 @@ public class Main {
 
         WriteReviewsView writeReviewsView = WriteReviewsUseCaseFactory.create(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
         views.add(writeReviewsView, writeReviewsView.viewName);
+
+        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
