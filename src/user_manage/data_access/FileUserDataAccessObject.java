@@ -2,6 +2,7 @@ package user_manage.data_access;
 
 import user_manage.entity.User;
 import user_manage.entity.UserFactory;
+import user_manage.service.login.LoginDataAccessInterface;
 import user_manage.service.signup.SignupDataAccessInterface;
 import java.io.*;
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupDataAccessInterface {
+public class FileUserDataAccessObject implements SignupDataAccessInterface, LoginDataAccessInterface {
 
     private final File csvFile;
     private final Map<String, Integer> header = new LinkedHashMap<>();
@@ -46,6 +47,18 @@ public class FileUserDataAccessObject implements SignupDataAccessInterface {
             }
         }
     }
+
+    @Override
+    public void save(User user) { userAccounts.put(user.getName(), user);
+        this.save();
+
+    }
+
+    @Override
+    public User get(String name) {
+        return userAccounts.get(name);;
+    }
+
     /**
      * Return whether a user exists with username identifier.
      * @param username the username to check.
