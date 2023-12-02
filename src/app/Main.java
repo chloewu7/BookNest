@@ -101,6 +101,9 @@ public class Main {
         //uncomment to see showMyReviewsView
         //viewManagerModel.setActiveView(showMyReviewsView.viewName);
 
+        //uncomment to see writeReviewsView
+        //viewManagerModel.setActiveView(writeReviewsView.viewName);
+
 
         viewManagerModel.firePropertyChanged();
 

@@ -56,7 +56,7 @@ public class FileUserDataAccessObject implements SignupDataAccessInterface, Logi
 
     @Override
     public User get(String name) {
-        return userAccounts.get(name);;
+        return userAccounts.get(name);
     }
 
     /**
