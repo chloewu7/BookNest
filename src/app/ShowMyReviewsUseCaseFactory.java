@@ -20,7 +20,7 @@ public class ShowMyReviewsUseCaseFactory {
     public static ShowMyReviewsView create(ViewManagerModel viewManagerModel, ShowMyReviewsViewModel showMyReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject) {
         try {
             ShowMyReviewsController showMyReviewsController = createShowReviewUseCase(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
-            return new ShowMyReviewsView(showMyReviewsController, showMyReviewsViewModel);
+            return new ShowMyReviewsView(viewManagerModel, showMyReviewsController, showMyReviewsViewModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
         }

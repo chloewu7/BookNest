@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsController;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
@@ -17,8 +18,12 @@ public class ShowMyReviewsView extends JPanel implements ActionListener, Propert
     private final ShowMyReviewsViewModel showMyReviewsViewModel;
     private final JTextField reviewContentInputField = new JTextField(30);
     private final JButton returnButton;
-    public ShowMyReviewsView(ShowMyReviewsController showMyReviewsController,
+    private final ViewManagerModel viewManagerModel;
+
+    public ShowMyReviewsView(ViewManagerModel viewManagerModel,
+                             ShowMyReviewsController showMyReviewsController,
                              ShowMyReviewsViewModel showMyReviewsViewModel){
+        this.viewManagerModel = viewManagerModel;
         this.showMyReviewsController = showMyReviewsController;
         this.showMyReviewsViewModel = showMyReviewsViewModel;
         this.setSize(1000, 600);
@@ -45,7 +50,8 @@ public class ShowMyReviewsView extends JPanel implements ActionListener, Propert
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(returnButton)) {
-                            //TODO: 跳转User Center
+                            viewManagerModel.setActiveView("User Center");
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }

@@ -13,7 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ShowAllReviewsView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "my reviews";
+    public final String viewName = "all reviews";
     private String bookTitle = "";
     private float rating;
     private final ShowAllReviewsController showAllReviewsController;

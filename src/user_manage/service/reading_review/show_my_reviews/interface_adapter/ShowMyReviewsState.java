@@ -8,6 +8,8 @@ public class ShowMyReviewsState {
 
     private String noReviewMessage = null;
 
+    private String username = "";
+
     public ShowMyReviewsState() {
     }
 
@@ -25,5 +27,13 @@ public class ShowMyReviewsState {
 
     public String getNoReviewMessage() {
         return noReviewMessage;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
