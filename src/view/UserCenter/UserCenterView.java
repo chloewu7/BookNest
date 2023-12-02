@@ -1,8 +1,10 @@
-package view;
+package view.UserCenter;
 
 import app.ShowMyReviewsUseCaseFactory;
 import interface_adapter.ViewManagerModel;
 import search.service.interface_adapter.SearchViewModel;
+import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsController;
+import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
 
 import javax.swing.*;
@@ -19,35 +21,53 @@ public class UserCenterView extends JPanel {
     private JButton historyButton;
     private JButton reviewButton;
     private JButton searchButton;
-
     private ViewManagerModel viewManagerModel;
+    private UserCenterViewModel userCenterViewModel;
+    private ShowMyReviewsViewModel showMyReviewsViewModel;
+
+    private ShowMyReviewsController showMyReviewsController;
 
 
-    public UserCenterView(ViewManagerModel viewManagerModel){
+    public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel, ShowMyReviewsController showMyReviewsController, ShowMyReviewsViewModel showMyReviewsViewModel){
         this.viewManagerModel = viewManagerModel;
+        this.userCenterViewModel = userCenterViewModel;
+        this.showMyReviewsController = showMyReviewsController;
+        this.showMyReviewsViewModel = showMyReviewsViewModel;
         createUI();
     }
 
     private void createUI(){
         this.setSize(1000, 600);
-        this.setLayout(new GridLayout(4, 1, 10, 10));
+        this.setLayout(new GridLayout(5, 1, 10, 10));
 
         Color lightYellow = new Color(255, 255, 224);
         Color lightBlue = new Color(173, 216, 230);
 
-        collectionButton = new JButton("Collection");
+        UserCenterState state = userCenterViewModel.getState();
+
+        String myUsername = "";
+        myUsername = state.getUsername();
+
+        JLabel username = new JLabel("User Center for " + myUsername);
+        username.setFont(new Font("Lucida Grande", 0, 20));
+        JPanel title = new JPanel();
+        title.setBackground(lightYellow);
+        title.setPreferredSize(new Dimension(1000, 100));
+        title.add(username);
+
+        collectionButton = new JButton("My Collection");
         collectionButton.setBackground(lightBlue);
         collectionButton.setOpaque(true);
         collectionButton.setBorderPainted(false);
         collectionButton.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-        historyButton = new JButton("History");
+        historyButton = new JButton("My Reading History");
         historyButton.setBackground(lightYellow);
         historyButton.setOpaque(true);
         historyButton.setBorderPainted(false);
         historyButton.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-        reviewButton = new JButton("Review");
+        reviewButton = new JButton("My Review");
         reviewButton.setBackground(lightBlue);
         reviewButton.setOpaque(true);
         reviewButton.setBorderPainted(false);
@@ -58,6 +78,8 @@ public class UserCenterView extends JPanel {
         searchButton.setOpaque(true);
         searchButton.setBorderPainted(false);
         searchButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+
+
 
         //collectionButton.addActionListener to be completed
 
@@ -73,8 +95,20 @@ public class UserCenterView extends JPanel {
             }
         });
 
+        reviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = state.getUsername();
+                ShowMyReviewsState showMyReviewsState = showMyReviewsViewModel.getState();
+                showMyReviewsState.setUsername(username);
+                showMyReviewsController.execute(username);
+                viewManagerModel.setActiveView("my reviews");
+                viewManagerModel.firePropertyChanged();
+            }
+        });
 
 
+        add(title);
         add(collectionButton);
         add(historyButton);
         add(reviewButton);
