@@ -3,28 +3,20 @@ package view;
 
 import interface_adapter.ViewManagerModel;
 import search.entity.Book;
-import search.entity.NewResponseFactory;
-import search.entity.ResponseFactory;
 import search.service.SearchInteractor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import search.service.SearchInputData;
-import search.service.SearchDataAccessInterface;
-import search.data_access.SearchDataAccessObject;
-import search.service.SearchOutputBoundary;
 import search.service.interface_adapter.SearchController;
-import search.service.interface_adapter.SearchPresenter;
 import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
-import view.UserCenterView;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     JComboBox<String> searchTypeComboBox;
@@ -33,18 +25,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private JPanel resultsPanel;
 
     private JLabel searchInstructionLabel;
-    private SearchInteractor searchInteractor;
+    private SearchController searchController;
     private SearchViewModel searchViewModel;
     private ViewManagerModel viewManagerModel;
+
+    public final ArrayList<Book> collectedBooks = new ArrayList<Book>();
 
     public final String viewName = "Search";
 
 
-
-    public SearchView(SearchInteractor searchInteractor,
+    public SearchView(SearchController searchController,
                       SearchViewModel searchViewModel,
                       ViewManagerModel viewManagerModel){
-        this.searchInteractor = searchInteractor;
+        this.searchController = searchController;
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
         createUI();
@@ -127,8 +120,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         String searchType = (String) searchTypeComboBox.getSelectedItem();
         String keyword = searchTextField.getText();
 
-        SearchInputData inputData = new SearchInputData(searchType, keyword);
-        searchInteractor.execute(inputData);
+        searchController.execute(searchType, keyword);
         SearchState searchState = searchViewModel.getState();
 
         System.out.println("Performing search for type: " + searchType + " with keyword: " + keyword);
@@ -152,11 +144,25 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
             resultsPanel.add(bookLinePanel);
 
+            collectButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addBookToList(book);
+                }
+            });
+
+
         }
         resultsPanel.revalidate();
         resultsPanel.repaint();
         searchTextField.setText("");
     }
+
+    // Method to add books to collectedBooks
+    public void addBookToList(Book book){
+        collectedBooks.add(book);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
