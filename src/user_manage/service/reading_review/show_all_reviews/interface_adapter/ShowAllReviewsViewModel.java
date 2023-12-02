@@ -6,6 +6,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ShowAllReviewsViewModel extends ViewModel{
+    public static final String TITLE_LABEL = "Reviews";
+    public static final String RETURN_BUTTON_LABEL = "return";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private ShowAllReviewsState state = new ShowAllReviewsState();
 
