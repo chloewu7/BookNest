@@ -2,6 +2,8 @@ package view.UserCenter;
 
 import app.ShowMyReviewsUseCaseFactory;
 import interface_adapter.ViewManagerModel;
+import search.service.interface_adapter.SearchController;
+import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsController;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
@@ -27,12 +29,19 @@ public class UserCenterView extends JPanel {
 
     private ShowMyReviewsController showMyReviewsController;
 
+    private SearchController searchController;
+    private SearchViewModel searchViewModel;
 
-    public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel, ShowMyReviewsController showMyReviewsController, ShowMyReviewsViewModel showMyReviewsViewModel){
+
+    public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
+                          ShowMyReviewsController showMyReviewsController, ShowMyReviewsViewModel showMyReviewsViewModel,
+                          SearchController searchController, SearchViewModel searchViewModel){
         this.viewManagerModel = viewManagerModel;
         this.userCenterViewModel = userCenterViewModel;
         this.showMyReviewsController = showMyReviewsController;
         this.showMyReviewsViewModel = showMyReviewsViewModel;
+        this.searchController = searchController;
+        this.searchViewModel = searchViewModel;
         createUI();
     }
 
@@ -90,6 +99,9 @@ public class UserCenterView extends JPanel {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String userName = state.getUsername();
+                SearchState searchState = searchViewModel.getState();
+                searchState.setUserName(userName);
                 viewManagerModel.setActiveView("Search");
                 viewManagerModel.firePropertyChanged();
             }
