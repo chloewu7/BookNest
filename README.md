@@ -1,26 +1,24 @@
-# Week 3 Project - Library Management System
+# Library Management System
 
 ## Problem Domain
-Our project centers around the development of a library management system, offering comprehensive solutions for library administrators and patrons alike. This domain encompasses various aspects of library operations, including:
+Our project is focused on the development of a sophisticated personal library management system, aimed at providing comprehensive solutions for both library administrators and patrons. This system is designed to streamline various library operations, enhance the efficiency of administrative tasks, and improve the overall user experience for book management. By incorporating advanced features and user-friendly interfaces, the system addresses the diverse needs of modern personal libraries. It facilitates easier access to resources and better inventory management. This project represents a significant step towards modernizing library management and making the wealth of knowledge more accessible and manageable. This domain encompasses various aspects of library operations, including:
 
-## High-Level Description
-Our team is dedicated to creating a user-friendly library management application that simplifies key aspects of library operations and enhances the overall library experience. This application will offer the following core functionalities:
+## Search Function:
+- The Search Function, an integral component of the system, is designed to offer users the flexibility to perform searches using various criteria. This includes the ability to search by title, author, category, and ISBN, with each criterion accepting corresponding keywords. The function is powered by the OpenLibrary API, ensuring a comprehensive and reliable search experience. By leveraging this API, the Search Function taps into a vast repository of book-related information, allowing users to efficiently and accurately find specific books or explore titles within a certain category. This feature is particularly useful for those seeking to locate books in a large database, as it simplifies the process and enhances the overall user experience.
+- After utilizing the search function, users are presented with a seamless integration of various features, enhancing their interaction with the library system. Upon finding their desired books, users have the option to add these books to their personal collections, an action that personalizes their library experience. Additionally, they can actively engage with the community by commenting on the books, offering insights or opinions. This feature not only allows for personal expression but also enables users to review comments and ratings from other members, providing a broader perspective on each book. Furthermore, users have the ability to mark books as 'read', which serves as a record of their reading journey. This functionality not only helps in tracking reading progress but also aids in the curation of future reading lists based on past preferences. By linking the search function with these additional features, the system ensures a cohesive and interconnected user experience, where each function complements and enhances the others. This integration is key to creating a comprehensive and user-friendly library management system.
+- Additional Information about OpenLibrary API: For more detailed information about the OpenLibrary API, which is the backbone of the Search Function's capabilities, users are encouraged to visit the official website at https://openlibrary.org/developers/api. This resource provides comprehensive documentation, guidelines, and additional insights into how the API functions. It is an invaluable tool for understanding the range of features and possibilities offered by the OpenLibrary API, enabling users to fully leverage its capabilities in their search experiences.
 
-- **Catalog Management:** A robust system for librarians to add, update, and organize library materials, making it easier for patrons to find what they need.
+## User Management: 
+This contains several key features, including Collection Management, Comment and Review, and History Management, all aimed at enhancing the library experience for users.
+- Collection Management: This feature allows users to curate their collections by creating new collections and adding books to them. It offers a customized approach to organizing and accessing literature, catering to the unique preferences of each user.
+- Comment and Review: In this section, users have the opportunity to engage with the community by commenting on books and providing ratings. This interactive platform not only allows users to express their opinions but also enables them to view and consider the comments and ratings left by others, fostering a shared reading experience.
+- History Management: This functionality keeps track of the user's reading history, providing a convenient reference to past readings. It serves as a personal reading journey, allowing users to revisit their reading habits and preferences.
+- Complementing these features is our robust login system, designed to ensure the security of every user's account. This aspect of the system is critical in aligning with our goal to create a personalized and secure library experience for each user. By prioritizing account safety, we provide our users with peace of mind, knowing that their personal collections and reading histories are well-protected.
 
-- **User Management:** An intuitive interface for managing library member accounts, including registration, access control, and communication.
+The library management system we have developed stands out as a comprehensive tool that significantly enhances the library experience for users. Its key features - Collection Management, Comment and Review, and History Management - are meticulously designed to cater to the diverse needs of our users. These features collectively create a user-centric library management system that is not only efficient and secure but also adaptable to the individual preferences and needs of each user. This system is a significant stride towards revolutionizing the way users interact with libraries, making it a valuable asset in the realm of library management.
 
-Our library management system aims to provide library staff with the tools they need to manage their collections efficiently while ensuring library users have a seamless experience accessing and browsing materials.
+## Maintenance:
+- It is important to note that our program is still undergoing continuous development and refinement. Our primary focus is on enhancing the flexibility of the system and ensuring an improved user experience. We are dedicated to implementing updates and improvements that will address current limitations and introduce new features to meet the evolving needs of our users. This ongoing maintenance is a testament to our commitment to providing a high-quality, adaptable, and user-centric library management system.
 
-## External Library APIs
-To enrich our library management system, we plan to integrate external library APIs for accessing book data, including information about authors, titles, and publication dates. We will utilize the "LibraryData API" to achieve this goal. You can find detailed API documentation: https://openlibrary.org/developers/api
-
-## API Testing
-Below is a screenshot illustrating the use of Hoppscotch to test the LibraryData API for retrieving book information by using the key words "Vincent van Gogh":
-
-![Hoppscotch Screenshot](screenshot.png)
-
-## Example Output
-Here is a minimal Java code example demonstrating how our application will interact with the LibraryData API to fetch book details:
-
-![Output Screenshot](output.png)
+## Reference
+- For more information about the OpenLibrary API, please refer to the official documentation available at: "OpenLibrary API," OpenLibrary, https://openlibrary.org/developers/api.

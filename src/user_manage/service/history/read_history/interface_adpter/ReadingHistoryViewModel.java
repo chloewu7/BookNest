@@ -5,6 +5,7 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class ReadingHistoryViewModel extends ViewModel {
@@ -26,7 +27,7 @@ public class ReadingHistoryViewModel extends ViewModel {
         notifyUpdate();
     }
 
-    public void setHistory(LinkedHashMap<LocalDateTime, String> history) {
+    public void setHistory(ArrayList<String> history) {
         state.setHistory(history);
         notifyUpdate();
     }

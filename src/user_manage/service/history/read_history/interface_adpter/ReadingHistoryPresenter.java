@@ -7,6 +7,7 @@ import view.ViewManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,18 +25,10 @@ public class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
 
     @Override
     public void presentHistory(ReadingHistoryOutputData outputData) {
-        Map<LocalDateTime, String> history = outputData.getHistory();
+        ArrayList<String> history = outputData.getHistory();
 
-        // Sort the history by timestamp and format it for display
-        LinkedHashMap<LocalDateTime, String> sortedHistory = history.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-
-        // Update the ViewModel with the formatted history
-        viewModel.setHistory(sortedHistory);
+        // Update the ViewModel with the history
+        viewModel.setHistory(history);
         viewModel.notifyUpdate();
 
         // Optionally, update the view using the view manager

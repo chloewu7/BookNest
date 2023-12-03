@@ -20,6 +20,8 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     private final ReadingHistoryController readingHistoryController;
 
     private final JButton historyButton = new JButton("History");
+
+    public final String viewName = "History";
     private JTextArea historyTextArea;
 
     public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller) {
