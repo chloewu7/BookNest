@@ -12,9 +12,9 @@ public class AddingHistoryController {
         this.addingHistoryUseCaseInteractor = addingHistoryUseCaseInteractor;
     }
 
-    public void execute(String userId, String bookId, String actionType, LocalDateTime timeStamp) {
+    public void execute(String userId, String bookname) {
         AddingHistoryInputData addingHistoryInputData = new AddingHistoryInputData(
-                userId, bookId, actionType,timeStamp);
+                userId, bookname);
 
         addingHistoryUseCaseInteractor.execute(addingHistoryInputData);
     }
