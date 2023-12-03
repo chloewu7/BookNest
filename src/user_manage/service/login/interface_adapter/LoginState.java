@@ -6,11 +6,14 @@ public class LoginState {
     private String password = "";
     private String passwordError = null;
 
+    private String readBookType = "";
+
     public LoginState(LoginState copy) {
         username = copy.username;
         usernameError = copy.usernameError;
         password = copy.password;
         passwordError = copy.passwordError;
+        readBookType = copy.readBookType;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -32,9 +35,13 @@ public class LoginState {
         return passwordError;
     }
 
+
+
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public void setReadBookType(String bookType){this.readBookType = bookType;}
 
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;
