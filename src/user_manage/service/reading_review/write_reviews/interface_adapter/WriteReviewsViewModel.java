@@ -12,7 +12,7 @@ public class WriteReviewsViewModel extends ViewModel{
     public static final String WRITEREVIEW_BUTTON_LABEL = "Submit";
     public static final String RATING_LABEL = "Rate this book";
     public static final String REVIEW_LABEL = "Share your insights and opinions...";
-    public static final String RETURN_BUTTON_LABEL = "Return to Search";
+    public static final String RETURN_BUTTON_LABEL = "Return to All Reviews";
 
     public WriteReviewsViewModel(){
         super("write reviews");

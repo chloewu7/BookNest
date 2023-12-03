@@ -23,7 +23,7 @@ WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListene
     private final WriteReviewsViewModel writeReviewsViewModel;
     private final JTextField reviewContentInputField = new JTextField(30);
     private final JButton writeReview;
-    private final JButton returnToSearch;
+    private final JButton returnAllReviews;
     private final JSlider ratingSlider;
     private final ViewManagerModel viewManagerModel;
 
@@ -111,8 +111,14 @@ WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListene
         buttons.setBackground(lightBlue);
         writeReview = new JButton(WriteReviewsViewModel.WRITEREVIEW_BUTTON_LABEL);
         writeReview.setPreferredSize(new Dimension(200, 50));
-        returnToSearch = new JButton(WriteReviewsViewModel.RETURN_BUTTON_LABEL);
+        returnAllReviews = new JButton(WriteReviewsViewModel.RETURN_BUTTON_LABEL);
+        returnAllReviews.setPreferredSize(new Dimension(200, 50));
+        JPanel middle = new JPanel();
+        middle.setPreferredSize(new Dimension(200, 50));
+        middle.setBackground(lightBlue);
         buttons.add(writeReview);
+        buttons.add(middle);
+        buttons.add(returnAllReviews);
         writeReview.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -128,6 +134,17 @@ WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListene
                     }
                 }
         );
+
+        returnAllReviews.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(returnAllReviews)) {
+                    viewManagerModel.setActiveView("all reviews");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
+
 
         // Add all Component into the Panel
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -147,6 +164,8 @@ WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListene
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        WriteReviewsState state = (WriteReviewsState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, "Thank you for submitting your review for " + state.getBookTitle() + "!");
     }
+
 }
