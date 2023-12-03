@@ -1,6 +1,7 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import search.data_access.SearchDataAccessObject;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchViewModel;
 import user_manage.data_access.FileReviewDataAccessObject;
@@ -43,6 +44,8 @@ public class Main {
         new ViewManager(views, cardLayout, viewManagerModel);
 
         // create data access object
+        SearchDataAccessObject searchDataAccessObject = new SearchDataAccessObject();
+
         FileUserDataAccessObject userDataAccessObject;
         FileReviewDataAccessObject reviewDataAccessObject;
         try {
@@ -59,8 +62,8 @@ public class Main {
         WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
 
         java.util.List<JPanel> searchViewList = new ArrayList<>();
-        searchViewList = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, showAllReviewsViewModel,
-                writeReviewsViewModel, reviewDataAccessObject);
+        searchViewList = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, searchDataAccessObject,
+                showAllReviewsViewModel, writeReviewsViewModel, reviewDataAccessObject);
 
         SearchView searchView = (SearchView) searchViewList.get(0);
         views.add(searchView, searchView.viewName);
@@ -117,7 +120,8 @@ public class Main {
         // create UserCenter View
         UserCenterViewModel userCenterViewModel = new UserCenterViewModel();
         java.util.List<JPanel> userManageViewList = new ArrayList<>();
-        userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel, reviewDataAccessObject);
+        userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel,
+                reviewDataAccessObject, searchViewModel, searchDataAccessObject);
 
         UserCenterView userCenterView = (UserCenterView) userManageViewList.get(0);
         views.add(userCenterView, userCenterView.viewName);
