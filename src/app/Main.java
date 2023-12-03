@@ -84,7 +84,7 @@ public class Main {
         // create Login View
         LoginViewModel loginViewModel1 = new LoginViewModel();
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,signupViewModel,userDataAccessObject, userDataAccessObject);
         views.add(loginView,loginView.viewName);
 
         // create Logout View

@@ -15,6 +15,13 @@ import user_manage.service.login.LoginOutputBoundary;
 import user_manage.service.login.interface_adapter.LoginController;
 import user_manage.service.login.interface_adapter.LoginPresenter;
 import user_manage.service.login.interface_adapter.LoginViewModel;
+import user_manage.service.signup.SignupDataAccessInterface;
+import user_manage.service.signup.SignupInputBoundary;
+import user_manage.service.signup.SignupInteractor;
+import user_manage.service.signup.SignupOutputBoundary;
+import user_manage.service.signup.interface_adapter.SignupController;
+import user_manage.service.signup.interface_adapter.SignupPresenter;
+import user_manage.service.signup.interface_adapter.SignupViewModel;
 import view.LoginView;
 
 import javax.swing.*;
@@ -29,11 +36,14 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             SearchViewModel searchViewModel,
-            FileUserDataAccessObject loginDataAccessObject) {
+            SignupViewModel signupViewModel,
+            LoginDataAccessInterface loginDataAccessObject,
+            SignupDataAccessInterface signupDataAccessObject) {
 
         try {
             LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, searchViewModel, loginDataAccessObject);
-            return new LoginView(loginViewModel, loginController);
+            SignupController signupController =createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, signupDataAccessObject);
+            return new LoginView(loginViewModel, loginController,signupViewModel,signupController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -56,5 +66,20 @@ public class LoginUseCaseFactory {
                 userDataAccessObject, loginOutputBoundary);
 
         return new LoginController(loginInteractor);
+    }
+
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel,
+                                                            SignupViewModel signupViewModel, LoginViewModel loginViewModel,
+                                                            SignupDataAccessInterface userDataAccessObject) throws IOException {
+
+        // Notice how we pass this method's parameters to the Presenter.
+        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+
+        UserFactory userFactory = new CommonUserFactory();
+
+        SignupInputBoundary userSignupInteractor = new SignupInteractor(
+                userDataAccessObject, signupOutputBoundary, userFactory);
+
+        return new SignupController(userSignupInteractor);
     }
 }
