@@ -25,6 +25,8 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
         return userDataAccessObject.getUserByName(username);
     }
 
+
+
     @Override
     public void addHistoryToUser(User user, History history) {
         try (FileWriter fw = new FileWriter(filePath, true);
