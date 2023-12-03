@@ -40,21 +40,22 @@ public class SearchUseCaseFactory {
     private SearchUseCaseFactory(){}
 
 
-    public static SearchController createSearchController(SearchViewModel searchViewModel) {
-        SearchDataAccessInterface searchDAO = new SearchDataAccessObject();
+    public static SearchController createSearchController(SearchViewModel searchViewModel, SearchDataAccessObject
+                                                          searchDataAccessObject) {
         SearchOutputBoundary searchPresenter = new SearchPresenter(searchViewModel);
         ResponseFactory responseFactory = new NewResponseFactory();
-        SearchInteractor searchInteractor = new SearchInteractor(searchDAO, searchPresenter, responseFactory);
+        SearchInteractor searchInteractor = new SearchInteractor(searchDataAccessObject, searchPresenter, responseFactory);
         SearchController searchController = new SearchController(searchInteractor);
 
         return searchController;
     }
 
     public static List<JPanel> create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,
+                                      SearchDataAccessObject  searchDataAccessObject,
                                       ShowAllReviewsViewModel showAllReviewsViewModel,
                                       WriteReviewsViewModel writeReviewsViewModel,
                                       FileReviewDataAccessObject reviewDataAccessObject){
-        SearchController searchController = createSearchController(searchViewModel);
+        SearchController searchController = createSearchController(searchViewModel, searchDataAccessObject);
         try {
             List<JPanel> searchViewList = new ArrayList<>();
             WriteReviewsController writeReviewsController = createWriteReviewUseCase(viewManagerModel,
