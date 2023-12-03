@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsController;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsState;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
@@ -24,11 +25,14 @@ WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListene
     private final JButton writeReview;
     private final JButton returnToSearch;
     private final JSlider ratingSlider;
+    private final ViewManagerModel viewManagerModel;
 
-    public WriteReviewsView(WriteReviewsController writeReviewsController,
+    public WriteReviewsView(ViewManagerModel viewManagerModel,
+                            WriteReviewsController writeReviewsController,
                             WriteReviewsViewModel writeReviewsViewModel){
         this.writeReviewsController = writeReviewsController;
         this.writeReviewsViewModel = writeReviewsViewModel;
+        this.viewManagerModel = viewManagerModel;
         writeReviewsViewModel.addPropertyChangeListener(this);
         Color lightBlue = new Color(173, 216, 230);
         Color darkBlue = new Color(80, 100, 230);

@@ -22,7 +22,7 @@ public class WriteReviewsUseCaseFactory {
     public static WriteReviewsView create(ViewManagerModel viewManagerModel, WriteReviewsViewModel writeReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject) {
         try {
             WriteReviewsController writeReviewsController = createWriteReviewUseCase(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
-            return new WriteReviewsView(writeReviewsController, writeReviewsViewModel);
+            return new WriteReviewsView(viewManagerModel, writeReviewsController, writeReviewsViewModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
         }
