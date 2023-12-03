@@ -1,6 +1,7 @@
 package view;
 
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
@@ -18,12 +19,15 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
     private float rating;
     private final ShowAllReviewsController showAllReviewsController;
     private final ShowAllReviewsViewModel showAllReviewsViewModel;
+    private final ViewManagerModel viewManagerModel;
     private final JTextField reviewContentInputField = new JTextField(30);
     private final JButton returnButton;
-    public ShowAllReviewsView(ShowAllReviewsController showAllReviewsController,
-                             ShowAllReviewsViewModel showAllReviewsViewModel){
+    public ShowAllReviewsView(ViewManagerModel viewManagerModel,
+                              ShowAllReviewsController showAllReviewsController,
+                              ShowAllReviewsViewModel showAllReviewsViewModel){
         this.showAllReviewsController = showAllReviewsController;
         this.showAllReviewsViewModel = showAllReviewsViewModel;
+        this.viewManagerModel = viewManagerModel;
         this.setSize(1000, 600);
         Color lightBlue = new Color(173, 216, 230);
         Color lightYellow = new Color(255, 255, 224);
