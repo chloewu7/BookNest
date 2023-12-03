@@ -18,6 +18,7 @@ import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
+import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -156,20 +157,28 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             collectButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    addBookToList(book);
+                    //Todo
                 }
             });
+
+            commentButton.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt.getSource().equals(commentButton)) {
+                                searchState.setCommentBookTitle(book.getTitle());
+                                ShowAllReviewsState showAllReviewsState = showAllReviewsViewModel.getState();
+                                showAllReviewsState.setBookTitle(searchState.getCommentBookTitle());
+                                viewManagerModel.setActiveView("all reviews");
+                                viewManagerModel.firePropertyChanged();
+                            }
+                        }
+                    });
 
 
         }
         resultsPanel.revalidate();
         resultsPanel.repaint();
         searchTextField.setText("");
-    }
-
-    // Method to add books to collectedBooks
-    public void addBookToList(Book book){
-        collectedBooks.add(book);
     }
 
 
