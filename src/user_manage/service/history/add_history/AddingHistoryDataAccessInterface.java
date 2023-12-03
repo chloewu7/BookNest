@@ -10,7 +10,6 @@ import java.util.Map;
 public interface AddingHistoryDataAccessInterface {
     User getUserByName(String userName);
 
-    void addHistoryToUser(User user, String historyRecord);
 
     void addHistoryToUser(User user, History history);
 
