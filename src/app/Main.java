@@ -4,10 +4,15 @@ import interface_adapter.ViewManagerModel;
 import search.data_access.SearchDataAccessObject;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchViewModel;
+import user_manage.data_access.FileCollectionDataAccessObject;
 import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
+import user_manage.entity.CommonCollectionListFactory;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListViewModel;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
 import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
@@ -19,13 +24,14 @@ import view.UserCenter.UserCenterViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // The main application window.
         JFrame application = new JFrame("Library Software");
@@ -45,13 +51,17 @@ public class Main {
 
         // create data access object
         SearchDataAccessObject searchDataAccessObject = new SearchDataAccessObject();
+        FileCollectionDataAccessObject collectionDataAccessObject;
 
         FileUserDataAccessObject userDataAccessObject;
         FileReviewDataAccessObject reviewDataAccessObject;
+
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
             reviewDataAccessObject = new FileReviewDataAccessObject("./reviews.csv",
                     new CommonReviewFactory());
+            collectionDataAccessObject = new FileCollectionDataAccessObject(new File("./collection.csv"),
+                    new CommonCollectionListFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -84,10 +94,10 @@ public class Main {
         // create Login View
         LoginViewModel loginViewModel1 = new LoginViewModel();
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,signupViewModel,userDataAccessObject, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,userDataAccessObject);
         views.add(loginView,loginView.viewName);
 
-        // create Logout View
+        // create ShowAllLists View
 
         // create WriteReview View
         //WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
@@ -119,15 +129,23 @@ public class Main {
 
         // create UserCenter View
         UserCenterViewModel userCenterViewModel = new UserCenterViewModel();
+        ShowAllListsViewModel showAllListsViewModel = new ShowAllListsViewModel();
+        CreateListViewModel createListViewModel = new CreateListViewModel();
+        ShowBooksInListViewModel showBooksInListViewModel = new ShowBooksInListViewModel();
+
         java.util.List<JPanel> userManageViewList = new ArrayList<>();
         userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel,
-                reviewDataAccessObject, searchViewModel, searchDataAccessObject);
+                reviewDataAccessObject, searchViewModel, searchDataAccessObject, showAllListsViewModel, collectionDataAccessObject,
+                createListViewModel, showBooksInListViewModel);
 
         UserCenterView userCenterView = (UserCenterView) userManageViewList.get(0);
         views.add(userCenterView, userCenterView.viewName);
 
         ShowMyReviewsView showMyReviewsView = (ShowMyReviewsView) userManageViewList.get(1);
         views.add(showMyReviewsView, showMyReviewsView.viewName);
+
+        ShowAllListsView showAllListsView = (ShowAllListsView) userManageViewList.get(2);
+        views.add(showAllListsView, showAllListsView.viewName);
 
         //ReadingHistoryView readingHistoryView = (ReadingHistoryView) userManageViewList.get(2);
         //views.add(readingHistoryView, readingHistoryView.viewName);

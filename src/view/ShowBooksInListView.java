@@ -15,6 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ShowBooksInListView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = "books in list";
     private JButton returnButton;
     private JPanel mainPane;
     private ShowBooksInListController showBooksInListController;
