@@ -8,6 +8,8 @@ import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsOutputB
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsPresenter;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
+import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsController;
+import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 import view.ShowAllReviewsView;
 
 import javax.swing.*;
@@ -16,10 +18,10 @@ import java.io.IOException;
 public class ShowAllReviewsUseCaseFactory {
     private ShowAllReviewsUseCaseFactory(){}
 
-    public static ShowAllReviewsView create(ViewManagerModel viewManagerModel, ShowAllReviewsViewModel showAllReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject) {
+    public static ShowAllReviewsView create(ViewManagerModel viewManagerModel, ShowAllReviewsViewModel showAllReviewsViewModel, WriteReviewsController writeReviewsController, WriteReviewsViewModel writeReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject) {
         try {
             ShowAllReviewsController showAllReviewsController = createShowAllReviewUseCase(viewManagerModel, showAllReviewsViewModel, reviewDataAccessObject);
-            return new ShowAllReviewsView(viewManagerModel, showAllReviewsController, showAllReviewsViewModel);
+            return new ShowAllReviewsView(viewManagerModel, showAllReviewsController, showAllReviewsViewModel, writeReviewsController, writeReviewsViewModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
         }

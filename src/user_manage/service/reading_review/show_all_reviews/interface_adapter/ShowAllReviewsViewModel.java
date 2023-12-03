@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class ShowAllReviewsViewModel extends ViewModel{
     public static final String TITLE_LABEL = "Reviews";
     public static final String RETURN_BUTTON_LABEL = "return to search";
+    public static final String WRITE_REVIEW_BUTTON_LABEL = "Write My Review";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private ShowAllReviewsState state = new ShowAllReviewsState();
 

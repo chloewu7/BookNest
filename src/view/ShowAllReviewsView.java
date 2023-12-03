@@ -5,6 +5,10 @@ import interface_adapter.ViewManagerModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
+import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
+import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsController;
+import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsState;
+import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,14 +23,21 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
     private float rating;
     private final ShowAllReviewsController showAllReviewsController;
     private final ShowAllReviewsViewModel showAllReviewsViewModel;
+    private final WriteReviewsController writeReviewsController;
+    private final WriteReviewsViewModel writeReviewsViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JTextField reviewContentInputField = new JTextField(30);
     private final JButton returnButton;
+    private final JButton writeReviewsButton;
     public ShowAllReviewsView(ViewManagerModel viewManagerModel,
                               ShowAllReviewsController showAllReviewsController,
-                              ShowAllReviewsViewModel showAllReviewsViewModel){
+                              ShowAllReviewsViewModel showAllReviewsViewModel,
+                              WriteReviewsController writeReviewsController,
+                              WriteReviewsViewModel writeReviewsViewModel){
         this.showAllReviewsController = showAllReviewsController;
         this.showAllReviewsViewModel = showAllReviewsViewModel;
+        this.writeReviewsController = writeReviewsController;
+        this.writeReviewsViewModel = writeReviewsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.setSize(1000, 600);
         Color lightBlue = new Color(173, 216, 230);
@@ -65,7 +76,7 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         returnButton.setPreferredSize(new Dimension(130, 60));
         returnButton.setBackground(lightYellow);
         JPanel button = new JPanel();
-        button.add(returnButton, BorderLayout.EAST);
+        button.add(returnButton);
         button.setBackground(lightBlue);
         button.setPreferredSize(new Dimension(1000, 90));
         returnButton.addActionListener(
@@ -73,11 +84,36 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(returnButton)) {
-                            //TODO：跳转Write My Review
+                            viewManagerModel.setActiveView("Search");
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
         );
+
+        writeReviewsButton = new JButton(ShowAllReviewsViewModel.WRITE_REVIEW_BUTTON_LABEL);
+        writeReviewsButton.setPreferredSize(new Dimension(130, 60));
+        JPanel middle = new JPanel();
+        middle.setPreferredSize(new Dimension(150, 60));
+        middle.setBackground(lightBlue);
+        button.add(middle);
+        button.add(writeReviewsButton);
+        writeReviewsButton.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(writeReviewsButton)) {
+                            String username = state.getUsername();
+                            WriteReviewsState writeReviewsState = writeReviewsViewModel.getState();
+                            writeReviewsState.setUsername(username);
+                            viewManagerModel.setActiveView("write review");
+                            viewManagerModel.firePropertyChanged();
+                        }
+                    }
+                }
+        );
+
+
 
         JPanel allReviewsPanel = new JPanel();
         allReviewsPanel.setLayout(new BoxLayout(allReviewsPanel, BoxLayout.Y_AXIS));
