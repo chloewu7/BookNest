@@ -55,9 +55,21 @@ public class Main {
 
         // create Search View
         SearchViewModel searchViewModel = new SearchViewModel();
-        SearchController searchController = SearchUseCaseFactory.createSearchController(searchViewModel);
-        SearchView searchView = new SearchView(searchController, searchViewModel, viewManagerModel);
+        ShowAllReviewsViewModel showAllReviewsViewModel = new ShowAllReviewsViewModel();
+        WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
+
+        java.util.List<JPanel> searchViewList = new ArrayList<>();
+        searchViewList = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, showAllReviewsViewModel,
+                writeReviewsViewModel, reviewDataAccessObject);
+
+        SearchView searchView = (SearchView) searchViewList.get(0);
         views.add(searchView, searchView.viewName);
+
+        ShowAllReviewsView showAllReviewsView = (ShowAllReviewsView) searchViewList.get(1);
+        views.add(showAllReviewsView, showAllReviewsView.viewName);
+
+        WriteReviewsView writeReviewsView = (WriteReviewsView) searchViewList.get(2);
+        views.add(writeReviewsView, writeReviewsView.viewName);
 
         // create Signup View
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -75,10 +87,10 @@ public class Main {
         // create Logout View
 
         // create WriteReview View
-        WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
+        //WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
 
-        WriteReviewsView writeReviewsView = WriteReviewsUseCaseFactory.create(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
-        views.add(writeReviewsView, writeReviewsView.viewName);
+        //WriteReviewsView writeReviewsView = WriteReviewsUseCaseFactory.create(viewManagerModel, writeReviewsViewModel, reviewDataAccessObject);
+        //views.add(writeReviewsView, writeReviewsView.viewName);
 
         // create ShowAllReview View
 

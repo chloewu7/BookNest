@@ -17,6 +17,8 @@ import search.service.SearchInputData;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
+import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
+import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     JComboBox<String> searchTypeComboBox;
@@ -29,6 +31,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private SearchViewModel searchViewModel;
     private ViewManagerModel viewManagerModel;
 
+    private ShowAllReviewsController showAllReviewsController;
+    private ShowAllReviewsViewModel showAllReviewsViewModel;
+
     public final ArrayList<Book> collectedBooks = new ArrayList<Book>();
 
     public final String viewName = "Search";
@@ -36,10 +41,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     public SearchView(SearchController searchController,
                       SearchViewModel searchViewModel,
-                      ViewManagerModel viewManagerModel){
+                      ViewManagerModel viewManagerModel,
+                      ShowAllReviewsController showAllReviewsController,
+                      ShowAllReviewsViewModel showAllReviewsViewModel){
         this.searchController = searchController;
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.showAllReviewsController = showAllReviewsController;
+        this.showAllReviewsViewModel = showAllReviewsViewModel;
         createUI();
     }
 
