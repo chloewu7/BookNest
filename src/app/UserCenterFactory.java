@@ -64,7 +64,7 @@ public class UserCenterFactory {
             SearchController searchController = createSearchUseCase(viewManagerModel,searchViewModel, searchDataAccessObject);
             ShowAllListsController showAllListsController = createShowAllListsUseCase(viewManagerModel, showAllListsViewModel, collectionDataAccessObject);
             CreateListController createListController = createCreateListUseCase(viewManagerModel,createListViewModel, collectionDataAccessObject);
-            ReadingHistoryController controller =crea
+            ReadingHistoryController readingHistoryController =createHistoryController(viewManagerModel, readingHistoryViewModel, readingHistoryDAO);
 
             //TODO：用刚才新建的的Controller和ViewModel创建一个新的userCenterView（加在参数里）
             List<JPanel> userManageViewList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class UserCenterFactory {
                     createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
             userManageViewList.add(showAllListsView);
 
-            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, controller);
+            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, readingHistoryController);
             userManageViewList.add(readingHistoryView);
             //TODO：新建showMyHistoryView和showMyCollectionView
             //TODO：把新建的View加到 userManageViewList
