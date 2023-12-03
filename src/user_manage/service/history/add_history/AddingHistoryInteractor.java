@@ -26,7 +26,7 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
             }
 
             // Add history record to the user
-            String historyRecord = "Action: " + addingHistoryInputData.getActionType() + ", Book ID: " + addingHistoryInputData.getBookId();
+            String historyRecord = ", Book Name: " + addingHistoryInputData.getBookName();
             userDataAccessObject.addHistoryToUser(user, historyRecord);
 
             // If successful, prepare the success view

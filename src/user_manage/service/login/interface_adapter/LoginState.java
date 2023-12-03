@@ -41,7 +41,7 @@ public class LoginState {
         this.username = username;
     }
 
-    public void setReadBookType(String bookType){this.readBookType = bookType;}
+    public void setReadBook(String book){this.readBookType = book;}
 
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;

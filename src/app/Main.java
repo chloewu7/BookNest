@@ -125,7 +125,10 @@ public class Main {
         ShowMyReviewsView showMyReviewsView = (ShowMyReviewsView) userManageViewList.get(1);
         views.add(showMyReviewsView, showMyReviewsView.viewName);
 
+        //ReadingHistoryView readingHistoryView = (ReadingHistoryView) userManageViewList.get(2);
+        //views.add(readingHistoryView, readingHistoryView.viewName);
         //TODO: 把个自的View从userManageViewList拿出来 添加到views里
+        viewManagerModel.setActiveView(loginView.viewName);
 
         viewManagerModel.firePropertyChanged();
 
