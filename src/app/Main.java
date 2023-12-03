@@ -170,7 +170,11 @@ public class Main {
         ReadingHistoryView readingHistoryView = (ReadingHistoryView) userManageViewList.get(3);
         views.add(readingHistoryView, readingHistoryView.viewName);
         //TODO: 把个自的View从userManageViewList拿出来 添加到views里
-        viewManagerModel.setActiveView(loginView.viewName);
+
+
+        //viewManagerModel.setActiveView(loginView.viewName);
+
+        //viewManagerModel.setActiveView(showAllListsView.viewName);
 
         viewManagerModel.firePropertyChanged();
 

@@ -118,7 +118,7 @@ public class UserCenterView extends JPanel {
                 ShowAllListsState showAllListsState = showAllListsViewModel.getState();
                 showAllListsState.setUserName(userName);
                 showAllListsController.execute(userName);
-                viewManagerModel.setActiveView("show all collection lists");
+                viewManagerModel.setActiveView("all collection lists");
                 viewManagerModel.firePropertyChanged();
             }
         });
