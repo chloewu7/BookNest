@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowAllListsView extends JPanel implements ActionListener, PropertyChangeListener {
-
+    public final String viewName = "all collection lists";
     private JButton addButton;
     private JButton returnButton;
     private JPanel mainPane;
