@@ -12,9 +12,11 @@ import user_manage.entity.CommonCollectionListFactory;
 import user_manage.entity.CommonHisotryFactory;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookViewModel;
 import user_manage.service.collection_management.create_list.interface_adapter.CreateListViewModel;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
+import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
@@ -72,14 +74,30 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        // create Search View
+        // Create view model
+        UserCenterViewModel userCenterViewModel = new UserCenterViewModel();
+
+        ShowAllListsViewModel showAllListsViewModel = new ShowAllListsViewModel();
+        CreateListViewModel createListViewModel = new CreateListViewModel();
+        ShowBooksInListViewModel showBooksInListViewModel = new ShowBooksInListViewModel();
+        AddBookViewModel addBookViewModel = new AddBookViewModel();
+
+        ReadingHistoryViewModel readingHistoryViewModel = new ReadingHistoryViewModel();
+        AddingHistoryViewModel addingHistoryViewModel = new AddingHistoryViewModel();
+
         SearchViewModel searchViewModel = new SearchViewModel();
+
         ShowAllReviewsViewModel showAllReviewsViewModel = new ShowAllReviewsViewModel();
+        ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
         WriteReviewsViewModel writeReviewsViewModel = new WriteReviewsViewModel();
+
+
+        // create Search View
 
         java.util.List<JPanel> searchViewList = new ArrayList<>();
         searchViewList = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, searchDataAccessObject,
-                showAllReviewsViewModel, writeReviewsViewModel, reviewDataAccessObject);
+                showAllReviewsViewModel, writeReviewsViewModel, reviewDataAccessObject, addBookViewModel,
+                collectionDataAccessObject, showAllListsViewModel, userCenterViewModel, addingHistoryViewModel);
 
         SearchView searchView = (SearchView) searchViewList.get(0);
         views.add(searchView, searchView.viewName);
@@ -114,7 +132,7 @@ public class Main {
         // create ShowAllReview View
 
         // create ShowMyReview View
-        ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
+        //ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
         //ShowMyReviewsView showMyReviewsView = ShowMyReviewsUseCaseFactory.create(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
         //views.add(showMyReviewsView, showMyReviewsView.viewName);
 
@@ -134,11 +152,6 @@ public class Main {
         //viewManagerModel.setActiveView(loginView.viewName);
 
         // create UserCenter View
-        UserCenterViewModel userCenterViewModel = new UserCenterViewModel();
-        ShowAllListsViewModel showAllListsViewModel = new ShowAllListsViewModel();
-        CreateListViewModel createListViewModel = new CreateListViewModel();
-        ShowBooksInListViewModel showBooksInListViewModel = new ShowBooksInListViewModel();
-        ReadingHistoryViewModel readingHistoryViewModel = new ReadingHistoryViewModel();
 
         java.util.List<JPanel> userManageViewList = new ArrayList<>();
         userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel,
