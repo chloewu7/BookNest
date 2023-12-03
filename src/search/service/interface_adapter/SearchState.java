@@ -12,7 +12,7 @@ public class SearchState {
 
     public String userName = "";
 
-    public Book readBook;
+    public String readBookTitle;
 
     public SearchState(SearchState copy){
         books = copy.books;
@@ -26,7 +26,7 @@ public class SearchState {
     public String getCommentBookTitle(){return commentBookTitle;}
     public Book getCollectedBook(){return collectedBook;}
     public String getUserName(){return userName;}
-    public Book getReadBook(){return readBook;}
+    public String getReadBookTitle(){return readBookTitle;}
 
     public void setCommentBookTitle(String title){this.commentBookTitle = title;}
     public void setCollectedBook(Book collectedBook){this.collectedBook = collectedBook;}
@@ -34,7 +34,7 @@ public class SearchState {
     public void setNotFound(String notFound){this.notFound = notFound;}
     public void setKeywordError(String keywordError){this.keywordError = keywordError;}
     public void setUserName(String userName){this.userName = userName;}
-    public void setReadBook(Book readBook){this.readBook = readBook;}
+    public void setReadBookTitle(String readBookTitle){this.readBookTitle = readBookTitle;}
 
 
 }
