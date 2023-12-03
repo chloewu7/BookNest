@@ -23,6 +23,10 @@ import user_manage.service.collection_management.add_book.interface_adapter.AddB
 import user_manage.service.collection_management.add_book.interface_adapter.AddBookViewModel;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsState;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.history.add_history.Interface_adapter.AddingHistoryState;
+import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
@@ -48,6 +52,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private ShowAllListsViewModel showAllListsViewModel;
     private UserCenterViewModel userCenterViewModel;
 
+    private AddingHistoryViewModel addingHistoryViewModel;
+
     public final ArrayList<Book> collectedBooks = new ArrayList<Book>();
 
     public final String viewName = "Search";
@@ -61,7 +67,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                       AddBookController addBookController,
                       AddBookViewModel addBookViewModel,
                       ShowAllListsViewModel showAllListsViewModel,
-                      UserCenterViewModel userCenterViewModel){
+                      UserCenterViewModel userCenterViewModel,
+                      AddingHistoryViewModel addingHistoryViewModel){
+
         this.searchController = searchController;
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -71,6 +79,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.addBookViewModel = addBookViewModel;
         this.showAllListsViewModel = showAllListsViewModel;
         this.userCenterViewModel = userCenterViewModel;
+        this.addingHistoryViewModel = addingHistoryViewModel;
+
         createUI();
     }
 
@@ -213,6 +223,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                                 showAllReviewsState.setBookTitle(searchState.getCommentBookTitle());
                                 viewManagerModel.setActiveView("all reviews");
                                 viewManagerModel.firePropertyChanged();
+                            }
+                        }
+                    });
+
+            readButton.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt.getSource().equals(readButton)) {
+
+                                searchState.setReadBookTitle(book.getTitle());
+                                AddingHistoryState addingHistoryState = addingHistoryViewModel.getState();
+                                addingHistoryState.setReadBook(searchState.getReadBookTitle());
+
                             }
                         }
                     });

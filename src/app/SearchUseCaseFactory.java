@@ -14,6 +14,28 @@ import search.service.interface_adapter.SearchViewModel;
 import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.ReviewFactory;
+import user_manage.service.collection_management.add_book.AddBookDataAccessInterface;
+import user_manage.service.collection_management.add_book.AddBookInputBoundary;
+import user_manage.service.collection_management.add_book.AddBookInteractor;
+import user_manage.service.collection_management.add_book.AddBookOutputBoundary;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookController;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookPresenter;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookViewModel;
+import user_manage.service.collection_management.create_list.CreateListDataAccessInterface;
+import user_manage.service.collection_management.create_list.CreateListInputBoundary;
+import user_manage.service.collection_management.create_list.CreateListInteractor;
+import user_manage.service.collection_management.create_list.CreateListOutputBoundary;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListController;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListPresenter;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListViewModel;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsDataAccessInterface;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsInputBoundary;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsInteractor;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsOutputBoundary;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
 import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsDataAccessInterface;
 import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsInteractor;
 import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsOutputBoundary;
@@ -27,7 +49,9 @@ import user_manage.service.reading_review.write_reviews.interface_adapter.WriteR
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsPresenter;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
 import view.SearchView;
+import view.ShowAllListsView;
 import view.ShowAllReviewsView;
+import view.UserCenter.UserCenterViewModel;
 import view.WriteReviewsView;
 
 import javax.swing.*;
@@ -54,23 +78,38 @@ public class SearchUseCaseFactory {
                                       SearchDataAccessObject  searchDataAccessObject,
                                       ShowAllReviewsViewModel showAllReviewsViewModel,
                                       WriteReviewsViewModel writeReviewsViewModel,
-                                      FileReviewDataAccessObject reviewDataAccessObject){
+                                      FileReviewDataAccessObject reviewDataAccessObject,
+                                      AddBookViewModel addBookViewModel, AddBookDataAccessInterface
+                                              addBookDataAccessObject, ShowAllListsViewModel showAllListsViewModel,
+                                      UserCenterViewModel userCenterViewModel, AddingHistoryViewModel
+                                      addingHistoryViewModel){
+
         SearchController searchController = createSearchController(searchViewModel, searchDataAccessObject);
         try {
             List<JPanel> searchViewList = new ArrayList<>();
+
             WriteReviewsController writeReviewsController = createWriteReviewUseCase(viewManagerModel,
                     writeReviewsViewModel, reviewDataAccessObject);
             WriteReviewsView writeReviewsView = new WriteReviewsView(viewManagerModel,
                     writeReviewsController, writeReviewsViewModel);
+
             ShowAllReviewsController showAllReviewsController = createShowAllReviewUseCase(viewManagerModel,
                     showAllReviewsViewModel, reviewDataAccessObject);
             ShowAllReviewsView showAllReviewsView = new ShowAllReviewsView(viewManagerModel,
                     showAllReviewsController, showAllReviewsViewModel, writeReviewsController, writeReviewsViewModel);
+
+            AddBookController addBookController = createAddBookController(viewManagerModel, addBookViewModel,
+                    addBookDataAccessObject);
+
+
             SearchView searchView = new SearchView(searchController, searchViewModel, viewManagerModel,
-                    showAllReviewsController, showAllReviewsViewModel);
+                    showAllReviewsController, showAllReviewsViewModel, addBookController, addBookViewModel,
+                    showAllListsViewModel, userCenterViewModel, addingHistoryViewModel);
+
             searchViewList.add(searchView);
             searchViewList.add(showAllReviewsView);
             searchViewList.add(writeReviewsView);
+
             return searchViewList;
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
@@ -105,6 +144,48 @@ public class SearchUseCaseFactory {
                 reviewsDataAccessObject, showAllReviewsPresenter);
 
         return new ShowAllReviewsController(showAllReviewsInteractor);
+    }
+
+    private static AddBookController createAddBookController(ViewManagerModel viewManagerModel,
+                                                             AddBookViewModel addBookViewModel,
+                                                             AddBookDataAccessInterface addBookDataAccessObject){
+        AddBookOutputBoundary addBookOutputPresenter = new AddBookPresenter(addBookViewModel);
+
+        AddBookInputBoundary addBookInteractor = new AddBookInteractor(addBookDataAccessObject, addBookOutputPresenter);
+
+        AddBookController addBookController = new AddBookController(addBookInteractor);
+
+        return addBookController;
+    }
+
+    private static ShowAllListsController createShowAllListController(ViewManagerModel viewManagerModel,
+                                                                      ShowAllListsViewModel showAllListsViewModel,
+                                                                      ShowAllListsDataAccessInterface
+                                                                      showAllListsDataAccessObject){
+        ShowAllListsOutputBoundary showAllListsPresenter = new ShowAllListsPresenter(showAllListsViewModel,
+                viewManagerModel);
+
+        ShowAllListsInputBoundary showAllListsInteractor = new ShowAllListsInteractor(showAllListsDataAccessObject,
+                showAllListsPresenter);
+
+        ShowAllListsController showAllListsController = new ShowAllListsController(showAllListsInteractor);
+
+        return showAllListsController;
+    }
+
+    private static CreateListController createListController(ViewManagerModel viewManagerModel,
+                                                             CreateListViewModel createListViewModel,
+                                                             CreateListDataAccessInterface
+                                                                     createListDataAccessObject){
+
+        CreateListOutputBoundary createListPresenter = new CreateListPresenter(createListViewModel, viewManagerModel);
+
+        CreateListInputBoundary createListInteractor = new CreateListInteractor(createListDataAccessObject,
+                createListPresenter);
+
+        CreateListController createListController = new CreateListController(createListInteractor);
+
+        return createListController;
     }
 }
 
