@@ -1,40 +1,41 @@
 package user_manage.service.history.add_history;
 
+import user_manage.entity.History;
+import user_manage.entity.HistoryFactory;
 import user_manage.entity.User;
 
 public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
 
     private final AddingHistoryOutputBoundary addingHistoryPresenter;
     private final AddingHistoryDataAccessInterface userDataAccessObject;
+    private final HistoryFactory historyFactory;
 
-    // Constructor with dependency injection for the output boundary and data access object
-    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessInterface) {
+    // Constructor with dependency injection for the output boundary, data access object, and history factory
+    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessInterface, HistoryFactory historyFactory) {
         this.userDataAccessObject = userDataAccessInterface;
         this.addingHistoryPresenter = addingHistoryOutputBoundary;
+        this.historyFactory = historyFactory;
     }
 
     @Override
     public void execute(AddingHistoryInputData addingHistoryInputData) {
         try {
             // Business logic for adding history
-            // For example, validate input data, interact with the database, etc.
-
-            // Assuming we have a method to get the User object by ID
             User user = userDataAccessObject.getUserByName(addingHistoryInputData.getUserName());
             if (user == null) {
                 addingHistoryPresenter.prepareFailView("User not found.");
+                return;
             }
 
-            // Add history record to the user
-            String historyRecord = ", Book Name: " + addingHistoryInputData.getBookName();
-            userDataAccessObject.addHistoryToUser(user, historyRecord);
+            // Create history record and add it to the user
+            History history = historyFactory.create(addingHistoryInputData.getBookName());
+            userDataAccessObject.addHistoryToUser(user, history);
 
             // If successful, prepare the success view
             AddingHistoryOutputData addingHistoryOutputData = new AddingHistoryOutputData(true, "History added successfully for user " + addingHistoryInputData.getUserName());
             addingHistoryPresenter.prepareSuccessView(addingHistoryOutputData);
         } catch (Exception e) {
             // Handle any exceptions or failure scenarios
-            // Prepare the failed view with appropriate message or error details
             addingHistoryPresenter.prepareFailView(e.getMessage());
         }
     }
