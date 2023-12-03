@@ -10,7 +10,7 @@ public class ShowAllListsViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private ShowAllListsState state = new ShowAllListsState();
     public ShowAllListsViewModel() {
-        super("show all collection lists");
+        super("all collection lists");
     }
 
     @Override
