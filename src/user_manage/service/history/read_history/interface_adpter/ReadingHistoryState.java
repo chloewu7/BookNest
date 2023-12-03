@@ -8,6 +8,8 @@ public class ReadingHistoryState {
     private ArrayList<String> history;
     private String errorMessage;
 
+    private String userName;
+
     public ReadingHistoryState() {
         this.history = new ArrayList<String>();
         this.errorMessage = "";
@@ -28,6 +30,8 @@ public class ReadingHistoryState {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    public void setUserName(String userName){this.userName = userName;}
 
 
 
