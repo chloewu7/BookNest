@@ -8,6 +8,7 @@ import user_manage.service.reading_review.write_reviews.WriteReviewsDataAccessIn
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterface, ShowMyReviewsDataAccessInterface, ShowAllReviewsDataAccessInterface {
@@ -15,6 +16,8 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
     private final Map<String, Integer> header = new LinkedHashMap<>();
     private Map<String, Map<String, Review>> reviewsByUser = new HashMap<>();
     private Map<String, List<Review>> reviewsByBook = new HashMap<>();
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private ReviewFactory reviewFactory;
 
@@ -64,7 +67,7 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
                     if (reviewsByBook.containsKey(bookTitle)){
                         bookReviewList = reviewsByBook.get(bookTitle); }
                     bookReviewList.add(review);
-                    reviewsByBook.put(reviewer, bookReviewList);
+                    reviewsByBook.put(bookTitle, bookReviewList);
                 }
 
             }
@@ -79,23 +82,19 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         String reviewer = newReview.getReviewer();
 
         //Save review by different book
-        Map<String, Review> userReviewList = new HashMap<>();
+        Map<String, Review> userReviewsList = new HashMap<>();
         if (reviewsByUser.containsKey(reviewer)){
-            userReviewList = reviewsByUser.get(reviewer); }
+            userReviewsList = reviewsByUser.get(reviewer); }
 
-        if (userReviewList.containsKey(bookTitle)){
-            userReviewList.replace(bookTitle, newReview);
-        } else {
-            userReviewList.put(bookTitle, newReview);
-        }
-        reviewsByUser.put(reviewer, userReviewList);
+        userReviewsList.put(bookTitle, newReview);
+        reviewsByUser.put(reviewer, userReviewsList);
 
         //Save review by different user
         List<Review> bookReviewList = new ArrayList<>();
         if (reviewsByBook.containsKey(bookTitle)){
             bookReviewList = reviewsByBook.get(bookTitle); }
         bookReviewList.add(newReview);
-        reviewsByBook.put(reviewer, bookReviewList);
+        reviewsByBook.put(bookTitle, bookReviewList);
 
         save();
     }
@@ -134,8 +133,8 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         List<String> bookReviewStringList = new ArrayList<>();
         for (Review review: bookReviewList) {
             String bookReviewString = "";
-            bookReviewString = review.getReviewer() + "\n" + "rating:" + review.getRating() +
-                    "\n" + review.getReviewContent() + "\n" + review.getCreationTime();
+            bookReviewString = review.getReviewer() + "\n" + "rating: " + review.getRating() +
+                    "\n" + review.getReviewContent() + "\n" + review.getCreationTime().format(formatter);
             bookReviewStringList.add(bookReviewString);
         }
         return bookReviewStringList;
@@ -171,10 +170,22 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         for (String books: userReviewList.keySet()) {
             String bookReviewString = "";
             Review review = userReviewList.get(books);
-            bookReviewString = review.getReviewedBook() + "  by" + review.getBookAuthor() +"\n" + "rating:"
-                    + review.getRating() + "\n" + review.getReviewContent() + "\n" + review.getCreationTime();
+            bookReviewString = review.getReviewedBook() + "       by " + review.getBookAuthor() +"\n" + "rating: "
+                    + review.getRating() + "\n" + review.getReviewContent() + "\n" + review.getCreationTime().format(formatter);
             userReviewStringList.add(bookReviewString);
         }
         return userReviewStringList;
+    }
+
+    public void deleteAll(){
+        reviewsByUser.clear();
+        reviewsByBook.clear();
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
