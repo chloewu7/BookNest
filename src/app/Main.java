@@ -5,14 +5,17 @@ import search.data_access.SearchDataAccessObject;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchViewModel;
 import user_manage.data_access.FileCollectionDataAccessObject;
+import user_manage.data_access.FileHistoryDataAccessObject;
 import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.data_access.FileUserDataAccessObject;
 import user_manage.entity.CommonCollectionListFactory;
+import user_manage.entity.CommonHisotryFactory;
 import user_manage.entity.CommonReviewFactory;
 import user_manage.entity.CommonUserFactory;
 import user_manage.service.collection_management.create_list.interface_adapter.CreateListViewModel;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
@@ -56,12 +59,15 @@ public class Main {
         FileUserDataAccessObject userDataAccessObject;
         FileReviewDataAccessObject reviewDataAccessObject;
 
+        FileHistoryDataAccessObject readingHistoryDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
             reviewDataAccessObject = new FileReviewDataAccessObject("./reviews.csv",
                     new CommonReviewFactory());
             collectionDataAccessObject = new FileCollectionDataAccessObject(new File("./collection.csv"),
                     new CommonCollectionListFactory());
+            readingHistoryDataAccessObject = new FileHistoryDataAccessObject(new File("./history.csv"),new
+                    CommonHisotryFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +100,7 @@ public class Main {
         // create Login View
         LoginViewModel loginViewModel1 = new LoginViewModel();
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(loginView,loginView.viewName);
 
         // create ShowAllLists View
@@ -132,11 +138,12 @@ public class Main {
         ShowAllListsViewModel showAllListsViewModel = new ShowAllListsViewModel();
         CreateListViewModel createListViewModel = new CreateListViewModel();
         ShowBooksInListViewModel showBooksInListViewModel = new ShowBooksInListViewModel();
+        ReadingHistoryViewModel readingHistoryViewModel = new ReadingHistoryViewModel();
 
         java.util.List<JPanel> userManageViewList = new ArrayList<>();
         userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel,
                 reviewDataAccessObject, searchViewModel, searchDataAccessObject, showAllListsViewModel, collectionDataAccessObject,
-                createListViewModel, showBooksInListViewModel);
+                createListViewModel, showBooksInListViewModel,readingHistoryViewModel, readingHistoryDataAccessObject);
 
         UserCenterView userCenterView = (UserCenterView) userManageViewList.get(0);
         views.add(userCenterView, userCenterView.viewName);
@@ -147,8 +154,8 @@ public class Main {
         ShowAllListsView showAllListsView = (ShowAllListsView) userManageViewList.get(2);
         views.add(showAllListsView, showAllListsView.viewName);
 
-        //ReadingHistoryView readingHistoryView = (ReadingHistoryView) userManageViewList.get(2);
-        //views.add(readingHistoryView, readingHistoryView.viewName);
+        ReadingHistoryView readingHistoryView = (ReadingHistoryView) userManageViewList.get(3);
+        views.add(readingHistoryView, readingHistoryView.viewName);
         //TODO: 把个自的View从userManageViewList拿出来 添加到views里
         viewManagerModel.setActiveView(loginView.viewName);
 
