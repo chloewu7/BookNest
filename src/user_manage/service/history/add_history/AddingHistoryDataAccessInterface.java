@@ -13,4 +13,6 @@ public interface AddingHistoryDataAccessInterface {
     void addHistoryToUser(User user, History history);
 
     ArrayList<String> getHistoryByUserId(String userId);
+
+    User getUserByName(String userName);
 }
