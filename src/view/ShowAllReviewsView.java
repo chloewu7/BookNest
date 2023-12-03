@@ -40,16 +40,16 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         rating.setForeground(Orange);
         rating.setFont(new Font("SansSerif", Font.PLAIN, 20));
         bookTitle = state.getBookTitle();
-        JLabel myReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + " for " + bookTitle
+        JLabel allReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + " for " + bookTitle
                 + "                                                                                             ");
-        myReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        allReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
         JPanel titleAndRating = new JPanel();
 
-        titleAndRating.add(myReviewTitle);
+        titleAndRating.add(allReviewTitle);
         titleAndRating.add(rating);
-        titleAndRating.setPreferredSize(new Dimension(1000, 80));
+        titleAndRating.setPreferredSize(new Dimension(1000, 130));
         titleAndRating.setBackground(lightYellow);
-        myReviewTitle.setForeground(Color.black);
+        allReviewTitle.setForeground(Color.black);
 
         JPanel titleAndRatingPanel  = new JPanel();
         titleAndRatingPanel.setLayout(new GridBagLayout());
@@ -62,12 +62,12 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         titleAndRatingPanel.add(titleAndRating, gbc);
 
         returnButton = new JButton(ShowAllReviewsViewModel.RETURN_BUTTON_LABEL);
-        returnButton.setPreferredSize(new Dimension(130, 40));
+        returnButton.setPreferredSize(new Dimension(130, 60));
         returnButton.setBackground(lightYellow);
         JPanel button = new JPanel();
         button.add(returnButton, BorderLayout.EAST);
         button.setBackground(lightBlue);
-        button.setPreferredSize(new Dimension(1000, 70));
+        button.setPreferredSize(new Dimension(1000, 90));
         returnButton.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -82,7 +82,7 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         JPanel allReviewsPanel = new JPanel();
         allReviewsPanel.setLayout(new BoxLayout(allReviewsPanel, BoxLayout.Y_AXIS));
         JScrollPane reviewsScrollPane = new JScrollPane(allReviewsPanel);
-        reviewsScrollPane.setPreferredSize(new Dimension(1000, 450));
+        reviewsScrollPane.setPreferredSize(new Dimension(1000, 490));
         allReviewsPanel.setBackground(lightBlue);
 
         if (state.getNoReviewMessage() != null){
