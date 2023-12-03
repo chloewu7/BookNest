@@ -22,7 +22,7 @@ public class ShowBooksInListInteractor implements ShowBooksInListInputBoundary{
         String listName = showBooksInListInputData.getListName();
         Map<String, String> books= showBooksInListDataAccessObject.getBooksInlist(userName, listName);
         ShowBooksInListOutputData showBooksInListOutputData =
-                new ShowBooksInListOutputData(books);
+                new ShowBooksInListOutputData(listName, books);
 
         showBooksInListPresenter.prepareSuccessView(showBooksInListOutputData);
     }
