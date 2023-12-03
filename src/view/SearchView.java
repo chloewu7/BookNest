@@ -12,14 +12,22 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import search.service.SearchInputData;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookController;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookState;
+import user_manage.service.collection_management.add_book.interface_adapter.AddBookViewModel;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsState;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
+import view.UserCenter.UserCenterState;
+import view.UserCenter.UserCenterViewModel;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     JComboBox<String> searchTypeComboBox;
@@ -35,6 +43,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private ShowAllReviewsController showAllReviewsController;
     private ShowAllReviewsViewModel showAllReviewsViewModel;
 
+    private AddBookController addBookController;
+    private AddBookViewModel addBookViewModel;
+    private ShowAllListsViewModel showAllListsViewModel;
+    private UserCenterViewModel userCenterViewModel;
+
     public final ArrayList<Book> collectedBooks = new ArrayList<Book>();
 
     public final String viewName = "Search";
@@ -44,12 +57,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                       SearchViewModel searchViewModel,
                       ViewManagerModel viewManagerModel,
                       ShowAllReviewsController showAllReviewsController,
-                      ShowAllReviewsViewModel showAllReviewsViewModel){
+                      ShowAllReviewsViewModel showAllReviewsViewModel,
+                      AddBookController addBookController,
+                      AddBookViewModel addBookViewModel,
+                      ShowAllListsViewModel showAllListsViewModel,
+                      UserCenterViewModel userCenterViewModel){
         this.searchController = searchController;
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
         this.showAllReviewsController = showAllReviewsController;
         this.showAllReviewsViewModel = showAllReviewsViewModel;
+        this.addBookController = addBookController;
+        this.addBookViewModel = addBookViewModel;
+        this.showAllListsViewModel = showAllListsViewModel;
+        this.userCenterViewModel = userCenterViewModel;
         createUI();
     }
 
@@ -157,7 +178,29 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             collectButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //Todo
+                    Book book = searchState.getCollectedBook();
+                    ShowAllListsState showAllListsState = showAllListsViewModel.getState();
+                    List<String> listsName = showAllListsState.getListsName();
+                    Object[] listsArray = listsName.toArray();
+                    Object wantList = JOptionPane.showInputDialog(SearchView.this, "Collect the book to:\n",
+                            "Add Book to Collection List", JOptionPane.PLAIN_MESSAGE, null, listsArray, "Like");
+                    UserCenterState userCenterState = userCenterViewModel.getState();
+                    String userName = userCenterState.getUsername();
+                    AddBookState addBookState = addBookViewModel.getState();
+                    addBookState.setBook(book);
+                    addBookState.setBookName(book.getTitle());
+                    addBookState.setBookAuthor(book.getAuthor());
+                    addBookState.setListName(wantList.toString());
+                    addBookState.setUserName(userName);
+                    addBookController.execute(userName, wantList.toString(), book);
+                    if(addBookState.getAddBookSuccess() != null){
+                        JOptionPane.showMessageDialog(SearchView.this, addBookState.getAddBookSuccess(),
+                                "Add Book Response",JOptionPane.PLAIN_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(SearchView.this, addBookState.getAddBookError(),
+                                "Add Book Response",JOptionPane.WARNING_MESSAGE);
+                    }
+
                 }
             });
 
