@@ -8,6 +8,8 @@ public class ShowAllReviewsState {
     public float rating;
 
     public String bookTitle;
+
+    public String username;
     private List<String> reviewList = new ArrayList<>();
     private String noReviewMessage = null;
     public ShowAllReviewsState(){}
@@ -44,4 +46,10 @@ public class ShowAllReviewsState {
         this.bookTitle = bookTitle;
     }
 
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public String getUsername() {
+        return username;
+    }
 }
