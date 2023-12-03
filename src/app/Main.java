@@ -81,9 +81,6 @@ public class Main {
         views.add(writeReviewsView, writeReviewsView.viewName);
 
         // create ShowAllReview View
-        ShowAllReviewsViewModel showAllReviewsViewModel = new ShowAllReviewsViewModel();
-        ShowAllReviewsView showAllReviewsView = ShowAllReviewsUseCaseFactory.create(viewManagerModel, showAllReviewsViewModel, reviewDataAccessObject);
-        views.add(showAllReviewsView, showAllReviewsView.viewName);
 
         // create ShowMyReview View
         ShowMyReviewsViewModel showMyReviewsViewModel = new ShowMyReviewsViewModel();
