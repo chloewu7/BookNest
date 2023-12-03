@@ -13,7 +13,7 @@ public class ShowAllReviewsViewModel extends ViewModel{
     private ShowAllReviewsState state = new ShowAllReviewsState();
 
     public ShowAllReviewsViewModel(){
-        super("show all reviews");
+        super("all reviews");
     }
 
     @Override

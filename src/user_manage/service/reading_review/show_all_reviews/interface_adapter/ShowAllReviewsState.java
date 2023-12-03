@@ -30,7 +30,7 @@ public class ShowAllReviewsState {
         return noReviewMessage;
     }
 
-    public void setRating(float getRating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

@@ -7,7 +7,7 @@ public class ShowAllReviewsInputData {
         this.bookTitle = bookTitle;
     }
 
-    String getBookTitle() {
+    public String getBookTitle() {
         return bookTitle;
     }
 }
