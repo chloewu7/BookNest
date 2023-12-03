@@ -9,6 +9,7 @@ import search.service.SearchInteractor;
 import search.service.interface_adapter.SearchPresenter;
 import search.service.interface_adapter.SearchState;
 import user_manage.data_access.FileCollectionDataAccessObject;
+import user_manage.data_access.FileHistoryDataAccessObject;
 import user_manage.data_access.FileReviewDataAccessObject;
 import user_manage.service.collection_management.create_list.CreateListDataAccessInterface;
 import user_manage.service.collection_management.create_list.CreateListInteractor;
@@ -23,6 +24,12 @@ import user_manage.service.collection_management.show_all_lists.interface_adapte
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
+import user_manage.service.history.read_history.ReadingHistoryDataAccessInterface;
+import user_manage.service.history.read_history.ReadingHistoryInteractor;
+import user_manage.service.history.read_history.ReadingHistoryOutputBoundary;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryPresenter;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsDataAccessInterface;
 import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsInteractor;
 import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsOutputBoundary;
@@ -33,12 +40,9 @@ import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchViewModel;
 import search.service.SearchDataAccessInterface;
 import search.service.SearchOutputBoundary;
-import view.SearchView;
-import view.ShowAllListsView;
-import view.ShowMyReviewsView;
+import view.*;
 import view.UserCenter.UserCenterView;
 import view.UserCenter.UserCenterViewModel;
-import view.ViewManager;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -52,24 +56,29 @@ public class UserCenterFactory {
                                       ShowMyReviewsViewModel showMyReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject,
                                       SearchViewModel searchViewModel, SearchDataAccessObject searchDataAccessObject,
                                       ShowAllListsViewModel showAllListsViewModel, FileCollectionDataAccessObject collectionDataAccessObject,
-                                      CreateListViewModel createListViewModel, ShowBooksInListViewModel showBooksInListViewModel) {
+                                      CreateListViewModel createListViewModel, ShowBooksInListViewModel showBooksInListViewModel, ReadingHistoryViewModel
+                                      readingHistoryViewModel, FileHistoryDataAccessObject readingHistoryDAO) {
         try {
             //TODO:创建showMyHistoryController和showMyCollectionController
             ShowMyReviewsController showMyReviewsController = createShowMyReviewUseCase(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
             SearchController searchController = createSearchUseCase(viewManagerModel,searchViewModel, searchDataAccessObject);
             ShowAllListsController showAllListsController = createShowAllListsUseCase(viewManagerModel, showAllListsViewModel, collectionDataAccessObject);
             CreateListController createListController = createCreateListUseCase(viewManagerModel,createListViewModel, collectionDataAccessObject);
+            ReadingHistoryController controller =crea
 
             //TODO：用刚才新建的的Controller和ViewModel创建一个新的userCenterView（加在参数里）
             List<JPanel> userManageViewList = new ArrayList<>();
             UserCenterView userCenterView =  new UserCenterView(viewManagerModel, userCenterViewModel, showMyReviewsController, showMyReviewsViewModel,
-                    searchController, searchViewModel, showAllListsController, showAllListsViewModel);
+                    searchController, searchViewModel, showAllListsController, showAllListsViewModel, readingHistoryController,  readingHistoryViewModel);
             userManageViewList.add(userCenterView);
             ShowMyReviewsView showMyReviewsView = new ShowMyReviewsView(viewManagerModel, showMyReviewsController, showMyReviewsViewModel);
             userManageViewList.add(showMyReviewsView);
             ShowAllListsView showAllListsView = new ShowAllListsView(showAllListsController, showAllListsViewModel, viewManagerModel,
                     createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
             userManageViewList.add(showAllListsView);
+
+            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, controller);
+            userManageViewList.add(readingHistoryView);
             //TODO：新建showMyHistoryView和showMyCollectionView
             //TODO：把新建的View加到 userManageViewList
             return userManageViewList;
@@ -123,5 +132,14 @@ public class UserCenterFactory {
                 createListDataAccessObject, createListPresenter);
 
         return new CreateListController(createListInteractor);
+    }
+
+    private  static ReadingHistoryController createHistoryController(ViewManagerModel viewManagerModel,
+                                                                    ReadingHistoryViewModel readingHistoryViewModel,
+                                                                    ReadingHistoryDataAccessInterface readingHistoryDataAcessObject) throws  IOException{
+        ReadingHistoryOutputBoundary readingHistoryPresenter = new ReadingHistoryPresenter(readingHistoryViewModel, viewManagerModel);
+        ReadingHistoryInteractor interactor = new ReadingHistoryInteractor(readingHistoryPresenter, readingHistoryDataAcessObject);
+
+        return new ReadingHistoryController(interactor);
     }
 }
