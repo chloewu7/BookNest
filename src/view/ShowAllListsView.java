@@ -116,10 +116,6 @@ public class ShowAllListsView extends JPanel implements ActionListener, Property
 
     private void showListsPerform() {
         mainPane.removeAll();
-        UserCenterState userCenterState = userCenterViewModel.getState();
-        String userName = userCenterState.getUsername();
-
-        showAllListsController.execute(userName);
         ShowAllListsState showAllListsState = showAllListsViewModel.getState();
 
         for (String list: showAllListsState.getListsName()) {

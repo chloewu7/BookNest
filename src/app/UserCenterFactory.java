@@ -8,7 +8,21 @@ import search.service.SearchDataAccessInterface;
 import search.service.SearchInteractor;
 import search.service.interface_adapter.SearchPresenter;
 import search.service.interface_adapter.SearchState;
+import user_manage.data_access.FileCollectionDataAccessObject;
 import user_manage.data_access.FileReviewDataAccessObject;
+import user_manage.service.collection_management.create_list.CreateListDataAccessInterface;
+import user_manage.service.collection_management.create_list.CreateListInteractor;
+import user_manage.service.collection_management.create_list.CreateListOutputBoundary;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListController;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListPresenter;
+import user_manage.service.collection_management.create_list.interface_adapter.CreateListViewModel;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsDataAccessInterface;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsInteractor;
+import user_manage.service.collection_management.show_all_lists.ShowAllListsOutputBoundary;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
 import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsDataAccessInterface;
 import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsInteractor;
 import user_manage.service.reading_review.show_my_reviews.ShowMyReviewsOutputBoundary;
@@ -20,6 +34,7 @@ import search.service.interface_adapter.SearchViewModel;
 import search.service.SearchDataAccessInterface;
 import search.service.SearchOutputBoundary;
 import view.SearchView;
+import view.ShowAllListsView;
 import view.ShowMyReviewsView;
 import view.UserCenter.UserCenterView;
 import view.UserCenter.UserCenterViewModel;
@@ -35,20 +50,26 @@ public class UserCenterFactory {
 
     public static List<JPanel> create(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
                                       ShowMyReviewsViewModel showMyReviewsViewModel, FileReviewDataAccessObject reviewDataAccessObject,
-                                      SearchViewModel searchViewModel, SearchDataAccessObject searchDataAccessObject) {
+                                      SearchViewModel searchViewModel, SearchDataAccessObject searchDataAccessObject,
+                                      ShowAllListsViewModel showAllListsViewModel, FileCollectionDataAccessObject collectionDataAccessObject,
+                                      CreateListViewModel createListViewModel, ShowBooksInListViewModel showBooksInListViewModel) {
         try {
             //TODO:创建showMyHistoryController和showMyCollectionController
             ShowMyReviewsController showMyReviewsController = createShowMyReviewUseCase(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
-
             SearchController searchController = createSearchUseCase(viewManagerModel,searchViewModel, searchDataAccessObject);
+            ShowAllListsController showAllListsController = createShowAllListsUseCase(viewManagerModel, showAllListsViewModel, collectionDataAccessObject);
+            CreateListController createListController = createCreateListUseCase(viewManagerModel,createListViewModel, collectionDataAccessObject);
 
             //TODO：用刚才新建的的Controller和ViewModel创建一个新的userCenterView（加在参数里）
             List<JPanel> userManageViewList = new ArrayList<>();
             UserCenterView userCenterView =  new UserCenterView(viewManagerModel, userCenterViewModel, showMyReviewsController, showMyReviewsViewModel,
-                    searchController, searchViewModel);
+                    searchController, searchViewModel, showAllListsController, showAllListsViewModel);
             userManageViewList.add(userCenterView);
             ShowMyReviewsView showMyReviewsView = new ShowMyReviewsView(viewManagerModel, showMyReviewsController, showMyReviewsViewModel);
             userManageViewList.add(showMyReviewsView);
+            ShowAllListsView showAllListsView = new ShowAllListsView(showAllListsController, showAllListsViewModel, viewManagerModel,
+                    createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
+            userManageViewList.add(showAllListsView);
             //TODO：新建showMyHistoryView和showMyCollectionView
             //TODO：把新建的View加到 userManageViewList
             return userManageViewList;
@@ -80,5 +101,27 @@ public class UserCenterFactory {
 
         return searchController;
 
+    }
+
+    private static ShowAllListsController createShowAllListsUseCase(ViewManagerModel viewManagerModel,
+                                                                    ShowAllListsViewModel showAllListsViewModel,
+                                                                    ShowAllListsDataAccessInterface showAllListsDataAccessObject){
+        ShowAllListsOutputBoundary showAllListsOutputPresenter = new ShowAllListsPresenter(showAllListsViewModel, viewManagerModel);
+
+        ShowAllListsInteractor showAllListsInteractor = new ShowAllListsInteractor(
+                showAllListsDataAccessObject, showAllListsOutputPresenter);
+
+        return new ShowAllListsController(showAllListsInteractor);
+    }
+
+    private static CreateListController createCreateListUseCase(ViewManagerModel viewManagerModel,
+                                                                CreateListViewModel createListViewModel,
+                                                                CreateListDataAccessInterface createListDataAccessObject) throws IOException {
+        CreateListOutputBoundary createListPresenter = new CreateListPresenter(createListViewModel, viewManagerModel);
+
+        CreateListInteractor createListInteractor = new CreateListInteractor(
+                createListDataAccessObject, createListPresenter);
+
+        return new CreateListController(createListInteractor);
     }
 }
