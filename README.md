@@ -1,4 +1,4 @@
-# Library Management System
+# BookNest
 
 ## Problem Domain
 Our project is focused on the development of a sophisticated personal library management system, aimed at providing comprehensive solutions for both library administrators and patrons. This system is designed to streamline various library operations, enhance the efficiency of administrative tasks, and improve the overall user experience for book management. By incorporating advanced features and user-friendly interfaces, the system addresses the diverse needs of modern personal libraries. It facilitates easier access to resources and better inventory management. This project represents a significant step towards modernizing library management and making the wealth of knowledge more accessible and manageable. This domain encompasses various aspects of library operations, including:
