@@ -49,4 +49,9 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
         }
         return historyRecords;
     }
+
+    @Override
+    public User getUserByName(String userName) {
+        return null;
+    }
 }
