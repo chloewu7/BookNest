@@ -1,5 +1,6 @@
 package user_manage.service.collection_management.add_book.interface_adapter;
 
+import search.entity.Book;
 import user_manage.entity.CollectionList;
 import user_manage.entity.CommonCollectionList;
 
@@ -10,6 +11,7 @@ public class AddBookState {
     private String listName = "";
     private String bookName = "";
     private String bookAuthor = "";
+    private Book book = null;
     private String addBookSuccess = null;
     private String addBookError = null;
 
@@ -18,6 +20,7 @@ public class AddBookState {
         listName = copy.listName;
         bookName = copy.bookName;
         bookAuthor = copy.bookAuthor;
+        book = copy.book;
         addBookSuccess = copy.addBookSuccess;
         addBookError = copy.addBookError;
     }
@@ -34,6 +37,10 @@ public class AddBookState {
 
     public String getBookAuthor() {
         return bookAuthor;
+    }
+
+    public Book getBook() {
+        return book;
     }
 
     public String getAddBookSuccess() {
@@ -58,6 +65,10 @@ public class AddBookState {
 
     public void setBookAuthor(String bookAuthor) {
         this.bookAuthor = bookAuthor;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public void setAddBookSuccess(String addBookSuccess) {

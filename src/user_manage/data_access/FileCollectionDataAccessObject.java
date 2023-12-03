@@ -7,7 +7,6 @@ import user_manage.entity.CommonCollectionList;
 import user_manage.entity.Review;
 import user_manage.service.collection_management.add_book.AddBookDataAccessInterface;
 import user_manage.service.collection_management.create_list.CreateListDataAccessInterface;
-import user_manage.service.collection_management.delete_list.DeleteListDataAccessInterface;
 import user_manage.service.collection_management.show_all_lists.ShowAllListsDataAccessInterface;
 import user_manage.service.collection_management.show_books_in_list.ShowBooksInListDataAccessInterface;
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class FileCollectionDataAccessObject implements AddBookDataAccessInterface, CreateListDataAccessInterface,
-        DeleteListDataAccessInterface, ShowAllListsDataAccessInterface, ShowBooksInListDataAccessInterface {
+        ShowAllListsDataAccessInterface, ShowBooksInListDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> header = new LinkedHashMap<>();
     private final Map<String, Map<String, Map<String, String>>> userLists = new HashMap<>(); //<userName, listsMap>
@@ -124,11 +123,6 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
         }else{
             userLists.put(userName,newList);
         }
-    }
-
-    @Override
-    public void deleteCollectionList(String userName, String listName) {
-        userLists.get(userName).remove(listName);
     }
 
     @Override
