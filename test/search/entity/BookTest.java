@@ -5,13 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommonBookTest {
+class BookTest {
 
-    private CommonBook book;
+    private Book book;
 
     @BeforeEach
     public void setUp(){
-        book = new CommonBook("Effective Java", "Joshua Bloch", "Programming", "978-0134685991");
+        book = new CommonBook("Effective Java", "Joshua Bloch", "Programming",
+                "978-0134685991");
     }
 
     @Test
