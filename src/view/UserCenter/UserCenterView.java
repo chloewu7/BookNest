@@ -8,6 +8,9 @@ import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsState;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryState;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsController;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
 import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsViewModel;
@@ -37,11 +40,17 @@ public class UserCenterView extends JPanel {
     private ShowAllListsController showAllListsController;
     private ShowAllListsViewModel showAllListsViewModel;
 
+    private ReadingHistoryController readingHistoryController;
+    private ReadingHistoryViewModel readingHistoryViewModel;
+
 
     public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
                           ShowMyReviewsController showMyReviewsController, ShowMyReviewsViewModel showMyReviewsViewModel,
                           SearchController searchController, SearchViewModel searchViewModel,
-                          ShowAllListsController showAllListsController, ShowAllListsViewModel showAllListsViewModel){
+                          ShowAllListsController showAllListsController, ShowAllListsViewModel showAllListsViewModel,
+                          ReadingHistoryController readingHistoryController, ReadingHistoryViewModel
+                                  readingHistoryViewModel){
+
         this.viewManagerModel = viewManagerModel;
         this.userCenterViewModel = userCenterViewModel;
         this.showMyReviewsController = showMyReviewsController;
@@ -50,6 +59,9 @@ public class UserCenterView extends JPanel {
         this.searchViewModel = searchViewModel;
         this.showAllListsController = showAllListsController;
         this.showAllListsViewModel = showAllListsViewModel;
+        this.readingHistoryController = readingHistoryController;
+        this.readingHistoryViewModel = readingHistoryViewModel;
+
         createUI();
     }
 
@@ -98,7 +110,7 @@ public class UserCenterView extends JPanel {
 
 
 
-        //collectionButton.addActionListener to be completed
+
         collectionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,9 +123,7 @@ public class UserCenterView extends JPanel {
             }
         });
 
-        //historyButton.addActionListener to be completed
 
-        //reviewButton.addActionListener to be completed
 
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -134,6 +144,18 @@ public class UserCenterView extends JPanel {
                 showMyReviewsState.setUsername(username);
                 showMyReviewsController.execute(username);
                 viewManagerModel.setActiveView("my reviews");
+                viewManagerModel.firePropertyChanged();
+            }
+        });
+
+        historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = state.getUsername();
+                ReadingHistoryState readingHistoryState = readingHistoryViewModel.getState();
+                readingHistoryState.setUserName(username);
+                readingHistoryController.fetchUserHistory();
+                viewManagerModel.setActiveView("History");
                 viewManagerModel.firePropertyChanged();
             }
         });
