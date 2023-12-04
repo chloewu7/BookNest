@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
+import user_manage.service.login.interface_adapter.LoginState;
 import user_manage.service.signup.interface_adapter.SignupController;
 import user_manage.service.signup.interface_adapter.SignupState;
 import user_manage.service.signup.interface_adapter.SignupViewModel;
@@ -26,7 +28,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
     public SignupView(SignupController signupController,
-                      SignupViewModel signupViewModel){
+                      SignupViewModel signupViewModel,
+                      ViewManagerModel viewManagerModel){
         this.signupController = signupController;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
@@ -124,6 +127,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
+
+                            viewManagerModel.setActiveView("log in");
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
