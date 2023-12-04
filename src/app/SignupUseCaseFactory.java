@@ -22,7 +22,7 @@ public class SignupUseCaseFactory {
     public static SignupView create(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, FileUserDataAccessObject signupDataAccessObject) {
         try {
             SignupController signupController = createSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, signupDataAccessObject);
-            return new SignupView(signupController, signupViewModel);
+            return new SignupView(viewManagerModel,signupController, signupViewModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
         }

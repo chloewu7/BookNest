@@ -1,5 +1,8 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
+import search.service.interface_adapter.SearchState;
+import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.signup.interface_adapter.SignupController;
 import user_manage.service.signup.interface_adapter.SignupState;
 import user_manage.service.signup.interface_adapter.SignupViewModel;
@@ -23,9 +26,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(20);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(20);
 
+    private final JButton returnButton;
 
 
-    public SignupView(SignupController signupController,
+
+    public SignupView(ViewManagerModel viewManagerModel,
+                      SignupController signupController,
                       SignupViewModel signupViewModel){
         this.signupController = signupController;
         this.signupViewModel = signupViewModel;
@@ -104,11 +110,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
         signupButton = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        returnButton = new JButton("Login");
         signupButton.setPreferredSize(new Dimension(200, 50));
+        returnButton.setPreferredSize(new Dimension(200, 50));
         signupButton.setFont(new Font("Lucida Grande", 0, 15));
+        returnButton.setFont(new Font("Lucida Grande", 0, 15));
         signupButton.setBackground(lightYellow);
         JPanel button = new JPanel();
         button.add(signupButton, BorderLayout.NORTH);
+        button.add(returnButton);
         button.setBackground(lightBlue);
         button.setPreferredSize(new Dimension(1000, 120));
 
@@ -128,6 +138,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
+
+        returnButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(returnButton)) {
+                    viewManagerModel.setActiveView("log in");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
 
         usernameInputField.addKeyListener(
                 new KeyListener() {
@@ -207,6 +226,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        SignupState state = (SignupState) evt.getNewValue();
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        }
     }
 }
