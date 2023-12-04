@@ -139,7 +139,7 @@ WriteReviewsView extends JPanel implements ActionListener, PropertyChangeListene
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(returnAllReviews)) {
-                    viewManagerModel.setActiveView("all reviews");
+                    viewManagerModel.setActiveView("Search");
                     viewManagerModel.firePropertyChanged();
                 }
             }
