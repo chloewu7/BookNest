@@ -158,34 +158,6 @@ public class SearchUseCaseFactory {
         return addBookController;
     }
 
-    private static ShowAllListsController createShowAllListController(ViewManagerModel viewManagerModel,
-                                                                      ShowAllListsViewModel showAllListsViewModel,
-                                                                      ShowAllListsDataAccessInterface
-                                                                      showAllListsDataAccessObject){
-        ShowAllListsOutputBoundary showAllListsPresenter = new ShowAllListsPresenter(showAllListsViewModel,
-                viewManagerModel);
 
-        ShowAllListsInputBoundary showAllListsInteractor = new ShowAllListsInteractor(showAllListsDataAccessObject,
-                showAllListsPresenter);
-
-        ShowAllListsController showAllListsController = new ShowAllListsController(showAllListsInteractor);
-
-        return showAllListsController;
-    }
-
-    private static CreateListController createListController(ViewManagerModel viewManagerModel,
-                                                             CreateListViewModel createListViewModel,
-                                                             CreateListDataAccessInterface
-                                                                     createListDataAccessObject){
-
-        CreateListOutputBoundary createListPresenter = new CreateListPresenter(createListViewModel, viewManagerModel);
-
-        CreateListInputBoundary createListInteractor = new CreateListInteractor(createListDataAccessObject,
-                createListPresenter);
-
-        CreateListController createListController = new CreateListController(createListInteractor);
-
-        return createListController;
-    }
 }
 

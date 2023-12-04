@@ -40,14 +40,5 @@ public class SearchPresenter implements SearchOutputBoundary {
 
     }
 
-    private String convertBooksList(List<Book> books){
-        StringBuilder st = new StringBuilder();
-        for (Book book: books){
-            st.append("Title: ").append(book.getTitle()).append(" by ").append(book.getAuthor()).append(" Category: ")
-                    .append(book.getCategory()).append(" ISBN: #").append(book.getISBN()).append(" \n\n\n");
-        }
-        return st.toString().trim();
-    }
-
 
 }
