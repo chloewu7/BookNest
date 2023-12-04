@@ -7,7 +7,7 @@ public class ShowMyReviewsInputData {
         this.username = username;
     }
 
-    String getUsername() {
+    public String getUsername() {
         return username;
     }
 }
