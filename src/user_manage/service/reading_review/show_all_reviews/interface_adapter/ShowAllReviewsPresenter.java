@@ -17,9 +17,10 @@ public class ShowAllReviewsPresenter implements ShowAllReviewsOutputBoundary {
     @Override
     public void prepareNoReviewView(String noReviewMessage) {
         ShowAllReviewsState showAllReviewsState = showAllReviewsViewModel.getState();
+        showAllReviewsState.setRating(0.0F);
         showAllReviewsState.setNoReviewMessage(noReviewMessage);
         showAllReviewsViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView("all reviews");
+        viewManagerModel.setActiveView(showAllReviewsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
@@ -28,6 +29,7 @@ public class ShowAllReviewsPresenter implements ShowAllReviewsOutputBoundary {
         ShowAllReviewsState showAllReviewsState = showAllReviewsViewModel.getState();
         showAllReviewsState.setReviewList(showAllReviewsOutputData.getReviewList());
         showAllReviewsState.setRating(showAllReviewsOutputData.getRating());
+        showAllReviewsState.setNoReviewMessage(null);
 
         this.showAllReviewsViewModel.setState(showAllReviewsState);
 

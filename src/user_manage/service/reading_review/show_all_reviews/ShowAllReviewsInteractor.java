@@ -22,9 +22,11 @@ public class ShowAllReviewsInteractor implements ShowAllReviewsInputBoundary{
             ShowAllReviewsOutputData showAllReviewsOutputData = new ShowAllReviewsOutputData(reviewList, rating);
             showAllReviewsPresenter.prepareSuccessView(showAllReviewsOutputData);
         } else {
-            showAllReviewsPresenter.prepareNoReviewView("Be the first to share your thoughts! " +
-                    "There are currently no reviews for this book. Your review can help others " +
-                    "discover and enjoy it. Click the 'Write a Review' button to get started.");
+            showAllReviewsPresenter.prepareNoReviewView("<html>Be the first to share your thoughts!<br>" +
+                    "There are currently no reviews for this book. <br>" +
+                    "Your review can help others  discover and enjoy it.<br>" +
+                    "Click the 'Write a Review' button to get started."
+);
         }
     }
 }

@@ -133,8 +133,8 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         List<String> bookReviewStringList = new ArrayList<>();
         for (Review review: bookReviewList) {
             String bookReviewString = "";
-            bookReviewString = review.getReviewer() + "\n" + "rating: " + review.getRating() +
-                    "\n" + review.getReviewContent() + "\n" + review.getCreationTime().format(formatter);
+            bookReviewString = "<html>" + review.getReviewer() + "<br>" + "rating: " + review.getRating() +
+                    "<br><br>" + review.getReviewContent() + "<br>" + "<br>" + review.getCreationTime().format(formatter);
             bookReviewStringList.add(bookReviewString);
         }
         return bookReviewStringList;
@@ -147,12 +147,12 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         }
         List<Review> bookReviewList = reviewsByBook.get(bookTitle);
         float rating = 0.0F;
-        int numReview = 0;
-        for (Review review: bookReviewList) {
-            numReview += 1;
-            rating = (rating + review.getRating()) / numReview;
+        int numReviews = 0;
+        for (Review review : bookReviewList) {
+            rating += review.getRating();
+            numReviews ++;
         }
-        return rating;
+        return rating / numReviews;
     }
 
     @Override
@@ -170,8 +170,8 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         for (String books: userReviewList.keySet()) {
             String bookReviewString = "";
             Review review = userReviewList.get(books);
-            bookReviewString = review.getReviewedBook() + "       by " + review.getBookAuthor() +"\n" + "rating: "
-                    + review.getRating() + "\n" + review.getReviewContent() + "\n" + review.getCreationTime().format(formatter);
+            bookReviewString = "<html>" + review.getReviewedBook() + "       by " + review.getBookAuthor() +"<br>" + "rating: "
+                    + review.getRating() + "<br>" + review.getReviewContent() + "<br>" + review.getCreationTime().format(formatter);
             userReviewStringList.add(bookReviewString);
         }
         return userReviewStringList;

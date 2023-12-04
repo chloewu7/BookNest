@@ -16,9 +16,9 @@ public class ShowMyReviewsInteractor implements ShowMyReviewsInputBoundary{
     public void execute(ShowMyReviewsInputData showMyReviewsInputData) {
         String username = showMyReviewsInputData.getUsername();
         if (showMyReviewsDataAccessObject.user_review_exists(username)){
-            showMyReviewsPresenter.prepareNoReviewView("You haven't posted any reviews yet. " +
-                    "Share your thoughts on the books you've read and help others discover great reads. " +
-                    "Click the 'Write a Review' button to get started.");
+            showMyReviewsPresenter.prepareNoReviewView("<html>You haven't posted any reviews yet. <br>Share your " +
+                    "thoughts on the books you've read and <br>Help others discover great reads. <br>Click the 'Write " +
+                    "a Review' button to get started.");
         } else {
             List<String> myReviews = showMyReviewsDataAccessObject.retrieveAllMyReviews(username);
             ShowMyReviewsOutputData showMyReviewsOutputData = new ShowMyReviewsOutputData(myReviews);

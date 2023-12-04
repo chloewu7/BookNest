@@ -221,8 +221,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                                 searchState.setCommentBookTitle(book.getTitle());
                                 ShowAllReviewsState showAllReviewsState = showAllReviewsViewModel.getState();
                                 showAllReviewsState.setBookTitle(searchState.getCommentBookTitle());
-                                viewManagerModel.setActiveView("all reviews");
-                                viewManagerModel.firePropertyChanged();
+                                showAllReviewsState.setAuthor(book.getAuthor());
+
+                                showAllReviewsState.setUsername(searchState.getUserName());
+                                showAllReviewsViewModel.setState(showAllReviewsState);
+                                showAllReviewsController.execute(book.getTitle());
                             }
                         }
                     });
@@ -235,7 +238,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                                 searchState.setReadBookTitle(book.getTitle());
                                 AddingHistoryState addingHistoryState = addingHistoryViewModel.getState();
                                 addingHistoryState.setReadBook(searchState.getReadBookTitle());
-
                             }
                         }
                     });
