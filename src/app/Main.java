@@ -156,7 +156,7 @@ public class Main {
         java.util.List<JPanel> userManageViewList = new ArrayList<>();
         userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel,
                 reviewDataAccessObject, searchViewModel, searchDataAccessObject, showAllListsViewModel, collectionDataAccessObject,
-                createListViewModel, showBooksInListViewModel,readingHistoryViewModel, readingHistoryDataAccessObject);
+                createListViewModel, showBooksInListViewModel,readingHistoryViewModel,addingHistoryViewModel ,readingHistoryDataAccessObject);
 
         UserCenterView userCenterView = (UserCenterView) userManageViewList.get(0);
         views.add(userCenterView, userCenterView.viewName);
