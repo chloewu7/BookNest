@@ -3,7 +3,6 @@ package user_manage.service.history.read_history;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ReadingHistoryInteractor implements ReadingHistoryInputBoundary {
@@ -20,7 +19,7 @@ public class ReadingHistoryInteractor implements ReadingHistoryInputBoundary {
         try {
             // Assuming the user's ID is retrieved from the context/session
             String userId = getCurrentUserId();
-            List<String> history = userDataAccessObject.getHistoryByUserId(userId);
+            ArrayList<String> history = userDataAccessObject.getHistoryByUserId(userId);
 
             // Pass the history data to the output boundary
             ReadingHistoryOutputData outputData = new ReadingHistoryOutputData(history);

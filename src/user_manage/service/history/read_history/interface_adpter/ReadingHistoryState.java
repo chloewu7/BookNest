@@ -3,10 +3,9 @@ package user_manage.service.history.read_history.interface_adpter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class ReadingHistoryState {
-    private List<String> history;
+    private ArrayList<String> history;
     private String errorMessage;
 
     private String userName;
@@ -16,11 +15,11 @@ public class ReadingHistoryState {
         this.errorMessage = "";
     }
 
-    public List<String> getHistory() {
+    public ArrayList<String> getHistory() {
         return history;
     }
 
-    public void setHistory(List<String> history) {
+    public void setHistory(ArrayList<String> history) {
         this.history = history;
     }
 
