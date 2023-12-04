@@ -147,12 +147,12 @@ public class FileReviewDataAccessObject implements WriteReviewsDataAccessInterfa
         }
         List<Review> bookReviewList = reviewsByBook.get(bookTitle);
         float rating = 0.0F;
-        int numReview = 0;
-        for (Review review: bookReviewList) {
-            numReview += 1;
-            rating = (rating + review.getRating()) / numReview;
+        int numReviews = 0;
+        for (Review review : bookReviewList) {
+            rating += review.getRating();
+            numReviews ++;
         }
-        return rating;
+        return rating / numReviews;
     }
 
     @Override
