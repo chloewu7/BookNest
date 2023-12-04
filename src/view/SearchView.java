@@ -188,7 +188,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             collectButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Book book = searchState.getCollectedBook();
+                    searchState.setCollectedBook(book);
+                    Book Collectedbook = searchState.getCollectedBook();
                     ShowAllListsState showAllListsState = showAllListsViewModel.getState();
                     List<String> listsName = showAllListsState.getListsName();
                     Object[] listsArray = listsName.toArray();
@@ -197,12 +198,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     UserCenterState userCenterState = userCenterViewModel.getState();
                     String userName = userCenterState.getUsername();
                     AddBookState addBookState = addBookViewModel.getState();
-                    addBookState.setBook(book);
-                    addBookState.setBookName(book.getTitle());
-                    addBookState.setBookAuthor(book.getAuthor());
+                    addBookState.setBook(Collectedbook);
+                    addBookState.setBookName(Collectedbook.getTitle());
+                    addBookState.setBookAuthor(Collectedbook.getAuthor());
                     addBookState.setListName(wantList.toString());
                     addBookState.setUserName(userName);
-                    addBookController.execute(userName, wantList.toString(), book);
+                    addBookController.execute(userName, wantList.toString(),Collectedbook);
                     if(addBookState.getAddBookSuccess() != null){
                         JOptionPane.showMessageDialog(SearchView.this, addBookState.getAddBookSuccess(),
                                 "Add Book Response",JOptionPane.PLAIN_MESSAGE);
