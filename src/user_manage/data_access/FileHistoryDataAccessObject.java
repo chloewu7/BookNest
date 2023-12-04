@@ -35,22 +35,26 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
                 while ((currentRow = reader.readLine()) != null) {
                     String[] historyInfo = currentRow.split(",");
                     String username = historyInfo[header.get("username")];
-                    String bookName = historyInfo[header.get("book_name")];
+                    String bookName = historyInfo[header.get("bookname")];
 
                     History history = historyFactory.create(bookName);
                     List<String> userHistoryList = historyByUser.getOrDefault(username, new ArrayList<>());
                     userHistoryList.add(history.getBookName());
                     historyByUser.put(username, userHistoryList);
 
+
+
                 }
+                }catch (NullPointerException e){
+                throw new RuntimeException(e);
             }
         }
     }
 
     @Override
-    public void addHistoryToUser(User user, History history) {
+    public void addHistoryToUser(User user, String bookName) {
         List<String> userHistoryList = historyByUser.getOrDefault(user.getName(), new ArrayList<>());
-        userHistoryList.add(history.getBookName());
+        userHistoryList.add(bookName);
         historyByUser.put(user.getName(), userHistoryList);
         save();
     }
