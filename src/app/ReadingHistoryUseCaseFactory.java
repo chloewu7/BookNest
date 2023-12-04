@@ -25,7 +25,7 @@ public class ReadingHistoryUseCaseFactory {
     public static ReadingHistoryView create(ViewManagerModel viewManagerModel, ReadingHistoryViewModel readingHistoryViewModel, FileHistoryDataAccessObject readingDataAccessObject) {
         try {
             ReadingHistoryController readingHistoryController = createReadingHistoryUseCase(readingHistoryViewModel, viewManagerModel, readingDataAccessObject);
-            AddingHistoryController addingHistoryController = createAddingHistoryUseCase()
+           // AddingHistoryController addingHistoryController = createAddingHistoryUseCase()
             return new ReadingHistoryView(readingHistoryViewModel, readingHistoryController, viewManagerModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open reading history data file.");
@@ -33,13 +33,15 @@ public class ReadingHistoryUseCaseFactory {
         return null;
     }
 
-    private static AddingHistoryController createAddingHistoryUseCase(AddingHistoryViewModel addingHistoryViewModel, ViewManagerModel viewManagerModel, FileHistoryDataAccessObject addinghistoryobj, HistoryFactory historyFactory)
+    /*private static AddingHistoryController createAddingHistoryUseCase(AddingHistoryViewModel addingHistoryViewModel, ViewManagerModel viewManagerModel, FileHistoryDataAccessObject addinghistoryobj, HistoryFactory historyFactory)
         throws IOException{
         AddingHistoryOutputBoundary addingHistoryPresenter = new AddingHistoryPresenter(viewManagerModel, addingHistoryViewModel);
         AddingHistoryInteractor addingHistoryInteractor = new AddingHistoryInteractor(addingHistoryPresenter, addinghistoryobj, historyFactory);
 
         return new AddingHistoryController((addingHistoryInteractor));
     }
+
+     */
     private static ReadingHistoryController createReadingHistoryUseCase(ReadingHistoryViewModel readingHistoryViewModel,
                                                                         ViewManagerModel viewManagerModel,
                                                                         FileHistoryDataAccessObject readingDataAccessObject) throws IOException {
