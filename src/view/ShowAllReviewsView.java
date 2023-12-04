@@ -2,6 +2,8 @@ package view;
 
 
 import interface_adapter.ViewManagerModel;
+import search.entity.Book;
+import search.service.interface_adapter.SearchState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
@@ -29,6 +31,14 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
     private final JTextField reviewContentInputField = new JTextField(30);
     private final JButton returnButton;
     private final JButton writeReviewsButton;
+    private JLabel allReviewTitle;
+    private JLabel ratingLable;
+    private JPanel allReviewsPanel;
+    private JPanel titleAndRatingPanel;
+    private JPanel titleAndRating;
+    private Color Orange = new Color(248, 152, 32);
+    private Color lightBlue = new Color(173, 216, 230);
+    private Color lightYellow = new Color(255, 255, 224);
     public ShowAllReviewsView(ViewManagerModel viewManagerModel,
                               ShowAllReviewsController showAllReviewsController,
                               ShowAllReviewsViewModel showAllReviewsViewModel,
@@ -39,31 +49,29 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         this.writeReviewsController = writeReviewsController;
         this.writeReviewsViewModel = writeReviewsViewModel;
         this.viewManagerModel = viewManagerModel;
+        writeReviewsViewModel.addPropertyChangeListener(this);
+        showAllReviewsViewModel.addPropertyChangeListener(this);
         this.setSize(1000, 600);
-        Color lightBlue = new Color(173, 216, 230);
-        Color lightYellow = new Color(255, 255, 224);
-        Color Orange = new Color(248, 152, 32);
-
         ShowAllReviewsState state = showAllReviewsViewModel.getState();
-        rating = state.getRating();
-        String ratingTxt = String.valueOf(rating);
-        JLabel rating = new JLabel("Rating:" + ratingTxt);
-        rating.setForeground(Orange);
-        rating.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        bookTitle = state.getBookTitle();
-        JLabel allReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + " for " + bookTitle
-                + "                                                                                             ");
-        allReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        JPanel titleAndRating = new JPanel();
 
-        titleAndRating.add(allReviewTitle);
-        titleAndRating.add(rating);
+        //rating = state.getRating();
+        //String ratingTxt = String.valueOf(rating);
+        //ratingLable = new JLabel("Rating:" + ratingTxt);
+        //ratingLable.setForeground(Orange);
+        //ratingLable.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        //allReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + "                                                                                     ");
+        //allReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        titleAndRating = new JPanel();
+        titleAndRating.setLayout(new BoxLayout(titleAndRating, BoxLayout.Y_AXIS));
+
+        //titleAndRating.add(allReviewTitle);
+        //titleAndRating.add(ratingLable);
         titleAndRating.setPreferredSize(new Dimension(1000, 130));
         titleAndRating.setBackground(lightYellow);
-        allReviewTitle.setForeground(Color.black);
 
-        JPanel titleAndRatingPanel  = new JPanel();
+        titleAndRatingPanel  = new JPanel();
         titleAndRatingPanel.setLayout(new GridBagLayout());
+        titleAndRatingPanel.setBackground(lightYellow);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -115,26 +123,14 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
 
 
 
-        JPanel allReviewsPanel = new JPanel();
+        allReviewsPanel = new JPanel();
         allReviewsPanel.setLayout(new BoxLayout(allReviewsPanel, BoxLayout.Y_AXIS));
         JScrollPane reviewsScrollPane = new JScrollPane(allReviewsPanel);
         reviewsScrollPane.setPreferredSize(new Dimension(1000, 490));
         allReviewsPanel.setBackground(lightBlue);
 
-        if (state.getNoReviewMessage() != null){
-            JLabel nonReviewMessage = new JLabel(state.getNoReviewMessage());
-            nonReviewMessage.setFont(new Font("SansSerif", Font.PLAIN, 20));
-            allReviewsPanel.add(nonReviewMessage);
-        } else {
-            for (String reviews : state.getReviewList()) {
-                JPanel reviewPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                reviewPanel.setBackground(lightBlue);
-                reviewPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
 
-                reviewPanel.add(new JLabel(reviews));
-                allReviewsPanel.add(reviewPanel);
-            }
-        }
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(lightBlue);
@@ -149,6 +145,52 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        ShowAllReviewsState state = (ShowAllReviewsState) evt.getNewValue();
+        if (state.getNoReviewMessage() != null) {
+            showNoReviewExistPage(state);
+        } else {
+            showAllReviewsPage(state);
+        }
+    }
 
+    private void showNoReviewExistPage(ShowAllReviewsState state) {
+        allReviewsPanel.removeAll();
+        JLabel nonReviewMessage = new JLabel(state.getNoReviewMessage());
+        nonReviewMessage.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        allReviewsPanel.add(nonReviewMessage);
+
+        allReviewsPanel.revalidate();
+        allReviewsPanel.repaint();
+        updateTitleLabel(state);
+    }
+
+    private void updateTitleLabel(ShowAllReviewsState state) {
+        titleAndRatingPanel.removeAll();
+        bookTitle = state.getBookTitle();
+        System.out.println("updateTitleLabel" + bookTitle);
+        allReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + " for " + bookTitle
+                + "             ");
+        allReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
+
+        rating = state.getRating();
+        String ratingTxt = String.valueOf(rating);
+        ratingLable = new JLabel("Rating:" + ratingTxt);
+        ratingLable.setForeground(Orange);
+        ratingLable.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        titleAndRatingPanel.add(allReviewTitle);
+        titleAndRatingPanel.add(ratingLable);
+        titleAndRatingPanel.revalidate();
+        titleAndRatingPanel.repaint();
+    }
+
+    private void showAllReviewsPage(ShowAllReviewsState state){
+        for (String reviews : state.getReviewList()) {
+            JPanel reviewPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            reviewPanel.setBackground(lightBlue);
+            reviewPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
+
+            reviewPanel.add(new JLabel(reviews));
+            allReviewsPanel.add(reviewPanel);
+        }
     }
 }
