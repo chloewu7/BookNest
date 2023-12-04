@@ -60,10 +60,9 @@ class FileReviewDataAccessObjectTest {
             assertFalse(fileReviewDataAccessObject.book_review_exists("no exist"));
             assertTrue(fileReviewDataAccessObject.user_review_exists("4.0student"));
             assertFalse(fileReviewDataAccessObject.user_review_exists("no name"));
-            assertEquals("4.0student\n" + "rating: 5\n" + "excellent book\n" + "2003-07-24", fileReviewDataAccessObject.retrieveAllBookReviews("ezpz4.0").get(0));
-            assertEquals("ezpz4.0       by excellent professor\n" + "rating: 5\n"+ "excellent book\n" + "2003-07-24", fileReviewDataAccessObject.retrieveAllMyReviews("4.0student").get(0));
-            assertEquals("ezpz4.0       by excellent professor\n" + "rating: 5\n"+ "excellent book\n" +
-                    "2003-07-24", fileReviewDataAccessObject.retrieveAllMyReviews("4.0student").get(0));
+            assertEquals("<html>4.0student<br>rating: 5<br><br>excellent book<br><br>2003-07-24", fileReviewDataAccessObject.retrieveAllBookReviews("ezpz4.0").get(0));
+            assertEquals("<html>ezpz4.0       by excellent professor<br>rating: 5<br>excellent book<br>2003-07-24", fileReviewDataAccessObject.retrieveAllMyReviews("4.0student").get(0));
+            assertEquals("<html>ezpz4.0       by excellent professor<br>rating: 5<br>excellent book<br>2003-07-24", fileReviewDataAccessObject.retrieveAllMyReviews("4.0student").get(0));
             assertEquals(5.0F, fileReviewDataAccessObject.retrieveRating("ezpz4.0"));
 
         } catch (IOException e){
@@ -97,17 +96,17 @@ class FileReviewDataAccessObjectTest {
             fileReviewDAO2.saveNewReview(review2);
             assertEquals((5.0F + 4.0F)/2, fileReviewDAO2.retrieveRating("good book"));
             List<String> reviewList = fileReviewDAO2.retrieveAllBookReviews("good book");
-            assertEquals("good reviewer\n" + "rating: 5\n" + "very good book\n" + "1999-09-09", reviewList.get(0));
-            assertEquals("another good reviewer\n" + "rating: 4\n" + "good book\n" + "1998-09-09", reviewList.get(1));
+            assertEquals("<html>good reviewer<br>rating: 5<br><br>very good book<br><br>1999-09-09", reviewList.get(0));
+            assertEquals("<html>another good reviewer<br>rating: 4<br><br>good book<br><br>1998-09-09", reviewList.get(1));
             fileReviewDAO2.saveNewReview(review3);
             fileReviewDAO2.saveNewReview(review4);
             assertEquals((3.0F + 5.0F) / 2, fileReviewDAO2.retrieveRating("normal book"));
             List<String> userReviewList = fileReviewDAO2.retrieveAllMyReviews("good reviewer");
-            assertEquals("good book       by good author\n" + "rating: 5\n" + "very good book\n" + "1999-09-09", userReviewList.get(0));
-            assertEquals("normal book       by normal author\n" + "rating: 5\n" + "normal book but I only gives 5 star\n" + "2018-09-09", userReviewList.get(1));
+            assertEquals("<html>good book       by good author<br>rating: 5<br>very good book<br>1999-09-09", userReviewList.get(0));
+            assertEquals("<html>normal book       by normal author<br>rating: 5<br>normal book but I only gives 5 star<br>2018-09-09", userReviewList.get(1));
             fileReviewDAO2.saveNewReview(review5);
             List<String> userReviewList2 = fileReviewDAO2.retrieveAllMyReviews("good reviewer");
-            assertEquals("good book       by good author\n" + "rating: 5\n" + "very good book so I read it for second time\n" + "2023-09-09", userReviewList2.get(0));
+            assertEquals("<html>good book       by good author<br>rating: 5<br>very good book so I read it for second time<br>2023-09-09", userReviewList2.get(0));
         } catch (IOException e){
             throw new RuntimeException(e);
         }
