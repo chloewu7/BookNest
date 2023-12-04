@@ -68,6 +68,8 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }catch (NullPointerException e){
+            throw  new NullPointerException();
         }
     }
 
