@@ -7,10 +7,7 @@ import view.ViewManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
@@ -25,7 +22,7 @@ public class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
 
     @Override
     public void presentHistory(ReadingHistoryOutputData outputData) {
-        ArrayList<String> history = outputData.getHistory();
+        List<String> history = outputData.getHistory();
 
         // Update the ViewModel with the history
         viewModel.setHistory(history);
