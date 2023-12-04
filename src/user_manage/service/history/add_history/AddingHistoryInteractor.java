@@ -11,8 +11,8 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
     private final HistoryFactory historyFactory;
 
     // Constructor with dependency injection for the output boundary, data access object, and history factory
-    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessInterface, HistoryFactory historyFactory) {
-        this.userDataAccessObject = userDataAccessInterface;
+    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessObject, HistoryFactory historyFactory) {
+        this.userDataAccessObject = userDataAccessObject;
         this.addingHistoryPresenter = addingHistoryOutputBoundary;
         this.historyFactory = historyFactory;
     }
@@ -24,7 +24,6 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
             User user = userDataAccessObject.getUserByName(addingHistoryInputData.getUserName());
             if (user == null) {
                 addingHistoryPresenter.prepareFailView("User not found.");
-                return;
             }
 
             // Create history record and add it to the user

@@ -23,6 +23,7 @@ import user_manage.service.collection_management.add_book.interface_adapter.AddB
 import user_manage.service.collection_management.add_book.interface_adapter.AddBookViewModel;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsState;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.history.add_history.AddingHistoryInputData;
 import user_manage.service.history.add_history.Interface_adapter.AddingHistoryState;
 import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
@@ -238,7 +239,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                                 searchState.setReadBookTitle(book.getTitle());
                                 AddingHistoryState addingHistoryState = addingHistoryViewModel.getState();
-                                addingHistoryState.setReadBook(searchState.getReadBookTitle());
+                                //addingHistoryState.setReadBook(searchState.getReadBookTitle());
+                                AddingHistoryInputData addingHistoryInputData = addingHistoryState.setReadBookInput(searchState.getUserName(),searchState.getReadBookTitle());
                             }
                         }
                     });
