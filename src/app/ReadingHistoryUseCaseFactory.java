@@ -22,26 +22,26 @@ import java.io.IOException;
 public class ReadingHistoryUseCaseFactory {
     private ReadingHistoryUseCaseFactory(){}
 
-    public static ReadingHistoryView create(ViewManagerModel viewManagerModel, ReadingHistoryViewModel readingHistoryViewModel, FileHistoryDataAccessObject readingDataAccessObject) {
+    public static ReadingHistoryView create(ViewManagerModel viewManagerModel, ReadingHistoryViewModel readingHistoryViewModel,AddingHistoryViewModel addingHistoryViewModel, FileHistoryDataAccessObject readingDataAccessObject) {
         try {
             ReadingHistoryController readingHistoryController = createReadingHistoryUseCase(readingHistoryViewModel, viewManagerModel, readingDataAccessObject);
-           // AddingHistoryController addingHistoryController = createAddingHistoryUseCase()
-            return new ReadingHistoryView(readingHistoryViewModel, readingHistoryController, viewManagerModel);
+            AddingHistoryController addingHistoryController = createAddingHistoryUseCase(addingHistoryViewModel, viewManagerModel,readingDataAccessObject);
+            return new ReadingHistoryView(readingHistoryViewModel, readingHistoryController, addingHistoryController, viewManagerModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open reading history data file.");
         }
         return null;
     }
 
-    /*private static AddingHistoryController createAddingHistoryUseCase(AddingHistoryViewModel addingHistoryViewModel, ViewManagerModel viewManagerModel, FileHistoryDataAccessObject addinghistoryobj, HistoryFactory historyFactory)
+    private static AddingHistoryController createAddingHistoryUseCase(AddingHistoryViewModel addingHistoryViewModel, ViewManagerModel viewManagerModel, FileHistoryDataAccessObject addinghistoryobj)
         throws IOException{
         AddingHistoryOutputBoundary addingHistoryPresenter = new AddingHistoryPresenter(viewManagerModel, addingHistoryViewModel);
-        AddingHistoryInteractor addingHistoryInteractor = new AddingHistoryInteractor(addingHistoryPresenter, addinghistoryobj, historyFactory);
+        AddingHistoryInteractor addingHistoryInteractor = new AddingHistoryInteractor(addingHistoryPresenter, addinghistoryobj);
 
         return new AddingHistoryController((addingHistoryInteractor));
     }
 
-     */
+
     private static ReadingHistoryController createReadingHistoryUseCase(ReadingHistoryViewModel readingHistoryViewModel,
                                                                         ViewManagerModel viewManagerModel,
                                                                         FileHistoryDataAccessObject readingDataAccessObject) throws IOException {
