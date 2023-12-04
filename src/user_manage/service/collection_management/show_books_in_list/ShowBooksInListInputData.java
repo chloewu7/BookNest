@@ -9,8 +9,8 @@ public class ShowBooksInListInputData {
         this.userName = userName;
         this.listName = listName;
     }
-    String getUserName() {return userName; }
-    String getListName() {
+    public String getUserName() {return userName; }
+    public String getListName() {
         return listName;
     }
 }

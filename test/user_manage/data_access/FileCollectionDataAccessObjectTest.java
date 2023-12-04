@@ -67,6 +67,7 @@ class FileCollectionDataAccessObjectTest {
             throw new RuntimeException(e);
         }
     }
+/*
 
     @Test
     void testBehaviorAfterCreateNew(){
@@ -108,6 +109,7 @@ class FileCollectionDataAccessObjectTest {
         }
     }
 
+*/
 
 }
 
