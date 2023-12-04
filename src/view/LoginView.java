@@ -2,6 +2,9 @@ package view;
 
 
 
+import interface_adapter.ViewManagerModel;
+import search.service.interface_adapter.SearchState;
+import search.service.interface_adapter.SearchViewModel;
 import user_manage.service.login.interface_adapter.LoginController;
 import user_manage.service.login.interface_adapter.LoginState;
 import user_manage.service.login.interface_adapter.LoginViewModel;
@@ -17,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -33,52 +37,65 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
 
-    final JButton logIn;
+    private SearchViewModel searchViewModel;
 
-    final JButton signUp;
+    private ViewManagerModel viewManagerModel;
+
     private final LoginController loginController;
 
     private final SignupController signupController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller,SignupViewModel signupViewModel , SignupController signupController) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, SignupViewModel signupViewModel ,
+                     SignupController signupController,
+                     SearchViewModel searchViewModel,
+                     ViewManagerModel viewManagerModel) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
-        this.signupController =signupController;
-        this.signupViewModel =signupViewModel;
+        this.signupController = signupController;
+        this.signupViewModel = signupViewModel;
         this.signupViewModel.addPropertyChangeListener(this);
+        this.searchViewModel = searchViewModel;
+        this.viewManagerModel = viewManagerModel;
+
+        setupUI();
+
+    }
+
+    private void setupUI(){
+
+        Color lightYellow = new Color(255, 255, 224);
+        Color lightBlue = new Color(173, 216, 230);
+
+        this.setBackground(lightBlue);
 
 
         JLabel title = new JLabel("Login Screen");
+        title.setSize(1000, 200);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("SansSerif", Font.BOLD, 16));
+
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel("Username"), usernameInputField);
+
+
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);
 
-        JPanel buttons = new JPanel();
-        logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
-        buttons.add(logIn);
-        signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(signUp);
+        usernameInfo.setBackground(lightYellow);
+        passwordInfo.setBackground(lightYellow);
 
+        JButton logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
+        logIn.addActionListener(this);
+        JButton signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         signUp.addActionListener(this);
-        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            LoginState currentState = loginViewModel.getState();
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
-                    }
-                }
-        );
+        logIn.setSize(100, 100);
+        signUp.setSize(100, 100);
+
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 
         usernameInputField.addKeyListener(new KeyListener() {
@@ -97,14 +114,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             public void keyReleased(KeyEvent e) {
             }
         });
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
 
         passwordInputField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         LoginState currentState = loginViewModel.getState();
-                        currentState.setPassword(passwordInputField.getText() + e.getKeyChar());
+                        currentState.setPassword(new String(passwordInputField.getText() + e.getKeyChar()));
                         loginViewModel.setState(currentState);
                     }
 
@@ -117,29 +134,87 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 });
 
+        logIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginState loginState = loginViewModel.getState();
+
+                String username = usernameInputField.getText();
+                String password = new String(passwordInputField.getPassword());
+
+
+
+                loginState.setUsername(username);
+                loginState.setPassword(password);
+
+                try {
+                    loginController.execute(username, password);
+                    String loginUserNameFail = loginState.getUsernameError();
+                    String loginPasswordError = loginState.getPasswordError();
+
+                    if (loginUserNameFail == null && loginPasswordError == null && !Objects.equals(username, "")
+                    && !Objects.equals(password, "")) {
+                        SearchState searchState = searchViewModel.getState();
+                        searchState.setUserName(username);
+                        searchViewModel.setState(searchState);
+                        viewManagerModel.setActiveView("Search");
+                    }
+                    else {
+
+                        JOptionPane.showMessageDialog(LoginView.this,
+                                "User does not exist or incorrect password.",
+                                "Login Failed",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(LoginView.this,
+                            ex.getMessage(),
+                            "Login Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+                viewManagerModel.firePropertyChanged();
+            }
+            });
+
+        signUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SignupState signupState = signupViewModel.getState();
+
+                String username = usernameInputField.getText();
+                String password = new String(passwordInputField.getPassword());
+
+                signupState.setUsername(username);
+                signupState.setPassword(password);
+
+                signupViewModel.setState(signupState);
+
+                viewManagerModel.setActiveView("sign up");
+                viewManagerModel.firePropertyChanged();
+
+            }
+        });
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
         this.add(passwordErrorField);
+
+        JPanel buttons = new JPanel();
+        buttons.add(logIn);
+        buttons.add(signUp);
+        buttons.setBackground(lightYellow);
         this.add(buttons);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource().equals(logIn)) {
-            String username = usernameInputField.getText();
-            String password = new String(passwordInputField.getPassword());
-            loginController.execute(username, password);
-        } else if (evt.getSource().equals(signUp)) {
-                SignupState currentState = signupViewModel.getState();
-
-                signupController.execute(
-                        currentState.getUsername(),
-                        currentState.getPassword(),
-                        currentState.getRepeatPassword()
-                );
-    }}
+        }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
