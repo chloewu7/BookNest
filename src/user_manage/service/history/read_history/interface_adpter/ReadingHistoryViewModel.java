@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class ReadingHistoryViewModel extends ViewModel {
     private ReadingHistoryState state;
@@ -31,7 +32,7 @@ public class ReadingHistoryViewModel extends ViewModel {
         notifyUpdate();
     }
 
-    public void setHistory(ArrayList<String> history) {
+    public void setHistory(List<String> history) {
         state.setHistory(history);
         notifyUpdate();
     }
