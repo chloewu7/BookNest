@@ -137,7 +137,7 @@ public class Main {
         //views.add(showMyReviewsView, showMyReviewsView.viewName);
 
         //uncomment to see searchView
-        viewManagerModel.setActiveView(searchView.viewName);
+        //viewManagerModel.setActiveView(searchView.viewName);
 
         //uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
@@ -172,7 +172,7 @@ public class Main {
         //TODO: 把个自的View从userManageViewList拿出来 添加到views里
 
 
-        //viewManagerModel.setActiveView(loginView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
 
         //viewManagerModel.setActiveView(showAllListsView.viewName);
 

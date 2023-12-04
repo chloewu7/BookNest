@@ -4,7 +4,7 @@ import user_manage.service.signup.interface_adapter.SignupState;
 
 public class UserCenterState {
 
-    private String username = "";
+    private String username;
 
     public UserCenterState(UserCenterState copy) {
         username = copy.username;

@@ -148,7 +148,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         userCenterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                searchViewModel.firePropertyChanged();
+                UserCenterState userCenterState = userCenterViewModel.getState();
+
+                SearchState searchState = searchViewModel.getState();
+
+                userCenterState.setUsername(searchState.getUserName());
+                userCenterViewModel.setState(userCenterState);
 
                 viewManagerModel.setActiveView("User Center");
                 viewManagerModel.firePropertyChanged();
@@ -248,6 +253,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         resultsPanel.revalidate();
         resultsPanel.repaint();
         searchTextField.setText("");
+        searchViewModel.setState(searchState);
     }
 
 
