@@ -6,5 +6,5 @@ public class ShowAllListsInputData {
     public ShowAllListsInputData(String userName) {
         this.userName = userName;
     }
-    String getUserName() {return userName; }
+    public String getUserName() {return userName; }
 }
