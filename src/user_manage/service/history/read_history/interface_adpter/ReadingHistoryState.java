@@ -33,6 +33,8 @@ public class ReadingHistoryState {
 
     public void setUserName(String userName){this.userName = userName;}
 
+    public String getUserName(){return this.userName;}
+
 
 
 }

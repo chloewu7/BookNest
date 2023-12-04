@@ -1,7 +1,9 @@
 package view;
 
 
+import interface_adapter.ViewManagerModel;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryState;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ReadingHistoryView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -19,26 +22,55 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     private final ReadingHistoryViewModel readingHistoryViewModel;
     private final ReadingHistoryController readingHistoryController;
 
+    private final ViewManagerModel viewManagerModel;
+
     private final JButton historyButton = new JButton("History");
+    private final JButton backButton = new JButton("Back"); // Back button
 
     public final String viewName = "History";
     private JTextArea historyTextArea;
 
-    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller) {
+
+
+    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller, ViewManagerModel viewManagerModel) {
         this.readingHistoryViewModel = readingHistoryViewModel;
         this.readingHistoryController = controller;
         this.readingHistoryViewModel.addPropertyChangeListener(this);
+        this.viewManagerModel = viewManagerModel;
 
-        historyButton.addActionListener(this);
+        ReadingHistoryState state = readingHistoryViewModel.getState();
+
+        historyButton.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource() == historyButton) {
+                        ReadingHistoryState readingHistoryState = readingHistoryViewModel.getState();
+                        readingHistoryState.setHistory(state.getHistory());
+                        readingHistoryState.setUserName(state.getUserName());
+                        createHistoryWindow();
+                    }
+                }
+        });
+        backButton.addActionListener(
+                new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == backButton){
+                    viewManagerModel.setActiveView("Search");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+
+
+        });
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(historyButton);
+        this.add(backButton); // Adding the back button to the view
     }
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == historyButton) {
-            createHistoryWindow();
-        }
-    }
+
+
 
     private void createHistoryWindow() {
         JDialog historyDialog = new JDialog();
@@ -65,18 +97,20 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("history".equals(evt.getPropertyName())) {
-            updateHistoryArea((Map<LocalDateTime, String>) evt.getNewValue());
+            updateHistoryArea((ArrayList<String>) evt.getNewValue());
         }
     }
 
-    private void updateHistoryArea(Map<LocalDateTime, String> history) {
+    private void updateHistoryArea(ArrayList<String> history) {
         StringBuilder historyText = new StringBuilder();
-        for (Map.Entry<LocalDateTime, String> entry : history.entrySet()) {
-            historyText.append(entry.getKey().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-                    .append(" - ")
-                    .append(entry.getValue())
-                    .append("\n");
+        for (String record : history) {
+            historyText.append(record).append("\n");
         }
         historyTextArea.setText(historyText.toString());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

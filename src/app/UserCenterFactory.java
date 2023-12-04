@@ -77,7 +77,7 @@ public class UserCenterFactory {
                     createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
             userManageViewList.add(showAllListsView);
 
-            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, readingHistoryController);
+            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, readingHistoryController, viewManagerModel);
             userManageViewList.add(readingHistoryView);
             //TODO：新建showMyHistoryView和showMyCollectionView
             //TODO：把新建的View加到 userManageViewList
