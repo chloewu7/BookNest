@@ -27,7 +27,7 @@ public class WriteReviewsInteractor implements WriteReviewsInputBoundary {
         Integer rating = writeReviewsInputData.getRating();
         String reviewContent = writeReviewsInputData.getReviewContent();
         LocalDateTime current = LocalDateTime.now();
-        Review newReview = reviewFactory.create(bookTitle, reviewer, bookAuthor, rating, reviewContent, current);
+        Review newReview = reviewFactory.create(bookTitle, bookAuthor, reviewer, rating, reviewContent, current);
         writeReviewsDataAccessObject.saveNewReview(newReview);
         WriteReviewsOutputData writeReviewsOutputData = new WriteReviewsOutputData(bookTitle, current.toString());
         writeReviewsPresenter.prepareSuccessView(writeReviewsOutputData);
