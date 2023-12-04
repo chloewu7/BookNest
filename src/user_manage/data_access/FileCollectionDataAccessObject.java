@@ -18,7 +18,7 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
         ShowAllListsDataAccessInterface, ShowBooksInListDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> header = new LinkedHashMap<>();
-    private final Map<String, Map<String, Map<String, String>>> userLists = new HashMap<>(); //<userName, listsMap>
+    private Map<String, Map<String, Map<String, String>>> userLists = new HashMap<>(); //<userName, listsMap>
     private CollectionListFactory collectionListFactory;
 
     public FileCollectionDataAccessObject(File csvFile, CollectionListFactory collectionListFactory) throws IOException {
