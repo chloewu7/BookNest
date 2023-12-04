@@ -18,7 +18,7 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
         ShowAllListsDataAccessInterface, ShowBooksInListDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> header = new LinkedHashMap<>();
-    private final Map<String, Map<String, Map<String, String>>> userLists = new HashMap<>(); //<userName, listsMap>
+    private Map<String, Map<String, Map<String, String>>> userLists = new HashMap<>(); //<userName, listsMap>
     private CollectionListFactory collectionListFactory;
 
     public FileCollectionDataAccessObject(File csvFile, CollectionListFactory collectionListFactory) throws IOException {
@@ -93,6 +93,9 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
         }
     }
 
+    public Map<String, Map<String, Map<String, String>>> getUserLists() {
+        return userLists;
+    }
 
     @Override
     public List<String> getListsName(String userName) {
@@ -132,14 +135,4 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
         Map<String, String> books = lists.get(listName);
         books.put(bookTitle, bookAuthor);
     }
-
-//    @Override
-//    public CollectionList getCollectionListByName(String name) {
-//        for (CollectionList list : collectionLists) {
-//            if (list.getName().equals(name)) {
-//                return list;
-//            }
-//        }
-//        return null;
-//    }
 }
