@@ -21,7 +21,7 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
         this.historyFactory = historyFactory;
 
         header.put("username", 0);
-        header.put("book_name", 1);
+        header.put("bookname", 1);
 
         if (csvFile.length() == 0) {
             save();
@@ -29,7 +29,7 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String headers = reader.readLine();
 
-                assert headers.equals("username,book_name");
+                assert headers.equals("username,bookname");
 
                 String currentRow;
                 while ((currentRow = reader.readLine()) != null) {
@@ -41,6 +41,7 @@ public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInter
                     List<String> userHistoryList = historyByUser.getOrDefault(username, new ArrayList<>());
                     userHistoryList.add(history.getBookName());
                     historyByUser.put(username, userHistoryList);
+
                 }
             }
         }
