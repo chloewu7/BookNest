@@ -25,10 +25,23 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     private final ViewManagerModel viewManagerModel;
 
     private final JButton historyButton = new JButton("History");
-    private final JButton backButton = new JButton("Back"); // Back button
+    private JButton backButton = new JButton("return"); // Back button
 
     public final String viewName = "History";
     private JTextArea historyTextArea;
+
+    private JPanel History;
+
+    private JPanel Title;
+
+    private JLabel readBookTitle;
+
+    private final JPanel historyPanel = new JPanel();
+    private final JScrollPane scrollPane = new JScrollPane(historyPanel);
+
+    private Color Orange = new Color(248, 152, 32);
+    private Color lightBlue = new Color(173, 216, 230);
+    private Color lightYellow = new Color(255, 255, 224);
 
 
 
@@ -37,10 +50,70 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         this.readingHistoryController = controller;
         this.readingHistoryViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
+        this.setSize(1000,600);
+
+        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+        historyPanel.setBackground(lightBlue);
+
+        scrollPane.getViewport().setBackground(lightBlue);
+        scrollPane.setPreferredSize(new Dimension(700, 300));
+        JLabel titleLabel = new JLabel("Reading History", SwingConstants.CENTER);
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(lightYellow);
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
+        titleLabel.setPreferredSize(new Dimension(900, 50));
+
+        this.setLayout(new BorderLayout());
+        this.add(titleLabel, BorderLayout.NORTH);
+
+        this.add(scrollPane, BorderLayout.CENTER);
+
+
+
+
+
+        /*History = new JPanel();
+        History.setLayout(new BoxLayout(History, BoxLayout.Y_AXIS));
+        History.setPreferredSize(new Dimension(900,500));
+        History.setBackground(lightBlue);
+
+        Title = new JPanel();
+        Title.setLayout(new GridBagLayout());
+        Title.setBackground(lightYellow);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx =1.0;
+        gbc.weighty =1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        Title.add(History, gbc);
+
+         */
+
+
+
+        backButton.setPreferredSize(new Dimension(130, 60));
+        backButton.setBackground(lightBlue);
+        backButton.setFont(new Font("SansSerif", Font.BOLD, 12));
+        JPanel button = new JPanel();
+        button.add(backButton);
+        button.setBackground(lightYellow);
+        button.setPreferredSize(new Dimension(1000, 90));
+
+
+        this.add(button, BorderLayout.SOUTH);
+
+
+
+
 
         ReadingHistoryState state = readingHistoryViewModel.getState();
+        readingHistoryController.fetchUserHistory();
 
-        historyButton.addActionListener(
+
+
+
+        /*historyButton.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource() == historyButton) {
@@ -50,7 +123,8 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
                         createHistoryWindow();
                     }
                 }
-        });
+        });*/
+
         backButton.addActionListener(
                 new ActionListener() {
 
@@ -64,15 +138,15 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
 
         });
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(historyButton);
-        this.add(backButton); // Adding the back button to the view
+        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //this.add(historyButton);
+        //this.add(backButton); // Adding the back button to the view
     }
 
 
 
 
-    private void createHistoryWindow() {
+    /*private void createHistoryWindow() {
         JDialog historyDialog = new JDialog();
         historyDialog.setTitle("User Reading History");
         historyDialog.setSize(500, 400);
@@ -94,6 +168,8 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         readingHistoryController.fetchUserHistory();
     }
 
+     */
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("history".equals(evt.getPropertyName())) {
@@ -102,12 +178,14 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     }
 
     private void updateHistoryArea(ArrayList<String> history) {
-        StringBuilder historyText = new StringBuilder();
+        historyPanel.removeAll();
         for (String record : history) {
-            historyText.append(record).append("\n");
+            JLabel historyLabel = new JLabel(record);
+            historyLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            historyPanel.add(historyLabel);
         }
-        historyTextArea.setText(historyText.toString());
-    }
+        historyPanel.revalidate();
+        historyPanel.repaint();}
 
     @Override
     public void actionPerformed(ActionEvent e) {
