@@ -45,10 +45,10 @@ public class AddingHistoryState {
 
     public void setUserName(String userName){this.userName = userName;}
 
-    public AddingHistoryInputData setReadBookInput(String username, String booName){
-        AddingHistoryInputData addingHistoryInputData = new AddingHistoryInputData(userName, bookName);
-        return addingHistoryInputData;
-    }
+    //public AddingHistoryInputData setReadBookInput(String username, String booName){
+        //AddingHistoryInputData addingHistoryInputData = new AddingHistoryInputData(userName, bookName);
+        //return addingHistoryInputData;
+    //}
 
 
     @Override
