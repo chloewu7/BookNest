@@ -12,6 +12,11 @@ public class ShowAllReviewsState {
     public String username;
     private List<String> reviewList = new ArrayList<>();
     private String noReviewMessage = null;
+    private String author;
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
     public ShowAllReviewsState(){}
 
     public List<String> getReviewList() {
@@ -52,4 +57,9 @@ public class ShowAllReviewsState {
     public String getUsername() {
         return username;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
 }
