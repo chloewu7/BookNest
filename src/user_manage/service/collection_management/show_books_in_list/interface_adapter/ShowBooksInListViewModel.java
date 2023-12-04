@@ -10,7 +10,7 @@ public class ShowBooksInListViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private ShowBooksInListState state = new ShowBooksInListState();
     public ShowBooksInListViewModel() {
-        super("show books in list");
+        super("books in list");
     }
 
     @Override
