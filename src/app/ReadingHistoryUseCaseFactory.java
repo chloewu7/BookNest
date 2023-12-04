@@ -18,7 +18,7 @@ public class ReadingHistoryUseCaseFactory {
     public static ReadingHistoryView create(ViewManagerModel viewManagerModel, ReadingHistoryViewModel readingHistoryViewModel, FileHistoryDataAccessObject readingDataAccessObject) {
         try {
             ReadingHistoryController readingHistoryController = createReadingHistoryUseCase(readingHistoryViewModel, viewManagerModel, readingDataAccessObject);
-            return new ReadingHistoryView(readingHistoryViewModel, readingHistoryController);
+            return new ReadingHistoryView(readingHistoryViewModel, readingHistoryController, viewManagerModel);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open reading history data file.");
         }

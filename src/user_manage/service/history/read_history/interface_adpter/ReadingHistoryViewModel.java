@@ -10,6 +10,10 @@ import java.util.LinkedHashMap;
 
 public class ReadingHistoryViewModel extends ViewModel {
     private ReadingHistoryState state;
+
+    public static final String TITLE_LABEL = "History";
+
+    public static final String RETURN_BUTTON_LABEL = "return to search";
     private final PropertyChangeSupport support;
 
     public ReadingHistoryViewModel() {
