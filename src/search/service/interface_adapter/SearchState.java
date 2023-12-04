@@ -21,6 +21,8 @@ public class SearchState {
     }
     public SearchState(){}
     public List<Book> getBooks(){return books;}
+    public String getNotFound(){return notFound;}
+    public String getKeywordError(){return keywordError;}
     public String getCommentBookTitle(){return commentBookTitle;}
     public Book getCollectedBook(){return collectedBook;}
     public String getUserName(){return userName;}
