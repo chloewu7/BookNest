@@ -2,12 +2,9 @@ package view;
 
 
 import interface_adapter.ViewManagerModel;
-import search.entity.Book;
-import search.service.interface_adapter.SearchState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsController;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsState;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
-import user_manage.service.reading_review.show_my_reviews.interface_adapter.ShowMyReviewsState;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsController;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsState;
 import user_manage.service.reading_review.write_reviews.interface_adapter.WriteReviewsViewModel;
@@ -55,18 +52,9 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
         this.setSize(1000, 600);
         ShowAllReviewsState state = showAllReviewsViewModel.getState();
 
-        //rating = state.getRating();
-        //String ratingTxt = String.valueOf(rating);
-        //ratingLable = new JLabel("Rating:" + ratingTxt);
-        //ratingLable.setForeground(Orange);
-        //ratingLable.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        //allReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + "                                                                                     ");
-        //allReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
         titleAndRating = new JPanel();
         titleAndRating.setLayout(new BoxLayout(titleAndRating, BoxLayout.Y_AXIS));
 
-        //titleAndRating.add(allReviewTitle);
-        //titleAndRating.add(ratingLable);
         titleAndRating.setPreferredSize(new Dimension(1000, 130));
         titleAndRating.setBackground(lightYellow);
 
