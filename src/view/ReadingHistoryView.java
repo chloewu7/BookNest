@@ -2,6 +2,7 @@ package view;
 
 
 import interface_adapter.ViewManagerModel;
+import user_manage.service.history.add_history.Interface_adapter.AddingHistoryController;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryState;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
@@ -24,6 +25,8 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
 
     private final ViewManagerModel viewManagerModel;
 
+
+
     private final JButton historyButton = new JButton("History");
     private JButton backButton = new JButton("return"); // Back button
 
@@ -43,11 +46,14 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     private Color lightBlue = new Color(173, 216, 230);
     private Color lightYellow = new Color(255, 255, 224);
 
+    private final AddingHistoryController addingHistoryController;
 
 
-    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller, ViewManagerModel viewManagerModel) {
+
+    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller, AddingHistoryController addingHistoryController, ViewManagerModel viewManagerModel) {
         this.readingHistoryViewModel = readingHistoryViewModel;
         this.readingHistoryController = controller;
+        this.addingHistoryController = addingHistoryController;
         this.readingHistoryViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
         this.setSize(1000,600);
