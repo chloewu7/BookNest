@@ -116,9 +116,9 @@ public class Main {
         views.add(signupView, signupView.viewName);
 
         // create Login View
-        LoginViewModel loginViewModel1 = new LoginViewModel();
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,signupViewModel, userDataAccessObject, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,signupViewModel,
+                userDataAccessObject, userDataAccessObject);
         views.add(loginView,loginView.viewName);
 
         // create ShowAllLists View
@@ -137,7 +137,7 @@ public class Main {
         //views.add(showMyReviewsView, showMyReviewsView.viewName);
 
         //uncomment to see searchView
-        //viewManagerModel.setActiveView(searchView.viewName);
+        viewManagerModel.setActiveView(searchView.viewName);
 
         //uncomment to see showAllReviewsView
         //viewManagerModel.setActiveView(showAllReviewsView.viewName);
