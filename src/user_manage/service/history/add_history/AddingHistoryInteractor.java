@@ -8,13 +8,13 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
 
     private final AddingHistoryOutputBoundary addingHistoryPresenter;
     private final AddingHistoryDataAccessInterface userDataAccessObject;
-    private final HistoryFactory historyFactory;
+    //private final HistoryFactory historyFactory;
 
     // Constructor with dependency injection for the output boundary, data access object, and history factory
-    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessObject, HistoryFactory historyFactory) {
+    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessObject) {
         this.userDataAccessObject = userDataAccessObject;
         this.addingHistoryPresenter = addingHistoryOutputBoundary;
-        this.historyFactory = historyFactory;
+        //this.historyFactory = historyFactory;
     }
 
     @Override
@@ -27,8 +27,8 @@ public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
             }
 
             // Create history record and add it to the user
-            History history = historyFactory.create(addingHistoryInputData.getBookName());
-            userDataAccessObject.addHistoryToUser(user, history);
+
+            userDataAccessObject.addHistoryToUser(user, addingHistoryInputData.getBookName());
 
             // If successful, prepare the success view
             AddingHistoryOutputData addingHistoryOutputData = new AddingHistoryOutputData(true, "History added successfully for user " + addingHistoryInputData.getUserName());
