@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
 
 public class ShowAllReviewsView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "all reviews";
@@ -111,9 +112,11 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(writeReviewsButton)) {
-                            String username = state.getUsername();
                             WriteReviewsState writeReviewsState = writeReviewsViewModel.getState();
-                            writeReviewsState.setUsername(username);
+                            writeReviewsState.setUsername(state.getUsername());
+                            writeReviewsState.setBookTitle(state.getBookTitle());
+                            writeReviewsState.setAuthor(state.getAuthor());
+                            writeReviewsViewModel.setState(writeReviewsState);
                             viewManagerModel.setActiveView("write review");
                             viewManagerModel.firePropertyChanged();
                         }
@@ -167,30 +170,37 @@ public class ShowAllReviewsView extends JPanel implements ActionListener, Proper
     private void updateTitleLabel(ShowAllReviewsState state) {
         titleAndRatingPanel.removeAll();
         bookTitle = state.getBookTitle();
-        System.out.println("updateTitleLabel" + bookTitle);
         allReviewTitle = new JLabel(ShowAllReviewsViewModel.TITLE_LABEL + " for " + bookTitle
                 + "             ");
         allReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
 
         rating = state.getRating();
-        String ratingTxt = String.valueOf(rating);
-        ratingLable = new JLabel("Rating:" + ratingTxt);
+        // Create a DecimalFormat instance with the desired format
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+        // Format the float value to a String with two decimal places
+        ratingLable = new JLabel("Rating:" + decimalFormat.format(state.getRating()));
         ratingLable.setForeground(Orange);
         ratingLable.setFont(new Font("SansSerif", Font.PLAIN, 20));
         titleAndRatingPanel.add(allReviewTitle);
         titleAndRatingPanel.add(ratingLable);
-        titleAndRatingPanel.revalidate();
         titleAndRatingPanel.repaint();
     }
 
     private void showAllReviewsPage(ShowAllReviewsState state){
+        allReviewsPanel.removeAll();
         for (String reviews : state.getReviewList()) {
             JPanel reviewPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             reviewPanel.setBackground(lightBlue);
             reviewPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
 
-            reviewPanel.add(new JLabel(reviews));
+            JLabel review = new JLabel(reviews);
+            review.setFont(new Font("SansSerif", Font.PLAIN, 20));
+
+            reviewPanel.add(review);
             allReviewsPanel.add(reviewPanel);
         }
+        allReviewsPanel.repaint();
+        updateTitleLabel(state);
     }
 }
