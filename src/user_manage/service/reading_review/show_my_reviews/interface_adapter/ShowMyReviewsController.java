@@ -12,6 +12,7 @@ public class ShowMyReviewsController {
     }
 
     public void execute(String username){
+        System.out.println("showMyReviewController execute");
         ShowMyReviewsInputData showMyReviewsInputData = new ShowMyReviewsInputData(username);
         showMyReviewsInteractor.execute(showMyReviewsInputData);
     }

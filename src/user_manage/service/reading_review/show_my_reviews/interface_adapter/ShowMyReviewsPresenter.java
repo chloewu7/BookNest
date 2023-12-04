@@ -17,6 +17,7 @@ public class ShowMyReviewsPresenter implements ShowMyReviewsOutputBoundary {
 
     @Override
     public void prepareSuccessView(ShowMyReviewsOutputData showMyReviewsOutputData) {
+        System.out.println("prepareSuccessReviewView");
         ShowMyReviewsState showMyReviewsState = showMyReviewsViewModel.getState();
         showMyReviewsState.setReviewList(showMyReviewsOutputData.getReviewList());
 
@@ -29,6 +30,7 @@ public class ShowMyReviewsPresenter implements ShowMyReviewsOutputBoundary {
 
     @Override
     public void prepareNoReviewView(String noReviewMessage) {
+        System.out.println("prepareNoReviewView");
         ShowMyReviewsState showMyReviewsState = showMyReviewsViewModel.getState();
         showMyReviewsState.setNoReviewMessage(noReviewMessage);
         showMyReviewsViewModel.firePropertyChanged();
