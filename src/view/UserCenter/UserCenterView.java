@@ -72,10 +72,12 @@ public class UserCenterView extends JPanel {
         Color lightYellow = new Color(255, 255, 224);
         Color lightBlue = new Color(173, 216, 230);
 
-        UserCenterState state = userCenterViewModel.getState();
+        SearchState searchState = searchViewModel.getState();
 
-        String myUsername = "";
-        myUsername = state.getUsername();
+        UserCenterState state = userCenterViewModel.getState();
+        state.setUsername(searchState.getUserName());
+
+        String myUsername = state.getUsername();
 
         JLabel username = new JLabel("User Center for " + myUsername);
         username.setFont(new Font("Lucida Grande", 0, 20));
@@ -139,10 +141,10 @@ public class UserCenterView extends JPanel {
         reviewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = state.getUsername();
+                String userName = state.getUsername();
                 ShowMyReviewsState showMyReviewsState = showMyReviewsViewModel.getState();
-                showMyReviewsState.setUsername(username);
-                showMyReviewsController.execute(username);
+                showMyReviewsState.setUsername(userName);
+                showMyReviewsController.execute(userName);
                 viewManagerModel.setActiveView("my reviews");
                 viewManagerModel.firePropertyChanged();
             }
@@ -151,9 +153,9 @@ public class UserCenterView extends JPanel {
         historyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = state.getUsername();
+                String userName = state.getUsername();
                 ReadingHistoryState readingHistoryState = readingHistoryViewModel.getState();
-                readingHistoryState.setUserName(username);
+                readingHistoryState.setUserName(userName);
                 readingHistoryController.fetchUserHistory();
                 viewManagerModel.setActiveView("History");
                 viewManagerModel.firePropertyChanged();

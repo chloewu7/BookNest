@@ -13,7 +13,7 @@ public class UserCenterViewModel extends ViewModel {
     private UserCenterState state = new UserCenterState();
 
     public UserCenterViewModel(){
-        super("user center");
+        super("User Center");
     }
 
     public void setState(UserCenterState state){
