@@ -3,16 +3,17 @@ package user_manage.service.history.read_history;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReadingHistoryOutputData {
-    private final ArrayList<String> history;
+    private final List<String> history;
 
-    public ReadingHistoryOutputData(ArrayList<String> history) {
+    public ReadingHistoryOutputData(List<String> history) {
         this.history = history;
     }
 
-    public ArrayList<String>getHistory() {
+    public List<String>getHistory() {
         return history;
     }
 
