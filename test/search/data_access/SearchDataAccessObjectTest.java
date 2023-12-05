@@ -1,6 +1,8 @@
 package search.data_access;
 
 import search.entity.Book;
+
+import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,34 @@ class SearchDataAccessObjectTest {
             "[\"F. Scott Fitzgerald\"],\"isbn\":[\"1234567890\"]}]}";
 
     private class TestableSearchDataAccessObject extends SearchDataAccessObject{
-        protected String makeApiCall(String urlString){
+
+        private boolean shouldSimulateHttpError;
+        private boolean shouldSimulateIOException;
+        private boolean shouldSimulateMalformedJson;
+
+        protected String makeApiCall(String urlString) {
+            if (shouldSimulateHttpError) {
+                throw new RuntimeException("HttpResponseCode: 404");
+            }
+            if (shouldSimulateIOException) {
+                throw new RuntimeException("Error during API calling", new IOException());
+            }
+            if (shouldSimulateMalformedJson) {
+                return "{\"malformedJson\":true}";
+            }
             return sampleJsonResponse;
+        }
+
+        public void setShouldSimulateHttpError(boolean shouldSimulateHttpError) {
+            this.shouldSimulateHttpError = shouldSimulateHttpError;
+        }
+
+        public void setShouldSimulateIOException(boolean shouldSimulateIOException) {
+            this.shouldSimulateIOException = shouldSimulateIOException;
+        }
+
+        public void setShouldSimulateMalformedJson(boolean shouldSimulateMalformedJson) {
+            this.shouldSimulateMalformedJson = shouldSimulateMalformedJson;
         }
     }
 
@@ -56,5 +84,20 @@ class SearchDataAccessObjectTest {
         assertFalse(books.isEmpty(), "The search should return at least one book");
         assertEquals("1234567890", books.get(0).getISBN(),
                 "The book ISBN should match the expected ISBN");
+    }
+
+    @Test
+    void searchApiCallHttpError() {
+
+    }
+
+    @Test
+    void searchApiCallIOException() {
+
+    }
+
+    @Test
+    void searchMalformedJsonResponse() {
+
     }
 }
