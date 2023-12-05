@@ -15,7 +15,6 @@ public class ShowMyReviewsInteractor implements ShowMyReviewsInputBoundary{
     @Override
     public void execute(ShowMyReviewsInputData showMyReviewsInputData) {
         String username = showMyReviewsInputData.getUsername();
-        System.out.println("interactor execute");
         if (! showMyReviewsDataAccessObject.user_review_exists(username)){
             System.out.println("interactor review not exists execute");
             showMyReviewsPresenter.prepareNoReviewView("<html>You haven't posted any reviews yet. <br>Share your " +
