@@ -20,6 +20,31 @@ class SearchStateTest {
     }
 
     @Test
+    void copyConstructor() {
+        searchState.setBooks(Arrays.asList(new CommonBook("Title1", "Author1",
+                "Category1", "ISBN1")));
+        searchState.setNotFound("Not found message");
+        searchState.setKeywordError("Keyword error message");
+
+        SearchState copiedState = new SearchState(searchState);
+
+        assertEquals(searchState.getBooks(), copiedState.getBooks());
+        assertEquals(searchState.getNotFound(), copiedState.getNotFound());
+        assertEquals(searchState.getKeywordError(), copiedState.getKeywordError());
+    }
+
+    @Test
+    void setFieldsToNull() {
+        searchState.setBooks(null);
+        searchState.setNotFound(null);
+        searchState.setKeywordError(null);
+
+        assertNull(searchState.getBooks());
+        assertNull(searchState.getNotFound());
+        assertNull(searchState.getKeywordError());
+    }
+
+    @Test
     void getBooks() {
 
         Book book1 = new CommonBook("The Great Gatsby", "F. Scott Fitzgerald", "Fiction",
