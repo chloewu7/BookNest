@@ -1,6 +1,5 @@
 package view.UserCenter;
 
-import app.ShowMyReviewsUseCaseFactory;
 import interface_adapter.ViewManagerModel;
 import search.service.interface_adapter.SearchController;
 import search.service.interface_adapter.SearchState;
