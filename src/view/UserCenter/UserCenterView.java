@@ -26,10 +26,10 @@ import java.beans.PropertyChangeListener;
 public class UserCenterView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "User Center";
-    private JButton collectionButton;
-    private JButton historyButton;
-    private JButton reviewButton;
-    private JButton searchButton;
+    JButton collectionButton;
+    JButton historyButton;
+    JButton reviewButton;
+    JButton searchButton;
     private ViewManagerModel viewManagerModel;
     private UserCenterViewModel userCenterViewModel;
     private ShowMyReviewsViewModel showMyReviewsViewModel;
