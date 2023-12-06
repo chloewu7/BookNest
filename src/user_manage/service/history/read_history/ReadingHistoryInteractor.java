@@ -1,5 +1,7 @@
 package user_manage.service.history.read_history;
 
+import user_manage.entity.User;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,11 +18,20 @@ public class ReadingHistoryInteractor implements ReadingHistoryInputBoundary {
     }
 
     @Override
-    public void execute() {
+    public void execute(ReadingHistoryInputData readingHistoryInputData) {
         try {
             // Assuming the user's ID is retrieved from the context/session
-            String userId = getCurrentUserId();
-            List<String> history = userDataAccessObject.getHistoryByUserId(userId);
+            //String userId = getCurrentUserId();
+            User user = userDataAccessObject.getUserByName(readingHistoryInputData.getUserName());
+            if (user == null) {
+                outputBoundary.handleFailure("User not found.");
+            }
+
+            // Create history record and add it to the user
+
+            userDataAccessObject.addHistoryToUser(user, readingHistoryInputData.getBookName());
+
+            List<String> history = userDataAccessObject.getHistoryByUserId(user.getName());
 
             // Pass the history data to the output boundary
             ReadingHistoryOutputData outputData = new ReadingHistoryOutputData(history);

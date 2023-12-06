@@ -35,7 +35,13 @@ import user_manage.service.collection_management.show_all_lists.ShowAllListsOutp
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
-import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
+import user_manage.service.history.read_history.ReadingHistoryDataAccessInterface;
+import user_manage.service.history.read_history.ReadingHistoryInputBoundary;
+import user_manage.service.history.read_history.ReadingHistoryInteractor;
+import user_manage.service.history.read_history.ReadingHistoryOutputBoundary;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryPresenter;
+import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsDataAccessInterface;
 import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsInteractor;
 import user_manage.service.reading_review.show_all_reviews.ShowAllReviewsOutputBoundary;
@@ -81,8 +87,8 @@ public class SearchUseCaseFactory {
                                       FileReviewDataAccessObject reviewDataAccessObject,
                                       AddBookViewModel addBookViewModel, AddBookDataAccessInterface
                                               addBookDataAccessObject, ShowAllListsViewModel showAllListsViewModel,
-                                      UserCenterViewModel userCenterViewModel, AddingHistoryViewModel
-                                      addingHistoryViewModel){
+                                      UserCenterViewModel userCenterViewModel, ReadingHistoryViewModel readingHistoryViewModel,
+                                      ReadingHistoryDataAccessInterface readingHistoryDAO){
 
         SearchController searchController = createSearchController(searchViewModel, searchDataAccessObject);
         try {
@@ -101,10 +107,13 @@ public class SearchUseCaseFactory {
             AddBookController addBookController = createAddBookController(viewManagerModel, addBookViewModel,
                     addBookDataAccessObject);
 
+            ReadingHistoryController readingHistoryController =createReadingHistoryController(viewManagerModel,readingHistoryViewModel,
+                    readingHistoryDAO);
+
 
             SearchView searchView = new SearchView(searchController, searchViewModel, viewManagerModel,
                     showAllReviewsController, showAllReviewsViewModel, addBookController, addBookViewModel,
-                    showAllListsViewModel, userCenterViewModel, addingHistoryViewModel);
+                    showAllListsViewModel, userCenterViewModel,readingHistoryViewModel,readingHistoryController);
 
             searchViewList.add(searchView);
             searchViewList.add(showAllReviewsView);
@@ -156,6 +165,16 @@ public class SearchUseCaseFactory {
         AddBookController addBookController = new AddBookController(addBookInteractor);
 
         return addBookController;
+    }
+
+    private static ReadingHistoryController createReadingHistoryController(ViewManagerModel viewManagerModel,
+                                                                           ReadingHistoryViewModel readingHistoryViewModel,
+                                                                           ReadingHistoryDataAccessInterface readingHistoryDAO){
+        ReadingHistoryOutputBoundary presenter = new ReadingHistoryPresenter(readingHistoryViewModel,viewManagerModel);
+        ReadingHistoryInputBoundary interactor = new ReadingHistoryInteractor(presenter,readingHistoryDAO);
+        ReadingHistoryController controller = new ReadingHistoryController(interactor);
+
+        return controller;
     }
 
 

@@ -24,12 +24,7 @@ import user_manage.service.collection_management.show_all_lists.interface_adapte
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
-import user_manage.service.history.add_history.AddingHistoryDataAccessInterface;
-import user_manage.service.history.add_history.AddingHistoryInteractor;
-import user_manage.service.history.add_history.AddingHistoryOutputBoundary;
-import user_manage.service.history.add_history.Interface_adapter.AddingHistoryController;
-import user_manage.service.history.add_history.Interface_adapter.AddingHistoryPresenter;
-import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
+
 import user_manage.service.history.read_history.ReadingHistoryDataAccessInterface;
 import user_manage.service.history.read_history.ReadingHistoryInteractor;
 import user_manage.service.history.read_history.ReadingHistoryOutputBoundary;
@@ -63,7 +58,7 @@ public class UserCenterFactory {
                                       SearchViewModel searchViewModel, SearchDataAccessObject searchDataAccessObject,
                                       ShowAllListsViewModel showAllListsViewModel, FileCollectionDataAccessObject collectionDataAccessObject,
                                       CreateListViewModel createListViewModel, ShowBooksInListViewModel showBooksInListViewModel, ReadingHistoryViewModel
-                                      readingHistoryViewModel, AddingHistoryViewModel addingHistoryViewModel, FileHistoryDataAccessObject HistoryDAO) {
+                                      readingHistoryViewModel, FileHistoryDataAccessObject HistoryDAO) {
         try {
             //TODO:创建showMyHistoryController和showMyCollectionController
             ShowMyReviewsController showMyReviewsController = createShowMyReviewUseCase(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
@@ -71,7 +66,7 @@ public class UserCenterFactory {
             ShowAllListsController showAllListsController = createShowAllListsUseCase(viewManagerModel, showAllListsViewModel, collectionDataAccessObject);
             CreateListController createListController = createCreateListUseCase(viewManagerModel,createListViewModel, collectionDataAccessObject);
             ReadingHistoryController readingHistoryController =createHistoryController(viewManagerModel, readingHistoryViewModel, HistoryDAO);
-            AddingHistoryController addingHistoryController=createAddHistoryController(viewManagerModel,addingHistoryViewModel,HistoryDAO);
+            //AddingHistoryController addingHistoryController=createAddHistoryController(viewManagerModel,addingHistoryViewModel,HistoryDAO);
 
             //TODO：用刚才新建的的Controller和ViewModel创建一个新的userCenterView（加在参数里）
             List<JPanel> userManageViewList = new ArrayList<>();
@@ -84,7 +79,7 @@ public class UserCenterFactory {
                     createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
             userManageViewList.add(showAllListsView);
 
-            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, readingHistoryController,addingHistoryController ,viewManagerModel);
+            ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, readingHistoryController ,viewManagerModel);
             userManageViewList.add(readingHistoryView);
             //TODO：新建showMyHistoryView和showMyCollectionView
             //TODO：把新建的View加到 userManageViewList
@@ -150,10 +145,12 @@ public class UserCenterFactory {
         return new ReadingHistoryController(interactor);
     }
 
-    private static AddingHistoryController createAddHistoryController(ViewManagerModel viewManagerModel, AddingHistoryViewModel addingHistoryViewModel,
+    /*private static AddingHistoryController createAddHistoryController(ViewManagerModel viewManagerModel, AddingHistoryViewModel addingHistoryViewModel,
                                                                       AddingHistoryDataAccessInterface addingHistoryDataAccessObj) throws IOException{
         AddingHistoryOutputBoundary addingHistoryPresenter = new AddingHistoryPresenter(viewManagerModel, addingHistoryViewModel);
         AddingHistoryInteractor interactor = new AddingHistoryInteractor(addingHistoryPresenter,addingHistoryDataAccessObj);
         return new AddingHistoryController(interactor);
     }
+
+     */
 }

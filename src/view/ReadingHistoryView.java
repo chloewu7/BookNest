@@ -2,7 +2,7 @@ package view;
 
 
 import interface_adapter.ViewManagerModel;
-import user_manage.service.history.add_history.Interface_adapter.AddingHistoryController;
+//import user_manage.service.history.add_history.Interface_adapter.AddingHistoryController;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryController;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryState;
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
@@ -16,6 +16,8 @@ import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class ReadingHistoryView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -46,14 +48,14 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     private Color lightBlue = new Color(173, 216, 230);
     private Color lightYellow = new Color(255, 255, 224);
 
-    private final AddingHistoryController addingHistoryController;
 
 
 
-    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller, AddingHistoryController addingHistoryController, ViewManagerModel viewManagerModel) {
+
+    public ReadingHistoryView(ReadingHistoryViewModel readingHistoryViewModel, ReadingHistoryController controller, ViewManagerModel viewManagerModel) {
         this.readingHistoryViewModel = readingHistoryViewModel;
         this.readingHistoryController = controller;
-        this.addingHistoryController = addingHistoryController;
+
         this.readingHistoryViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
         this.setSize(1000,600);
@@ -69,34 +71,11 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         titleLabel.setPreferredSize(new Dimension(900, 50));
 
+
+
         this.setLayout(new BorderLayout());
         this.add(titleLabel, BorderLayout.NORTH);
-
         this.add(scrollPane, BorderLayout.CENTER);
-
-
-
-
-
-        /*History = new JPanel();
-        History.setLayout(new BoxLayout(History, BoxLayout.Y_AXIS));
-        History.setPreferredSize(new Dimension(900,500));
-        History.setBackground(lightBlue);
-
-        Title = new JPanel();
-        Title.setLayout(new GridBagLayout());
-        Title.setBackground(lightYellow);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx =1.0;
-        gbc.weighty =1.0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        Title.add(History, gbc);
-
-         */
-
-
 
         backButton.setPreferredSize(new Dimension(130, 60));
         backButton.setBackground(lightBlue);
@@ -105,31 +84,16 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         button.add(backButton);
         button.setBackground(lightYellow);
         button.setPreferredSize(new Dimension(1000, 90));
-
-
         this.add(button, BorderLayout.SOUTH);
 
 
 
-
+        addFakeHistoryData();
 
         ReadingHistoryState state = readingHistoryViewModel.getState();
-        readingHistoryController.fetchUserHistory();
+        controller.execute(state.getUserName(),state.getReadBook());
 
 
-
-
-        /*historyButton.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource() == historyButton) {
-                        ReadingHistoryState readingHistoryState = readingHistoryViewModel.getState();
-                        readingHistoryState.setHistory(state.getHistory());
-                        readingHistoryState.setUserName(state.getUserName());
-                        createHistoryWindow();
-                    }
-                }
-        });*/
 
         backButton.addActionListener(
                 new ActionListener() {
@@ -144,50 +108,36 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
 
         });
 
-        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        //this.add(historyButton);
-        //this.add(backButton); // Adding the back button to the view
     }
 
 
+    private void addFakeHistoryData() {
+        List<String> fakeHistory = Arrays.asList("Book 1", "Book 2", "Book 3");
+        for (String record : fakeHistory) {
+            JLabel historyLabel = new JLabel(record, SwingConstants.CENTER);
+            historyLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); // Increase font size
+            historyLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+            historyLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Adjust padding
+            historyPanel.add(historyLabel);
+        }
+        historyPanel.revalidate();
+        historyPanel.repaint();}
 
 
-    /*private void createHistoryWindow() {
-        JDialog historyDialog = new JDialog();
-        historyDialog.setTitle("User Reading History");
-        historyDialog.setSize(500, 400);
-        historyDialog.setLayout(new BorderLayout());
-
-        historyTextArea = new JTextArea();
-        historyTextArea.setEditable(false);
-        historyTextArea.setLineWrap(true);
-        historyTextArea.setWrapStyleWord(true);
-
-        JScrollPane scrollPane = new JScrollPane(historyTextArea);
-        historyDialog.add(scrollPane, BorderLayout.CENTER);
-
-        JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(e -> historyDialog.dispose());
-        historyDialog.add(exitButton, BorderLayout.PAGE_END);
-
-        historyDialog.setVisible(true);
-        readingHistoryController.fetchUserHistory();
-    }
-
-     */
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        ReadingHistoryState state = (ReadingHistoryState) evt.getNewValue();
         if ("history".equals(evt.getPropertyName())) {
-            updateHistoryArea((ArrayList<String>) evt.getNewValue());
+            updateHistoryArea(state);
         }
     }
 
-    private void updateHistoryArea(ArrayList<String> history) {
-        historyPanel.removeAll();
-        for (String record : history) {
+    private void updateHistoryArea(ReadingHistoryState state) {
+
+        for (String record : state.getHistory()) {
             JLabel historyLabel = new JLabel(record);
-            historyLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            historyLabel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
             historyPanel.add(historyLabel);
         }
         historyPanel.revalidate();
