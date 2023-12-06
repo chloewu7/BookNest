@@ -16,7 +16,7 @@ import user_manage.service.collection_management.add_book.interface_adapter.AddB
 import user_manage.service.collection_management.create_list.interface_adapter.CreateListViewModel;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
-import user_manage.service.history.add_history.Interface_adapter.AddingHistoryViewModel;
+
 import user_manage.service.history.read_history.interface_adpter.ReadingHistoryViewModel;
 import user_manage.service.login.interface_adapter.LoginViewModel;
 import user_manage.service.reading_review.show_all_reviews.interface_adapter.ShowAllReviewsViewModel;
@@ -83,7 +83,7 @@ public class Main {
         AddBookViewModel addBookViewModel = new AddBookViewModel();
 
         ReadingHistoryViewModel readingHistoryViewModel = new ReadingHistoryViewModel();
-        AddingHistoryViewModel addingHistoryViewModel = new AddingHistoryViewModel();
+        //AddingHistoryViewModel addingHistoryViewModel = new AddingHistoryViewModel();
 
         SearchViewModel searchViewModel = new SearchViewModel();
 
@@ -97,7 +97,7 @@ public class Main {
         java.util.List<JPanel> searchViewList = new ArrayList<>();
         searchViewList = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, searchDataAccessObject,
                 showAllReviewsViewModel, writeReviewsViewModel, reviewDataAccessObject, addBookViewModel,
-                collectionDataAccessObject, showAllListsViewModel, userCenterViewModel, addingHistoryViewModel);
+                collectionDataAccessObject, showAllListsViewModel, userCenterViewModel,readingHistoryViewModel,readingHistoryDataAccessObject);
 
         SearchView searchView = (SearchView) searchViewList.get(0);
         views.add(searchView, searchView.viewName);
@@ -156,7 +156,7 @@ public class Main {
         java.util.List<JPanel> userManageViewList = new ArrayList<>();
         userManageViewList = UserCenterFactory.create(viewManagerModel, userCenterViewModel, showMyReviewsViewModel,
                 reviewDataAccessObject, searchViewModel, searchDataAccessObject, showAllListsViewModel, collectionDataAccessObject,
-                createListViewModel, showBooksInListViewModel,readingHistoryViewModel,addingHistoryViewModel ,readingHistoryDataAccessObject);
+                createListViewModel, showBooksInListViewModel,readingHistoryViewModel ,readingHistoryDataAccessObject);
 
         UserCenterView userCenterView = (UserCenterView) userManageViewList.get(0);
         views.add(userCenterView, userCenterView.viewName);

@@ -7,11 +7,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 public interface ReadingHistoryOutputBoundary {
-    /**
-     * Method to present the reading history to the user.
-     * @param history A data structure containing the reading history,
-     *                where the key is the timestamp and the value is the book title.
-     */
+
     void presentHistory(ReadingHistoryOutputData outputData);
 
     /**

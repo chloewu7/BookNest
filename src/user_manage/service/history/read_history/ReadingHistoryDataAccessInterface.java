@@ -1,5 +1,7 @@
 package user_manage.service.history.read_history;
 
+import user_manage.entity.User;
+
 import java.util.List;
 
 public interface ReadingHistoryDataAccessInterface {
@@ -11,5 +13,11 @@ public interface ReadingHistoryDataAccessInterface {
      */
     List<String> getHistoryByUserId(String userId);
 
+    void addHistoryToUser(User user, String bookName);
 
+
+    User getUserByName(String userName);
 }
+
+
+

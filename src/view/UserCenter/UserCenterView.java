@@ -155,7 +155,7 @@ public class UserCenterView extends JPanel {
                 String userName = state.getUsername();
                 ReadingHistoryState readingHistoryState = readingHistoryViewModel.getState();
                 readingHistoryState.setUserName(userName);
-                readingHistoryController.fetchUserHistory();
+                readingHistoryController.execute(userName, readingHistoryState.getReadBook());
                 viewManagerModel.setActiveView("History");
                 viewManagerModel.firePropertyChanged();
             }
