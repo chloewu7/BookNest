@@ -19,7 +19,7 @@ public class ReadingHistoryState {
     public ReadingHistoryState(){};
 
     public List<String> getHistory() {
-        return this.history;
+        return history;
     }
 
     public void setHistory(List<String> history) {
@@ -42,7 +42,7 @@ public class ReadingHistoryState {
 
 
     public void setReadBook(String readBookTitle) {this.bookName =readBookTitle;
-        this.history.add(readBookTitle);
+        //this.history.add(readBookTitle);
     }
 
     public String getReadBook(){return this.bookName;}

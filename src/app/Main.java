@@ -68,7 +68,7 @@ public class Main {
                     new CommonReviewFactory());
             collectionDataAccessObject = new FileCollectionDataAccessObject(new File("./collection.csv"),
                     new CommonCollectionListFactory());
-            readingHistoryDataAccessObject = new FileHistoryDataAccessObject(new File("./history.csv"),new
+            readingHistoryDataAccessObject = new FileHistoryDataAccessObject("./history.csv",new
                     CommonHisotryFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
