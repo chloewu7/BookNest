@@ -43,7 +43,7 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
 
     private ReadingHistoryController readingHistoryController;
     private ReadingHistoryViewModel readingHistoryViewModel;
-    private JPanel title;
+    JPanel title;
 
 
     public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
