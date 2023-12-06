@@ -4,7 +4,7 @@ import user_manage.entity.User;
 
 public interface LoginDataAccessInterface {
 
-    void save(User user);
+    void saveNewUser(User user);
 
     User get(String name);
 

@@ -63,6 +63,8 @@ class SearchPresenterTest {
         searchPresenter.prepareNotFoundView(message);
 
         assertTrue(searchViewModel.propertyChangedFired);
+        assertEquals(message, searchViewModel.getState().getNotFound());
+
     }
 
     @Test
@@ -72,5 +74,6 @@ class SearchPresenterTest {
         searchPresenter.prepareFailView(error);
 
         assertTrue(searchViewModel.propertyChangedFired);
+        assertEquals(error, searchViewModel.getState().getKeywordError());
     }
 }

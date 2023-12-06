@@ -49,12 +49,6 @@ public class FileUserDataAccessObject implements SignupDataAccessInterface, Logi
     }
 
     @Override
-    public void save(User user) { userAccounts.put(user.getName(), user);
-        this.save();
-
-    }
-
-    @Override
     public User get(String name) {
         return userAccounts.get(name);
     }
@@ -91,10 +85,14 @@ public class FileUserDataAccessObject implements SignupDataAccessInterface, Logi
 
     }
 
-    public User getUserByName(String username) {
-        if (existsByName(username)) {
-            return userAccounts.get(username);
+    public void deleteAll(){
+        userAccounts.clear();
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        else {return null;}
     }
 }
