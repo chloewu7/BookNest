@@ -104,7 +104,7 @@ class SearchViewTest {
         mockUserCenterViewModel = new UserCenterViewModel();
 
         mockReadingHistoryViewModel = new ReadingHistoryViewModel();
-        File mockCSVHistory = new File("./history.csv");
+        String mockCSVHistory = "./history.csv";
         HistoryFactory mockHistroyFactory = new CommonHisotryFactory();
         ReadingHistoryDataAccessInterface mockReadingHistoryDataAccessObject = new FileHistoryDataAccessObject(
                 mockCSVHistory, mockHistroyFactory);
