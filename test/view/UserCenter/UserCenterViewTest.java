@@ -152,15 +152,22 @@ class UserCenterViewTest {
         // Assuming the UserCenterState is correctly set up
         UserCenterState newState = new UserCenterState();
         newState.setUsername("TestUser");
-        PropertyChangeEvent evt = new PropertyChangeEvent(userCenterViewModel, "username", null, newState);
+        PropertyChangeEvent evt = new PropertyChangeEvent(userCenterViewModel, "username",
+                null, newState);
 
         userCenterView.propertyChange(evt);
 
         Component[] components = userCenterView.title.getComponents();
+        assertTrue(components.length >= 2, "Title panel should have at least two components.");
         assertTrue(components[0] instanceof JLabel, "First component should be a JLabel.");
         JLabel titleLabel = (JLabel) components[0];
-        assertEquals("User Center for TestUser", titleLabel.getText(),
-                "Property change should update the title with the new username.");
+        assertEquals("User Center for ", titleLabel.getText(),
+                "First label should have the expected text.");
+
+        assertTrue(components[1] instanceof JLabel, "Second component should be a JLabel.");
+        JLabel usernameLabel = (JLabel) components[1];
+        assertEquals("TestUser", usernameLabel.getText(),
+                "Second label should display the username.");
     }
 
     @Test
