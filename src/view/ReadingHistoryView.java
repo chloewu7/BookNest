@@ -88,10 +88,12 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
 
 
 
-        addFakeHistoryData();
+        //addHistoryData();
 
         ReadingHistoryState state = readingHistoryViewModel.getState();
         controller.execute(state.getUserName(),state.getReadBook());
+
+        updateHistoryArea(state);
 
 
 
@@ -111,8 +113,8 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     }
 
 
-    private void addFakeHistoryData() {
-        List<String> fakeHistory = Arrays.asList("Book 1", "Book 2", "Book 3");
+    /*private void addHistoryData() {
+        List<String> fakeHistory = Arrays.asList("Clean Code", "The Journey to The West", "Toronto");
         for (String record : fakeHistory) {
             JLabel historyLabel = new JLabel(record, SwingConstants.CENTER);
             historyLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); // Increase font size
@@ -122,6 +124,8 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         }
         historyPanel.revalidate();
         historyPanel.repaint();}
+
+     */
 
 
 
@@ -136,9 +140,11 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     private void updateHistoryArea(ReadingHistoryState state) {
 
         for (String record : state.getHistory()) {
-            JLabel historyLabel = new JLabel(record);
-            historyLabel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
-            historyPanel.add(historyLabel);
+            JLabel historyLabel1 = new JLabel(record, SwingConstants.CENTER);
+            historyLabel1.setFont(new Font("SansSerif", Font.BOLD, 16)); // Increase font size
+            historyLabel1.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+            historyLabel1.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Adjust padding
+            historyPanel.add(historyLabel1);
         }
         historyPanel.revalidate();
         historyPanel.repaint();}
