@@ -43,6 +43,7 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
 
     private ReadingHistoryController readingHistoryController;
     private ReadingHistoryViewModel readingHistoryViewModel;
+    private JPanel title;
 
 
     public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
@@ -79,11 +80,9 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
         UserCenterState state = userCenterViewModel.getState();
         state.setUsername(searchState.getUserName());
 
-        String myUsername = state.getUsername();
-
-        JLabel username = new JLabel("User Center for " + myUsername);
+        JLabel username = new JLabel("User Center");
         username.setFont(new Font("Lucida Grande", 0, 20));
-        JPanel title = new JPanel();
+        title = new JPanel();
         title.setBackground(lightYellow);
         title.setPreferredSize(new Dimension(1000, 100));
         title.add(username);
@@ -182,5 +181,13 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        UserCenterState state = (UserCenterState) evt.getNewValue();
+        title.removeAll();
+        JLabel username = new JLabel("User Center for " + state.getUsername());
+        username.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        title.add(username);
+
+        title.revalidate();
+        title.repaint();
     }
 }
