@@ -33,17 +33,16 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
     private ViewManagerModel viewManagerModel;
     private UserCenterViewModel userCenterViewModel;
     private ShowMyReviewsViewModel showMyReviewsViewModel;
-
     private ShowMyReviewsController showMyReviewsController;
-
     private SearchController searchController;
     private SearchViewModel searchViewModel;
     private ShowAllListsController showAllListsController;
     private ShowAllListsViewModel showAllListsViewModel;
-
     private ReadingHistoryController readingHistoryController;
     private ReadingHistoryViewModel readingHistoryViewModel;
     JPanel title;
+
+    private Color Orange = new Color(248, 152, 32);
 
 
     public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
@@ -183,9 +182,13 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         UserCenterState state = (UserCenterState) evt.getNewValue();
         title.removeAll();
-        JLabel username = new JLabel("User Center for " + state.getUsername());
-        username.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        JLabel username = new JLabel("User Center for ");
+        JLabel myUsername = new JLabel(state.getUsername());
+        username.setFont(new Font("SansSerif", Font.PLAIN, 35));
+        myUsername.setFont(new Font("SansSerif", Font.PLAIN, 40));
+        myUsername.setForeground(Orange);
         title.add(username);
+        title.add(myUsername);
 
         title.revalidate();
         title.repaint();
