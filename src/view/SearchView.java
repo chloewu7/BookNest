@@ -35,9 +35,9 @@ import view.UserCenter.UserCenterViewModel;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     JComboBox<String> searchTypeComboBox;
-    private JTextField searchTextField;
-    private JButton searchButton;
-    private JPanel resultsPanel;
+    JTextField searchTextField;
+    JButton searchButton;
+    JPanel resultsPanel;
 
     private JLabel searchInstructionLabel;
     private SearchController searchController;
@@ -157,6 +157,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                 userCenterState.setUsername(searchState.getUserName());
                 userCenterViewModel.setState(userCenterState);
+                userCenterViewModel.firePropertyChanged();
 
                 viewManagerModel.setActiveView("User Center");
                 viewManagerModel.firePropertyChanged();
@@ -198,19 +199,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 public void actionPerformed(ActionEvent e) {
                     searchState.setCollectedBook(book);
                     Book Collectedbook = searchState.getCollectedBook();
+                    String userName = searchState.getUserName();
                     ShowAllListsState showAllListsState = showAllListsViewModel.getState();
+                    showAllListsState.setUserName(userName);
                     List<String> listsName = showAllListsState.getListsName();
                     Object[] listsArray = listsName.toArray();
                     Object wantList = JOptionPane.showInputDialog(SearchView.this, "Collect the book to:\n",
                             "Add Book to Collection List", JOptionPane.PLAIN_MESSAGE, null, listsArray, "Like");
-                    UserCenterState userCenterState = userCenterViewModel.getState();
-                    String userName = userCenterState.getUsername();
                     AddBookState addBookState = addBookViewModel.getState();
                     addBookState.setBook(Collectedbook);
                     addBookState.setBookName(Collectedbook.getTitle());
                     addBookState.setBookAuthor(Collectedbook.getAuthor());
                     addBookState.setListName(wantList.toString());
                     addBookState.setUserName(userName);
+                    addBookState.setAddBookSuccess(null);
                     addBookController.execute(userName, wantList.toString(),Collectedbook);
                     if(addBookState.getAddBookSuccess() != null){
                         JOptionPane.showMessageDialog(SearchView.this, addBookState.getAddBookSuccess(),
