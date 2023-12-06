@@ -16,8 +16,8 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
 
     private HistoryFactory historyFactory;
 
-    public FileHistoryDataAccessObject(File csvFile, HistoryFactory historyFactory) throws IOException {
-        this.csvFile = csvFile;
+    public FileHistoryDataAccessObject(String csvFilepath, HistoryFactory historyFactory) throws IOException {
+        this.csvFile = new File(csvFilepath);
         this.historyFactory = historyFactory;
 
         header.put("username", 0);
@@ -85,5 +85,13 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
     @Override
     public User getUserByName(String userName) {
         return null;
+    }
+
+    public boolean user_exist(String username){
+        return historyByUser.containsKey(username);
+    }
+
+    public boolean book_exist(String user, String book){
+        return historyByUser.get(user).contains(book);
     }
 }

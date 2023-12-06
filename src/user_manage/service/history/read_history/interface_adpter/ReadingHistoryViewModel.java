@@ -33,7 +33,6 @@ public class ReadingHistoryViewModel extends ViewModel {
 
     public void setState(ReadingHistoryState state) {
         this.state = state;
-        firePropertyChanged();
     }
 
     /*
