@@ -38,6 +38,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
 
+    JButton logIn;
+    JButton signUp;
+
     private SearchViewModel searchViewModel;
 
     private ViewManagerModel viewManagerModel;
@@ -91,9 +94,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         usernameInfo.setBackground(lightYellow);
         passwordInfo.setBackground(lightYellow);
 
-        JButton logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
+        logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
         logIn.addActionListener(this);
-        JButton signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         signUp.addActionListener(this);
 
         logIn.setSize(100, 100);
