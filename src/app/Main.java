@@ -118,7 +118,7 @@ public class Main {
         // create Login View
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,searchViewModel,signupViewModel,
-                userDataAccessObject, userDataAccessObject);
+                showAllListsViewModel, userDataAccessObject, userDataAccessObject, collectionDataAccessObject);
         views.add(loginView,loginView.viewName);
 
         // create ShowAllLists View
@@ -169,6 +169,9 @@ public class Main {
 
         ReadingHistoryView readingHistoryView = (ReadingHistoryView) userManageViewList.get(3);
         views.add(readingHistoryView, readingHistoryView.viewName);
+
+        ShowBooksInListView showBooksInListView = (ShowBooksInListView) userManageViewList.get(4);
+        views.add(showBooksInListView, showBooksInListView.viewName);
         //TODO: 把个自的View从userManageViewList拿出来 添加到views里
 
 

@@ -23,6 +23,11 @@ import user_manage.service.collection_management.show_all_lists.ShowAllListsOutp
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.collection_management.show_books_in_list.ShowBooksInListDataAccessInterface;
+import user_manage.service.collection_management.show_books_in_list.ShowBooksInListInteractor;
+import user_manage.service.collection_management.show_books_in_list.ShowBooksInListOutputBoundary;
+import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListController;
+import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListPresenter;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
 
 import user_manage.service.history.read_history.ReadingHistoryDataAccessInterface;
@@ -64,6 +69,7 @@ public class UserCenterFactory {
             ShowMyReviewsController showMyReviewsController = createShowMyReviewUseCase(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
             SearchController searchController = createSearchUseCase(viewManagerModel,searchViewModel, searchDataAccessObject);
             ShowAllListsController showAllListsController = createShowAllListsUseCase(viewManagerModel, showAllListsViewModel, collectionDataAccessObject);
+            ShowBooksInListController showBooksInListController = createShowBooksInListUseCase(viewManagerModel, showBooksInListViewModel, collectionDataAccessObject);
             CreateListController createListController = createCreateListUseCase(viewManagerModel,createListViewModel, collectionDataAccessObject);
             ReadingHistoryController readingHistoryController =createHistoryController(viewManagerModel, readingHistoryViewModel, HistoryDAO);
             //AddingHistoryController addingHistoryController=createAddHistoryController(viewManagerModel,addingHistoryViewModel,HistoryDAO);
@@ -76,11 +82,15 @@ public class UserCenterFactory {
             ShowMyReviewsView showMyReviewsView = new ShowMyReviewsView(viewManagerModel, showMyReviewsController, showMyReviewsViewModel);
             userManageViewList.add(showMyReviewsView);
             ShowAllListsView showAllListsView = new ShowAllListsView(showAllListsController, showAllListsViewModel, viewManagerModel,
-                    createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
+                    createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel, showBooksInListController);
             userManageViewList.add(showAllListsView);
 
             ReadingHistoryView readingHistoryView = new ReadingHistoryView(readingHistoryViewModel, readingHistoryController ,viewManagerModel);
             userManageViewList.add(readingHistoryView);
+
+            ShowBooksInListView showBooksInListView = new ShowBooksInListView(showBooksInListController, showBooksInListViewModel, viewManagerModel, userCenterViewModel);
+            userManageViewList.add(showBooksInListView);
+
             //TODO：新建showMyHistoryView和showMyCollectionView
             //TODO：把新建的View加到 userManageViewList
             return userManageViewList;
@@ -134,6 +144,17 @@ public class UserCenterFactory {
                 createListDataAccessObject, createListPresenter);
 
         return new CreateListController(createListInteractor);
+    }
+
+    private static ShowBooksInListController createShowBooksInListUseCase(ViewManagerModel viewManagerModel,
+                                                                          ShowBooksInListViewModel showBooksInListViewModel,
+                                                                          ShowBooksInListDataAccessInterface showBooksInListDataAccessObject){
+        ShowBooksInListOutputBoundary showBooksInListOutputPresenter = new ShowBooksInListPresenter(showBooksInListViewModel, viewManagerModel);
+
+        ShowBooksInListInteractor showBooksInListInteractor = new ShowBooksInListInteractor(
+                showBooksInListDataAccessObject, showBooksInListOutputPresenter);
+
+        return new ShowBooksInListController(showBooksInListInteractor);
     }
 
     private  static ReadingHistoryController createHistoryController(ViewManagerModel viewManagerModel,

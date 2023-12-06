@@ -30,10 +30,6 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
         header.put("bookTitle", 2);
         header.put("bookAuthor", 3);
 
-        for(String userName: userLists.keySet()){
-            userLists.get(userName).put("Like", new HashMap<>());
-        }
-
         if (csvFile.length() == 0){
             save();
         } else {
@@ -68,7 +64,50 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
                 }
             }
         }
+    }    @Override
+    public List<String> getListsName(String userName) {
+        if(!userLists.containsKey(userName)){
+            createCollectionList(userName, "Like");
+            return new ArrayList<>(userLists.get(userName).keySet());
+        }
+        Set<String> nameSet = userLists.get(userName).keySet();
+//        for (String x : nameSet) {
+//            nameList.add(x);
+//        }
+        return new ArrayList<>(nameSet);
     }
+
+    @Override
+    public void createCollectionList(String userName, String listName) {
+        Map<String, Map<String, String>> newList = new HashMap<>();
+        Map<String, String> emptyBook = new HashMap<>();
+        emptyBook.put(" "," ");
+        if (userLists.containsKey(userName)){
+            userLists.get(userName).put(listName, emptyBook);
+            save();
+        }else{
+            userLists.put(userName,newList);
+            userLists.get(userName).put(listName, emptyBook);
+            save();
+        }
+    }
+
+    @Override
+    public void addToCollectionList(String userName, String listName, String bookTitle, String bookAuthor) {
+        if (!userLists.containsKey(userName)) {
+            return;
+        }
+        if (!userLists.get(userName).containsKey(listName)){
+            return;
+        }
+        Map<String, Map<String, String>> lists =
+                userLists.get(userName);
+        Map<String, String> books = lists.get(listName);
+        books.put(bookTitle, bookAuthor);
+        save();
+    }
+
+
 
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))){
@@ -78,13 +117,18 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
             for (String userName: userLists.keySet()){
                 for (String listName: userLists.get(userName).keySet()) {
                     Map<String, String> books = userLists.get(userName).get(listName);
-                        for(String bookTitle: books.keySet()){
-                            String bookAuthor = books.get(bookTitle);
-                            writer.write(String.format("%s,%s,%s,%s",
-                                    userName,listName, bookTitle, bookAuthor));
-                            writer.newLine();
+                    for(String bookTitle: books.keySet()){
+                        String bookAuthor = books.get(bookTitle);
+                        writer.write(String.format("%s,%s,%s,%s",
+                                userName,listName, bookTitle, bookAuthor));
+                        writer.newLine();
+//                            if (bookTitle == null){
+//                                writer.write(String.format("%s,%s,%s,%s",
+//                                        userName,listName, "", ""));
+//                                writer.newLine();
+//                            }
 
-                        }
+                    }
 
                 }
             }
@@ -98,41 +142,18 @@ public class FileCollectionDataAccessObject implements AddBookDataAccessInterfac
     }
 
     @Override
-    public List<String> getListsName(String userName) {
-        List<String> nameList = new ArrayList<>();
-        Set<String> nameSet = userLists.get(userName).keySet();
-        for (String x : nameSet) {
-            nameList.add(x);
-        }
-        return nameList;
-    }
-
-    @Override
     public Map<String, String> getBooksInlist(String userName, String listName) {
-        Map<String, String> books = null;
-        if (userLists.containsKey(userName)) {
-            Map<String, Map<String, String>> lists =
-                    userLists.get(userName);
-            books = lists.get(listName);
+        Map<String, String> books = new HashMap<>();
+        if (!userLists.containsKey(userName)) {
+            return books;
+        }if (!userLists.get(userName).containsKey(listName)) {
+            return books;
         }
+        Map<String, Map<String, String>> lists =
+                userLists.get(userName);
+        books = lists.get(listName);
         return books;
     }
 
-    @Override
-    public void createCollectionList(String userName, String listName) {
-        Map<String, Map<String, String>> newList = new HashMap<>();
-        if (userLists.containsKey(userName)){
-            userLists.get(userName).put(listName, new HashMap<>());
-        }else{
-            userLists.put(userName,newList);
-        }
-    }
 
-    @Override
-    public void addToCollectionList(String userName, String listName, String bookTitle, String bookAuthor) {
-        Map<String, Map<String, String>> lists =
-                userLists.get(userName);
-        Map<String, String> books = lists.get(listName);
-        books.put(bookTitle, bookAuthor);
-    }
 }

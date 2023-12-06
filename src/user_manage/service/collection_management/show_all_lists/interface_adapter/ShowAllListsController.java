@@ -15,4 +15,10 @@ public class ShowAllListsController {
 
         showAllListsInteractor.execute(showAllListsInputData);
     }
+
+    public void executeWhenSearch(String userName){
+        ShowAllListsInputData showAllListsInputData = new ShowAllListsInputData(userName);
+
+        showAllListsInteractor.executeWhenSearch(showAllListsInputData);
+    }
 }
