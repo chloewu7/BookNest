@@ -14,6 +14,11 @@ import user_manage.service.collection_management.show_all_lists.ShowAllListsOutp
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsPresenter;
 import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsViewModel;
+import user_manage.service.collection_management.show_books_in_list.ShowBooksInListDataAccessInterface;
+import user_manage.service.collection_management.show_books_in_list.ShowBooksInListInteractor;
+import user_manage.service.collection_management.show_books_in_list.ShowBooksInListOutputBoundary;
+import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListController;
+import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListPresenter;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
 import view.ShowAllListsView;
 import view.UserCenter.UserCenterViewModel;
@@ -35,8 +40,10 @@ public class ShowAllListsUseCaseFactory {
                     collectionDataAccessObject);
             CreateListController createListController = createCreateListUseCase(viewManagerModel,createListViewModel,
                     collectionDataAccessObject);
+            ShowBooksInListController showBooksInListController = createShowBooksInListUseCase(viewManagerModel, showBooksInListViewModel,
+                    collectionDataAccessObject);
             return new ShowAllListsView(showAllListsController, showAllListsViewModel, viewManagerModel,
-                    createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel);
+                    createListController, createListViewModel, userCenterViewModel, showBooksInListViewModel, showBooksInListController);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
         }
@@ -44,8 +51,8 @@ public class ShowAllListsUseCaseFactory {
     }
 
     private static ShowAllListsController createShowAllListsUseCase(ViewManagerModel viewManagerModel,
-                                                                   ShowAllListsViewModel showAllListsViewModel,
-                                                                   ShowAllListsDataAccessInterface showAllListsDataAccessObject) throws IOException {
+                                                                    ShowAllListsViewModel showAllListsViewModel,
+                                                                    ShowAllListsDataAccessInterface showAllListsDataAccessObject) throws IOException {
         ShowAllListsOutputBoundary showAllListsPresenter = new ShowAllListsPresenter(showAllListsViewModel, viewManagerModel);
 
         ShowAllListsInteractor showAllListsInteractor = new ShowAllListsInteractor(
@@ -63,5 +70,16 @@ public class ShowAllListsUseCaseFactory {
                 createListDataAccessObject, createListPresenter);
 
         return new CreateListController(createListInteractor);
+    }
+
+    private static ShowBooksInListController createShowBooksInListUseCase(ViewManagerModel viewManagerModel,
+                                                                          ShowBooksInListViewModel showBooksInListViewModel,
+                                                                          ShowBooksInListDataAccessInterface showBooksInListDataAccessObject){
+        ShowBooksInListOutputBoundary showBooksInListOutputPresenter = new ShowBooksInListPresenter(showBooksInListViewModel, viewManagerModel);
+
+        ShowBooksInListInteractor showBooksInListInteractor = new ShowBooksInListInteractor(
+                showBooksInListDataAccessObject, showBooksInListOutputPresenter);
+
+        return new ShowBooksInListController(showBooksInListInteractor);
     }
 }

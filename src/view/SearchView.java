@@ -198,19 +198,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 public void actionPerformed(ActionEvent e) {
                     searchState.setCollectedBook(book);
                     Book Collectedbook = searchState.getCollectedBook();
+                    String userName = searchState.getUserName();
                     ShowAllListsState showAllListsState = showAllListsViewModel.getState();
+                    showAllListsState.setUserName(userName);
                     List<String> listsName = showAllListsState.getListsName();
                     Object[] listsArray = listsName.toArray();
                     Object wantList = JOptionPane.showInputDialog(SearchView.this, "Collect the book to:\n",
                             "Add Book to Collection List", JOptionPane.PLAIN_MESSAGE, null, listsArray, "Like");
-                    UserCenterState userCenterState = userCenterViewModel.getState();
-                    String userName = userCenterState.getUsername();
                     AddBookState addBookState = addBookViewModel.getState();
                     addBookState.setBook(Collectedbook);
                     addBookState.setBookName(Collectedbook.getTitle());
                     addBookState.setBookAuthor(Collectedbook.getAuthor());
                     addBookState.setListName(wantList.toString());
                     addBookState.setUserName(userName);
+                    addBookState.setAddBookSuccess(null);
                     addBookController.execute(userName, wantList.toString(),Collectedbook);
                     if(addBookState.getAddBookSuccess() != null){
                         JOptionPane.showMessageDialog(SearchView.this, addBookState.getAddBookSuccess(),

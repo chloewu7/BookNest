@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsState;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListController;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListState;
 import user_manage.service.collection_management.show_books_in_list.interface_adapter.ShowBooksInListViewModel;
@@ -13,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class ShowBooksInListView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "books in list";
@@ -53,32 +56,31 @@ public class ShowBooksInListView extends JPanel implements ActionListener, Prope
         bottomPanel.add(returnButton);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
+
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //mainPane.removeAll();
                 showBooksInListViewModel.firePropertyChanged();
 
-                viewManagerModel.setActiveView("show all collection lists");
+                viewManagerModel.setActiveView("all collection lists");
                 viewManagerModel.firePropertyChanged();
             }
         });
     }
 
-    private void showBooksPerform(){
+    private void showBooksPerform(ShowBooksInListState state){
         mainPane.removeAll();
-        UserCenterState userCenterState = userCenterViewModel.getState();
-        String userName = userCenterState.getUsername();
-        ShowBooksInListState showBooksInListState = showBooksInListViewModel.getState();
-        String list = showBooksInListState.getListName();
-        showBooksInListController.execute(userName,list);
 
-        for(String bookTitle : showBooksInListState.getBooks().keySet()){
-            String bookAuthor = showBooksInListState.getBooks().get(bookTitle);
+        for(String bookTitle : state.getBooks().keySet()){
+            if(!Objects.equals(bookTitle, " ")) {
+                String bookAuthor = state.getBooks().get(bookTitle);
 
-            JPanel linePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            linePanel.setBorder(BorderFactory.createLineBorder(Color.gray));
-            linePanel.add(new JLabel("Title:" + bookTitle + ", Author: " + bookAuthor));
-            mainPane.add(linePanel);
+                JPanel linePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                linePanel.setBorder(BorderFactory.createLineBorder(Color.gray));
+                linePanel.add(new JLabel("Title:" + bookTitle + ", Author: " + bookAuthor));
+                mainPane.add(linePanel);
+            }
         }
         mainPane.revalidate();
         mainPane.repaint();
@@ -91,6 +93,7 @@ public class ShowBooksInListView extends JPanel implements ActionListener, Prope
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        ShowBooksInListState state = (ShowBooksInListState) evt.getNewValue();
+        showBooksPerform(state);
     }
 }

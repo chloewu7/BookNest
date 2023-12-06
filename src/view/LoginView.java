@@ -5,6 +5,7 @@ package view;
 import interface_adapter.ViewManagerModel;
 import search.service.interface_adapter.SearchState;
 import search.service.interface_adapter.SearchViewModel;
+import user_manage.service.collection_management.show_all_lists.interface_adapter.ShowAllListsController;
 import user_manage.service.login.interface_adapter.LoginController;
 import user_manage.service.login.interface_adapter.LoginState;
 import user_manage.service.login.interface_adapter.LoginViewModel;
@@ -44,11 +45,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginController loginController;
 
     private final SignupController signupController;
+    private ShowAllListsController showAllListsController;
 
     public LoginView(LoginViewModel loginViewModel, LoginController controller, SignupViewModel signupViewModel ,
                      SignupController signupController,
                      SearchViewModel searchViewModel,
-                     ViewManagerModel viewManagerModel) {
+                     ViewManagerModel viewManagerModel,
+                     ShowAllListsController showAllListsController) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
@@ -58,6 +61,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.signupViewModel.addPropertyChangeListener(this);
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.showAllListsController = showAllListsController;
 
         setupUI();
 
@@ -153,7 +157,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     String loginPasswordError = loginState.getPasswordError();
 
                     if (loginUserNameFail == null && loginPasswordError == null && !Objects.equals(username, "")
-                    && !Objects.equals(password, "")) {
+                            && !Objects.equals(password, "")) {
+                        showAllListsController.executeWhenSearch(username);
                         SearchState searchState = searchViewModel.getState();
                         searchState.setUserName(username);
                         searchViewModel.setState(searchState);
@@ -175,7 +180,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
                 viewManagerModel.firePropertyChanged();
             }
-            });
+        });
 
         signUp.addActionListener(new ActionListener() {
             @Override
@@ -214,7 +219,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        }
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

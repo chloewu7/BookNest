@@ -19,9 +19,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 
-public class UserCenterView extends JPanel {
+public class UserCenterView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "User Center";
     private JButton collectionButton;
@@ -67,6 +69,7 @@ public class UserCenterView extends JPanel {
     private void createUI(){
         this.setSize(1000, 600);
         this.setLayout(new GridLayout(5, 1, 10, 10));
+        userCenterViewModel.addPropertyChangeListener(this);
 
         Color lightYellow = new Color(255, 255, 224);
         Color lightBlue = new Color(173, 216, 230);
@@ -119,6 +122,7 @@ public class UserCenterView extends JPanel {
                 ShowAllListsState showAllListsState = showAllListsViewModel.getState();
                 showAllListsState.setUserName(userName);
                 showAllListsController.execute(userName);
+                showAllListsViewModel.setState(showAllListsState);
                 viewManagerModel.setActiveView("all collection lists");
                 viewManagerModel.firePropertyChanged();
             }
@@ -171,4 +175,12 @@ public class UserCenterView extends JPanel {
 
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+    }
 }

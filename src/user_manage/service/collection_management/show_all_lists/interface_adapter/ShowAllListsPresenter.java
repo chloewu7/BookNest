@@ -23,4 +23,11 @@ public class ShowAllListsPresenter implements ShowAllListsOutputBoundary {
         viewManagerModel.setActiveView(showAllListsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareShowAllLists(ShowAllListsOutputData allListsName) {
+        ShowAllListsState showAllListsState = showAllListsViewModel.getState();
+        showAllListsState.setListsName(allListsName.getAllLists());
+        this.showAllListsViewModel.setState(showAllListsState);
+    }
 }
