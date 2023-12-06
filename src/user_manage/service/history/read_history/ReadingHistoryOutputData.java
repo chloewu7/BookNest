@@ -14,7 +14,7 @@ public class ReadingHistoryOutputData {
     }
 
     public List<String> getHistory() {
-        return history;
+        return this.history;
     }
 
     // Optionally, you can add more methods or fields here if needed in the future.

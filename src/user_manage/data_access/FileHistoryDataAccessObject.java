@@ -3,13 +3,13 @@ package user_manage.data_access;
 import user_manage.entity.History;
 import user_manage.entity.HistoryFactory;
 import user_manage.entity.User;
-import user_manage.service.history.add_history.AddingHistoryDataAccessInterface;
+//import user_manage.service.history.add_history.AddingHistoryDataAccessInterface;
 import user_manage.service.history.read_history.ReadingHistoryDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
-public class FileHistoryDataAccessObject implements AddingHistoryDataAccessInterface, ReadingHistoryDataAccessInterface {
+public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> header = new LinkedHashMap<>();
     private Map<String, List<String>> historyByUser = new HashMap<>();

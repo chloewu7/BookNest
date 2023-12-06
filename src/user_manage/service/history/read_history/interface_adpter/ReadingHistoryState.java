@@ -1,26 +1,29 @@
 package user_manage.service.history.read_history.interface_adpter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ReadingHistoryState {
-    private List<String> history;
-    private String errorMessage;
+    private List<String> history = new ArrayList<>();
+    private String errorMessage = null;
 
-    private String userName;
+    private String userName = "";
 
-    public ReadingHistoryState() {
-        this.history = new ArrayList<>();
-        this.errorMessage = "";
-    }
+    private String bookName = "";
+
+    public ReadingHistoryState(ReadingHistoryState copy) {
+        history = copy.history;
+        errorMessage = copy.errorMessage;
+        userName = copy.userName;
+        bookName = copy.bookName;}
+    public ReadingHistoryState(){};
 
     public List<String> getHistory() {
-        return history;
+        return this.history;
     }
 
     public void setHistory(List<String> history) {
+        history.add(this.bookName);
         this.history = history;
     }
 
@@ -38,4 +41,10 @@ public class ReadingHistoryState {
 
 
 
+    public void setReadBook(String readBookTitle) {this.bookName =readBookTitle;
+        this.history.add(readBookTitle);
+    }
+
+    public String getReadBook(){return this.bookName;}
 }
+

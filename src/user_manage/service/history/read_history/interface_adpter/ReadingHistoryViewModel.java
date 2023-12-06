@@ -23,30 +23,33 @@ public class ReadingHistoryViewModel extends ViewModel {
         this.support = new PropertyChangeSupport(this);
     }
 
+
+
     public ReadingHistoryState getState() {
         return state;
     }
 
+
+
     public void setState(ReadingHistoryState state) {
         this.state = state;
-        notifyUpdate();
+        firePropertyChanged();
     }
 
+    /*
     public void setHistory(List<String> history) {
         state.setHistory(history);
-        notifyUpdate();
+        firePropertyChanged();
     }
 
     public void setErrorMessage(String errorMessage) {
         state.setErrorMessage(errorMessage);
-        notifyUpdate();
+        firePropertyChanged();
     }
+
+     */
 
     // This method notifies the view of any changes in the state
-    public void notifyUpdate() {
-        support.firePropertyChange("state", null, this.state);
-    }
-
     @Override
     public void firePropertyChanged() {support.firePropertyChange("state", null, this.state);
 
