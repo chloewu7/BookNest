@@ -9,4 +9,16 @@ class ReadingHistoryDataAccessInterfaceTest {
     @Test
     void getHistoryByUserId() {
     }
+
+    @Test
+    void testGetHistoryByUserId() {
+    }
+
+    @Test
+    void addHistoryToUser() {
+    }
+
+    @Test
+    void getUserByName() {
+    }
 }

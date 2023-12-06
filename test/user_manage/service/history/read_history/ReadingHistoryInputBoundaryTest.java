@@ -9,4 +9,8 @@ class ReadingHistoryInputBoundaryTest {
     @Test
     void execute() {
     }
+
+    @Test
+    void testExecute() {
+    }
 }
