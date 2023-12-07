@@ -1,85 +1,51 @@
-/*package user_manage.service.history.read_history;
+package user_manage.service.history.read_history;
 
 import org.junit.jupiter.api.Test;
-import user_manage.data_access.FileHistoryDataAccessObject;
-import user_manage.entity.*;
-import user_manage.service.history.read_history.interface_adpter.ReadingHistoryPresenter;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import user_manage.service.history.add_history.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReadingHistoryInteractorTest {
 
-    private class ReadingHistoryInteractor implements ReadingHistoryDataAccessInterface{
+    private class HistoryDataAccessStub implements ReadingHistoryDataAccessInterface {
+
+        @Override
+        public void addHistoryToUser(String user, String bookName) {
+        }
 
         @Override
         public List<String> getHistoryByUserId(String userId) {
-            return null;
-        }
-
-        @Override
-        public void addHistoryToUser(User user, String bookName) {
-
-        }
-
-        @Override
-        public User getUserByName(String userName) {
-            return null;
+            List<String> history = new ArrayList<>();
+            history.add("book1");
+            history.add("book2");
+            return history;
         }
     }
-    private class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary{
+
+    private class MockReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
 
         @Override
         public void presentHistory(ReadingHistoryOutputData outputData) {
-
-            List<String> his = new ArrayList<>();
-            his.add("mumu");
-            his.add("ww");
-            assertEquals(outputData, his);
+            assertEquals(outputData.getHistory().get(0), "book1");
+            assertEquals(outputData.getHistory().get(1), "book2");
         }
-
-        @Override
-        public void handleFailure(String errorMessage) {
-
-        }
-    }
-
-
-    ReadingHistoryOutputBoundary outputBoundary;
-
-    File file = new File("history.csv");
-
-    HistoryFactory historyFactory = new CommonHisotryFactory();
-
-    ReadingHistoryDataAccessInterface dao = new FileHistoryDataAccessObject(file, historyFactory);
-
-    //ReadingHistoryInteractor interactor = new ReadingHistoryInteractor(outputBoundary,dao);
-
-    ReadingHistoryInputData inputData = new ReadingHistoryInputData("123", "ww");
-
-
-    //ReadingHistoryOutputData outputData = new ReadingHistoryOutputData();
-
-    ReadingHistoryInteractorTest() throws IOException {
     }
 
     @Test
-    void testExecute() throws IOException {
-        ReadingHistoryInteractorTest readingHistoryDataAccessOBJ = new ReadingHistoryInteractorTest();
-        ReadingHistoryPresenter presenterTest = new ReadingHistoryPresenter();
+    void testExecuteSuccess() {
+        HistoryDataAccessStub historyDataAccessStub = new HistoryDataAccessStub();
+        MockReadingHistoryPresenter mockReadingHistoryPresenter = new MockReadingHistoryPresenter();
 
-        ReadingHistoryInteractor interactor1 = new ReadingHistoryInteractor(presenterTest, readingHistoryDataAccessOBJ);
-        ReadingHistoryInputData inputData1 = new ReadingHistoryInputData("123", "ww");
-        interactor1.execute(inputData1);
+        ReadingHistoryInteractor readingHistoryInteractor = new ReadingHistoryInteractor(mockReadingHistoryPresenter, historyDataAccessStub);
 
+        ReadingHistoryInputData readingHistoryInputData = new ReadingHistoryInputData("user", "book");
+        readingHistoryInteractor.execute(readingHistoryInputData);
     }
 }
 
- */
+
