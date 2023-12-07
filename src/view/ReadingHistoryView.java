@@ -93,7 +93,6 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         ReadingHistoryState state = readingHistoryViewModel.getState();
         controller.execute(state.getUserName(),state.getReadBook());
 
-        updateHistoryArea(state);
 
 
 
