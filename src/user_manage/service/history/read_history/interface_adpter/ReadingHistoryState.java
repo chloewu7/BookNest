@@ -45,6 +45,6 @@ public class ReadingHistoryState {
         //this.history.add(readBookTitle);
     }
 
-    public String getReadBook(){return this.bookName;}
+    public String getReadBook(){return bookName;}
 }
 
