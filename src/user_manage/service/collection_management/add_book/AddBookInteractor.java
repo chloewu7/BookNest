@@ -26,13 +26,11 @@ public class AddBookInteractor implements AddBookInputBoundary{
         String bookAuthor = book.getAuthor();
 
         Map<String, String> books = addBookDataAccessObject.getBooksInlist(userName, listName);
-        if (books.get(bookTitle) != null) {
             if (books.containsKey(bookTitle) && books.get(bookTitle).equals(bookAuthor)) {
                 addBookPresenter.prepareFailView("The book already in the list.");
             } else {
                 addBookDataAccessObject.addToCollectionList(userName, listName, bookTitle, bookAuthor);
                 addBookPresenter.prepareSuccessView("The book has been added successfully!");
-            }
         }
     }
 }
