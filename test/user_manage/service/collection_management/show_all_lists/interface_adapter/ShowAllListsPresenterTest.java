@@ -52,4 +52,20 @@ class ShowAllListsPresenterTest {
         ShowAllListsOutputData showAllListsOutputData = new ShowAllListsOutputData(listsName);
         showAllListsPresenter.prepareSuccessView(showAllListsOutputData);
     }
+
+    @Test
+    void testPrepareShowAllLists() {
+        MockShowAllListsViewModel mockShowAllListsViewModel = new MockShowAllListsViewModel();
+        MockViewManagerModel mockViewManagerModel = new MockViewManagerModel();
+        ShowAllListsPresenter showAllListsPresenter = new ShowAllListsPresenter(mockShowAllListsViewModel, mockViewManagerModel);
+
+        List<String> listsName = new ArrayList<>();
+        listsName.add("Sleep");
+        listsName.add("reading");
+        ShowAllListsOutputData showAllListsOutputData = new ShowAllListsOutputData(listsName);
+
+        showAllListsPresenter.prepareShowAllLists(showAllListsOutputData);
+
+        assertEquals(listsName, mockShowAllListsViewModel.getState().getListsName());
+    }
 }

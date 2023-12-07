@@ -13,15 +13,15 @@ public class AddBookInputData {
         this.listName = listName;
         this.book = book;
     }
-    String getUserName(){
+    public String getUserName(){
         return userName;
     }
 
-    String getListName() {
+    public String getListName() {
         return listName;
     }
 
-    Book getBook() {
+    public Book getBook() {
         return book;
     }
 }
