@@ -67,7 +67,6 @@ class FileCollectionDataAccessObjectTest {
             throw new RuntimeException(e);
         }
     }
-/*
 
     @Test
     void testBehaviorAfterCreateNew(){
@@ -94,9 +93,7 @@ class FileCollectionDataAccessObjectTest {
             FileCollectionDataAccessObject fileCollectionDAO2 =
                     new FileCollectionDataAccessObject(new File("./collectionDAOTest2.csv"), collectionListFactory);
             fileCollectionDAO2.createCollectionList("Cara","Health");
-            //assertTrue(fileCollectionDAO2.getListsName("Cara").contains("Health"));
-            //assertTrue(fileCollectionDAO2.getListsName("Cara").contains("Sleep"));
-            //assertTrue(fileCollectionDAO2.getListsName("Cara").contains("Like"));
+            assertTrue(fileCollectionDAO2.getListsName("Cara").contains("Health"));
 
             fileCollectionDAO2.addToCollectionList("Cara","Health","Eat", "prof");
             assertTrue(fileCollectionDAO2.getBooksInlist("Cara", "Health").containsKey("Eat"));
@@ -109,7 +106,6 @@ class FileCollectionDataAccessObjectTest {
         }
     }
 
-*/
 
 }
 

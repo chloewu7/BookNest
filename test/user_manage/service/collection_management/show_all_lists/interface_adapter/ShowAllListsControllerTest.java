@@ -10,22 +10,51 @@ import user_manage.service.collection_management.show_all_lists.ShowAllListsInpu
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShowAllListsControllerTest {
-
-    private class ShowAllListsInteractorMock implements ShowAllListsInputBoundary {
+public class ShowAllListsControllerTest {
+    public class FakeShowAllListsInteractor implements ShowAllListsInputBoundary {
+        private ShowAllListsInputData inputData;
 
         @Override
-        public void execute(ShowAllListsInputData showAllListsInputData) {
-            assertEquals(showAllListsInputData.getUserName(), "Monica");
+        public void execute(ShowAllListsInputData inputData) {
+            this.inputData = inputData;
+        }
+
+        @Override
+        public void executeWhenSearch(ShowAllListsInputData inputData) {
+            this.inputData = inputData;
+        }
+
+        public ShowAllListsInputData getInputData() {
+            return inputData;
         }
     }
 
     @Test
-    void testExecute() {
-        ShowAllListsInputData showAllListsInputData = new ShowAllListsInputData("Monica");
-        ShowAllListsControllerTest.ShowAllListsInteractorMock showAllListsInteractorMock =
-                new ShowAllListsControllerTest.ShowAllListsInteractorMock();
-        ShowAllListsController showAllListsController = new ShowAllListsController(showAllListsInteractorMock);
-        showAllListsController.execute("Monica");
+    public void testExecute() {
+        FakeShowAllListsInteractor fakeInteractor = new FakeShowAllListsInteractor();
+
+        ShowAllListsController controller = new ShowAllListsController(fakeInteractor);
+
+        String userName = "testUser";
+        controller.execute(userName);
+
+        ShowAllListsInputData inputData = fakeInteractor.getInputData();
+
+        assertEquals(userName, inputData.getUserName());
+    }
+
+    @Test
+    public void testExecuteWhenSearch() {
+
+        FakeShowAllListsInteractor fakeInteractor = new FakeShowAllListsInteractor();
+
+        ShowAllListsController controller = new ShowAllListsController(fakeInteractor);
+
+        String userName = "testUser";
+        controller.executeWhenSearch(userName);
+
+        ShowAllListsInputData inputData = fakeInteractor.getInputData();
+
+        assertEquals(userName, inputData.getUserName());
     }
 }
