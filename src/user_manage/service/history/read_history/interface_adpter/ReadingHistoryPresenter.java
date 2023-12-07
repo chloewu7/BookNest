@@ -27,22 +27,11 @@ public class ReadingHistoryPresenter implements ReadingHistoryOutputBoundary {
         ReadingHistoryState state = viewModel.getState();
         state.setHistory(history);
         this.viewModel.setState(state);
-        viewModel.firePropertyChanged();
+        //viewModel.firePropertyChanged();
 
 
         // Optionally, update the view using the view manager
-        viewManagerModel.updateView("ReadingHistoryView");
-        viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
-    public void handleFailure(String errorMessage) {
-        ReadingHistoryState state = viewModel.getState();
-        state.setErrorMessage(errorMessage);
-        viewModel.firePropertyChanged();
-
-        // Optionally, update the view using the view manager
-        viewManagerModel.updateView("ErrorView");
-        viewManagerModel.firePropertyChanged();
+        //viewManagerModel.updateView("History");
+        //viewManagerModel.firePropertyChanged();
     }
 }

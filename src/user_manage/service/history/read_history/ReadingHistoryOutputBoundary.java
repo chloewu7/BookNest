@@ -14,5 +14,4 @@ public interface ReadingHistoryOutputBoundary {
      * Method to handle the scenario when reading history cannot be fetched.
      * @param errorMessage A message describing the error.
      */
-    void handleFailure(String errorMessage);
 }

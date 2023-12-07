@@ -7,35 +7,21 @@ import user_manage.entity.User;
 public class AddingHistoryInteractor implements AddingHistoryInputBoundary {
 
     private final AddingHistoryOutputBoundary addingHistoryPresenter;
-    private final AddingHistoryDataAccessInterface userDataAccessObject;
+    private final AddingHistoryDataAccessInterface historyDataAccessObject;
     //private final HistoryFactory historyFactory;
 
     // Constructor with dependency injection for the output boundary, data access object, and history factory
-    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface userDataAccessObject) {
-        this.userDataAccessObject = userDataAccessObject;
+    public AddingHistoryInteractor(AddingHistoryOutputBoundary addingHistoryOutputBoundary, AddingHistoryDataAccessInterface historyDataAccessObject) {
+        this.historyDataAccessObject = historyDataAccessObject;
         this.addingHistoryPresenter = addingHistoryOutputBoundary;
         //this.historyFactory = historyFactory;
     }
 
     @Override
     public void execute(AddingHistoryInputData addingHistoryInputData) {
-        try {
-            // Business logic for adding history
-            User user = userDataAccessObject.getUserByName(addingHistoryInputData.getUserName());
-            if (user == null) {
-                addingHistoryPresenter.prepareFailView("User not found.");
-            }
+        historyDataAccessObject.addHistoryToUser(addingHistoryInputData.getUserName(), addingHistoryInputData.getBookName());
 
-            // Create history record and add it to the user
-
-            userDataAccessObject.addHistoryToUser(user, addingHistoryInputData.getBookName());
-
-            // If successful, prepare the success view
-            AddingHistoryOutputData addingHistoryOutputData = new AddingHistoryOutputData(true, "History added successfully for user " + addingHistoryInputData.getUserName());
-            addingHistoryPresenter.prepareSuccessView(addingHistoryOutputData);
-        } catch (Exception e) {
-            // Handle any exceptions or failure scenarios
-            addingHistoryPresenter.prepareFailView(e.getMessage());
-        }
+        AddingHistoryOutputData addingHistoryOutputData = new AddingHistoryOutputData(true, "History added successfully for user " + addingHistoryInputData.getUserName());
+        addingHistoryPresenter.prepareSuccessView(addingHistoryOutputData);
     }
 }

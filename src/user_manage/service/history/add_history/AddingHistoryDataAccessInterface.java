@@ -8,7 +8,7 @@ import java.util.List;
 public interface AddingHistoryDataAccessInterface {
 
 
-    void addHistoryToUser(User user, String bookName);
+    void addHistoryToUser(String user, String bookName);
 
     List<String> getHistoryByUserId(String userId);
 

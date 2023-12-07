@@ -10,41 +10,21 @@ import java.util.Map;
 
 public class ReadingHistoryInteractor implements ReadingHistoryInputBoundary {
     private final ReadingHistoryOutputBoundary outputBoundary;
-    private final ReadingHistoryDataAccessInterface userDataAccessObject;
+    private final ReadingHistoryDataAccessInterface historyDataAccessObject;
 
-    public ReadingHistoryInteractor(ReadingHistoryOutputBoundary outputBoundary, ReadingHistoryDataAccessInterface userDataAccessObject) {
+    public ReadingHistoryInteractor(ReadingHistoryOutputBoundary outputBoundary, ReadingHistoryDataAccessInterface historyDataAccessObject) {
         this.outputBoundary = outputBoundary;
-        this.userDataAccessObject = userDataAccessObject;
+        this.historyDataAccessObject = historyDataAccessObject;
     }
 
     @Override
     public void execute(ReadingHistoryInputData readingHistoryInputData) {
-        try {
-            // Assuming the user's ID is retrieved from the context/session
-            //String userId = getCurrentUserId();
-            User user = userDataAccessObject.getUserByName(readingHistoryInputData.getUserName());
-            if (user == null) {
-                outputBoundary.handleFailure("User not found.");
-            }
+        String user = readingHistoryInputData.getUserName();
 
-            // Create history record and add it to the user
+        List<String> history = historyDataAccessObject.getHistoryByUserId(user);
 
-            userDataAccessObject.addHistoryToUser(user, readingHistoryInputData.getBookName());
-
-            List<String> history = userDataAccessObject.getHistoryByUserId(user.getName());
-
-            // Pass the history data to the output boundary
-            ReadingHistoryOutputData outputData = new ReadingHistoryOutputData(history);
-            outputBoundary.presentHistory(outputData);
-        } catch (Exception e) {
-            // Handle any exceptions and pass error messages to the output boundary
-            outputBoundary.handleFailure(e.getMessage());
-        }
-    }
-
-    private String getCurrentUserId() {
-        // Implement logic to retrieve the current user's ID
-        // This could be from a session, context, or authentication token
-        return "user123";
+        // Pass the history data to the output boundary
+        ReadingHistoryOutputData outputData = new ReadingHistoryOutputData(history);
+        outputBoundary.presentHistory(outputData);
     }
 }

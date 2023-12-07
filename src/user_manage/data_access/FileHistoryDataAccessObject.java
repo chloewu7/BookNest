@@ -2,6 +2,7 @@ package user_manage.data_access;
 
 import user_manage.entity.History;
 import user_manage.entity.HistoryFactory;
+import user_manage.entity.Review;
 import user_manage.entity.User;
 //import user_manage.service.history.add_history.AddingHistoryDataAccessInterface;
 import user_manage.service.history.read_history.ReadingHistoryDataAccessInterface;
@@ -52,10 +53,14 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
     }
 
     @Override
-    public void addHistoryToUser(User user, String bookName) {
-        List<String> userHistoryList = historyByUser.getOrDefault(user.getName(), new ArrayList<>());
+    public void addHistoryToUser(String user, String bookName) {
+        List<String> userHistoryList = new ArrayList<>();
+        if (historyByUser.containsKey(user)){
+            userHistoryList = historyByUser.get(user); }
+
         userHistoryList.add(bookName);
-        historyByUser.put(user.getName(), userHistoryList);
+
+        historyByUser.put(user, userHistoryList);
         save();
     }
 
@@ -64,27 +69,20 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
             writer.write(String.join(",", header.keySet()));
             writer.newLine();
 
-            for (Map.Entry<String, List<String>> entry : historyByUser.entrySet()) {
-                for (String bookName : entry.getValue()) {
-                    writer.write(String.format("%s,%s", entry.getKey(), bookName));
+            for (String users : historyByUser.keySet()) {
+                for (String books : historyByUser.get(users)) {
+                    writer.write(String.format("%s,%s", users, books));
                     writer.newLine();
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }catch (NullPointerException e){
-            throw  new NullPointerException();
         }
     }
 
     @Override
     public List<String> getHistoryByUserId(String userId) {
-        return historyByUser.getOrDefault(userId, new ArrayList<>());
-    }
-
-    @Override
-    public User getUserByName(String userName) {
-        return null;
+        return historyByUser.get(userId);
     }
 
     public boolean user_exist(String username){

@@ -23,7 +23,6 @@ public class ReadingHistoryState {
     }
 
     public void setHistory(List<String> history) {
-        history.add(this.bookName);
         this.history = history;
     }
 

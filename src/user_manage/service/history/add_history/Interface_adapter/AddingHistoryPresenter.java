@@ -17,25 +17,15 @@ public class AddingHistoryPresenter implements AddingHistoryOutputBoundary {
 
     @Override
     public void prepareSuccessView(AddingHistoryOutputData response) {
-        // Update the view model with success information
         AddingHistoryState state = addingHistoryViewModel.getState();
         state.setSuccessMessage(response.getMessage());
         addingHistoryViewModel.setState(state);
-        addingHistoryViewModel.firePropertyChanged();
+        //addingHistoryViewModel.firePropertyChanged();
 
         // Optionally, switch to a different view
         // viewManagerModel.setActiveView("SomeOtherView");
         // viewManagerModel.firePropertyChanged();
     }
 
-
-    @Override
-    public void prepareFailView(String error) {
-        // Update the view model with error information
-        AddingHistoryState state = addingHistoryViewModel.getState();
-        state.setErrorMessage(error);
-        addingHistoryViewModel.setState(state);
-        addingHistoryViewModel.firePropertyChanged();
-    }
 }
 

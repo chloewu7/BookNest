@@ -4,5 +4,4 @@ public interface AddingHistoryOutputBoundary {
 
     void prepareSuccessView(AddingHistoryOutputData user);
 
-    void prepareFailView(String e);
 }
