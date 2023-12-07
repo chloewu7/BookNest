@@ -26,23 +26,23 @@ import java.beans.PropertyChangeListener;
 public class UserCenterView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "User Center";
-    private JButton collectionButton;
-    private JButton historyButton;
-    private JButton reviewButton;
-    private JButton searchButton;
+    JButton collectionButton;
+    JButton historyButton;
+    JButton reviewButton;
+    JButton searchButton;
     private ViewManagerModel viewManagerModel;
     private UserCenterViewModel userCenterViewModel;
     private ShowMyReviewsViewModel showMyReviewsViewModel;
-
     private ShowMyReviewsController showMyReviewsController;
-
     private SearchController searchController;
     private SearchViewModel searchViewModel;
     private ShowAllListsController showAllListsController;
     private ShowAllListsViewModel showAllListsViewModel;
-
     private ReadingHistoryController readingHistoryController;
     private ReadingHistoryViewModel readingHistoryViewModel;
+    JPanel title;
+
+    private Color Orange = new Color(248, 152, 32);
 
 
     public UserCenterView(ViewManagerModel viewManagerModel, UserCenterViewModel userCenterViewModel,
@@ -79,11 +79,9 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
         UserCenterState state = userCenterViewModel.getState();
         state.setUsername(searchState.getUserName());
 
-        String myUsername = state.getUsername();
-
-        JLabel username = new JLabel("User Center for " + myUsername);
+        JLabel username = new JLabel("User Center");
         username.setFont(new Font("Lucida Grande", 0, 20));
-        JPanel title = new JPanel();
+        title = new JPanel();
         title.setBackground(lightYellow);
         title.setPreferredSize(new Dimension(1000, 100));
         title.add(username);
@@ -182,5 +180,17 @@ public class UserCenterView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        UserCenterState state = (UserCenterState) evt.getNewValue();
+        title.removeAll();
+        JLabel username = new JLabel("User Center for ");
+        JLabel myUsername = new JLabel(state.getUsername());
+        username.setFont(new Font("SansSerif", Font.PLAIN, 35));
+        myUsername.setFont(new Font("SansSerif", Font.PLAIN, 40));
+        myUsername.setForeground(Orange);
+        title.add(username);
+        title.add(myUsername);
+
+        title.revalidate();
+        title.repaint();
     }
 }

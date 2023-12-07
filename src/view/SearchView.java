@@ -35,9 +35,9 @@ import view.UserCenter.UserCenterViewModel;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     JComboBox<String> searchTypeComboBox;
-    private JTextField searchTextField;
-    private JButton searchButton;
-    private JPanel resultsPanel;
+    JTextField searchTextField;
+    JButton searchButton;
+    JPanel resultsPanel;
 
     private JLabel searchInstructionLabel;
     private SearchController searchController;
@@ -157,6 +157,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                 userCenterState.setUsername(searchState.getUserName());
                 userCenterViewModel.setState(userCenterState);
+                userCenterViewModel.firePropertyChanged();
 
                 viewManagerModel.setActiveView("User Center");
                 viewManagerModel.firePropertyChanged();

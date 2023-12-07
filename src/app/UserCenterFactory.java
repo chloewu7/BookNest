@@ -65,7 +65,6 @@ public class UserCenterFactory {
                                       CreateListViewModel createListViewModel, ShowBooksInListViewModel showBooksInListViewModel, ReadingHistoryViewModel
                                       readingHistoryViewModel, FileHistoryDataAccessObject HistoryDAO) {
         try {
-            //TODO:创建showMyHistoryController和showMyCollectionController
             ShowMyReviewsController showMyReviewsController = createShowMyReviewUseCase(viewManagerModel, showMyReviewsViewModel, reviewDataAccessObject);
             SearchController searchController = createSearchUseCase(viewManagerModel,searchViewModel, searchDataAccessObject);
             ShowAllListsController showAllListsController = createShowAllListsUseCase(viewManagerModel, showAllListsViewModel, collectionDataAccessObject);
@@ -74,7 +73,6 @@ public class UserCenterFactory {
             ReadingHistoryController readingHistoryController =createHistoryController(viewManagerModel, readingHistoryViewModel, HistoryDAO);
             //AddingHistoryController addingHistoryController=createAddHistoryController(viewManagerModel,addingHistoryViewModel,HistoryDAO);
 
-            //TODO：用刚才新建的的Controller和ViewModel创建一个新的userCenterView（加在参数里）
             List<JPanel> userManageViewList = new ArrayList<>();
             UserCenterView userCenterView =  new UserCenterView(viewManagerModel, userCenterViewModel, showMyReviewsController, showMyReviewsViewModel,
                     searchController, searchViewModel, showAllListsController, showAllListsViewModel, readingHistoryController,  readingHistoryViewModel);
@@ -91,8 +89,6 @@ public class UserCenterFactory {
             ShowBooksInListView showBooksInListView = new ShowBooksInListView(showBooksInListController, showBooksInListViewModel, viewManagerModel, userCenterViewModel);
             userManageViewList.add(showBooksInListView);
 
-            //TODO：新建showMyHistoryView和showMyCollectionView
-            //TODO：把新建的View加到 userManageViewList
             return userManageViewList;
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open review data file.");
@@ -111,7 +107,6 @@ public class UserCenterFactory {
         return new ShowMyReviewsController(showMyReviewsInteractor);
     }
 
-    //TODO：创建Controller的Methods
     private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,
                                                         SearchDataAccessInterface searchDataAccessObject) {
         SearchOutputBoundary searchPresenter = new SearchPresenter(searchViewModel);
