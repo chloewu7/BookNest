@@ -13,10 +13,10 @@ public interface ReadingHistoryDataAccessInterface {
      */
     List<String> getHistoryByUserId(String userId);
 
-    void addHistoryToUser(User user, String bookName);
+    void addHistoryToUser(String username, String bookName);
 
 
-    User getUserByName(String userName);
+    boolean user_exist(String username);
 }
 
 

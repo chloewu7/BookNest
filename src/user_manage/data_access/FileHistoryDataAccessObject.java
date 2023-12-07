@@ -34,30 +34,58 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
                 String currentRow;
                 while ((currentRow = reader.readLine()) != null) {
                     String[] historyInfo = currentRow.split(",");
+                    if (historyInfo.length < 2) continue;
+
+
                     String username = historyInfo[header.get("username")];
                     String bookName = historyInfo[header.get("bookname")];
 
-                    History history = historyFactory.create(bookName);
-                    List<String> userHistoryList = historyByUser.getOrDefault(username, new ArrayList<>());
-                    userHistoryList.add(history.getBookName());
+                    historyByUser.computeIfAbsent(username, k -> new ArrayList<>()).add(bookName);
+                }
+
+
+                    /*if (historyByUser.containsKey(username)){
+                        historyByUser.get(username).add(bookName);
+                    }else {
+                        List<String> newlist = new ArrayList<>();
+                        newlist.add(bookName);
+                        historyByUser.put(username,newlist);
+                    }
+
+                     */
+                    /*List<String> userHistoryList = historyByUser.getOrDefault(username, new ArrayList<>());
+                    userHistoryList.add(bookName);
                     historyByUser.put(username, userHistoryList);
 
+                     */
 
 
-                }
+
+
                 }catch (NullPointerException e){
                 throw new RuntimeException(e);
             }
         }
     }
 
-    @Override
-    public void addHistoryToUser(User user, String bookName) {
-        List<String> userHistoryList = historyByUser.getOrDefault(user.getName(), new ArrayList<>());
+    /*@Override
+    public void addHistoryToUser(String username, String bookName) {
+        List<String> userHistoryList = historyByUser.get(username);
+        if (userHistoryList == null) {
+            userHistoryList = new ArrayList<>();
+            historyByUser.put(username, userHistoryList);
+        }
         userHistoryList.add(bookName);
-        historyByUser.put(user.getName(), userHistoryList);
         save();
     }
+
+     */
+    @Override
+    public void addHistoryToUser(String username, String bookName) {
+        historyByUser.computeIfAbsent(username, k -> new ArrayList<>()).add(bookName);
+        save();
+    }
+
 
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
@@ -65,8 +93,12 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
             writer.newLine();
 
             for (Map.Entry<String, List<String>> entry : historyByUser.entrySet()) {
+                String username = entry.getKey();
+                if (username == null || username.isEmpty()) continue;
+
                 for (String bookName : entry.getValue()) {
-                    writer.write(String.format("%s,%s", entry.getKey(), bookName));
+                    if (bookName == null || bookName.isEmpty()) continue;
+                    writer.write(String.format("%s,%s", username, bookName));
                     writer.newLine();
                 }
             }
@@ -79,14 +111,24 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
 
     @Override
     public List<String> getHistoryByUserId(String userId) {
+
         return historyByUser.getOrDefault(userId, new ArrayList<>());
     }
 
-    @Override
-    public User getUserByName(String userName) {
-        return null;
+    public void delete(){
+        historyByUser.clear();
+
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+
+    @Override
     public boolean user_exist(String username){
         return historyByUser.containsKey(username);
     }
@@ -95,3 +137,5 @@ public class FileHistoryDataAccessObject implements ReadingHistoryDataAccessInte
         return historyByUser.get(user).contains(book);
     }
 }
+
+

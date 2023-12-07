@@ -91,7 +91,7 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
         //addHistoryData();
 
         ReadingHistoryState state = readingHistoryViewModel.getState();
-        controller.execute(state.getUserName(),state.getReadBook());
+        this.readingHistoryController.execute(state.getUserName(),state.getReadBook());
 
         updateHistoryArea(state);
 
@@ -113,19 +113,7 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
     }
 
 
-    /*private void addHistoryData() {
-        List<String> fakeHistory = Arrays.asList("Clean Code", "The Journey to The West", "Toronto");
-        for (String record : fakeHistory) {
-            JLabel historyLabel = new JLabel(record, SwingConstants.CENTER);
-            historyLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); // Increase font size
-            historyLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
-            historyLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Adjust padding
-            historyPanel.add(historyLabel);
-        }
-        historyPanel.revalidate();
-        historyPanel.repaint();}
 
-     */
 
 
 
@@ -139,15 +127,20 @@ public class ReadingHistoryView extends JPanel implements ActionListener, Proper
 
     private void updateHistoryArea(ReadingHistoryState state) {
 
-        for (String record : state.getHistory()) {
-            JLabel historyLabel1 = new JLabel(record, SwingConstants.CENTER);
-            historyLabel1.setFont(new Font("SansSerif", Font.BOLD, 16)); // Increase font size
-            historyLabel1.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
-            historyLabel1.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Adjust padding
-            historyPanel.add(historyLabel1);
-        }
-        historyPanel.revalidate();
-        historyPanel.repaint();}
+        if (state.getHistory() == null || state.getHistory().isEmpty()) {
+            JLabel noHistoryLabel = new JLabel("No reading history available", SwingConstants.CENTER);
+            noHistoryLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+            noHistoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            historyPanel.add(noHistoryLabel);
+        } else {
+            for (String record : state.getHistory()) {
+                JLabel historyLabel = new JLabel(record, SwingConstants.CENTER);
+                historyLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+                historyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                historyLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+                historyPanel.add(historyLabel);
+            }
+        }}
 
     @Override
     public void actionPerformed(ActionEvent e) {

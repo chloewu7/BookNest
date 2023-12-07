@@ -248,8 +248,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                                 searchState.setReadBookTitle(book.getTitle());
                                 ReadingHistoryState readingHistoryState = readingHistoryViewModel.getState();
                                 readingHistoryState.setReadBook(searchState.getReadBookTitle());
-                                ReadingHistoryState readingHistoryState1 =readingHistoryViewModel.getState();
-                                readingHistoryController.execute(readingHistoryState1.getUserName(),
+                                readingHistoryController.execute(searchState.getUserName(),
                                         readingHistoryState.getReadBook());
                             }
                         }

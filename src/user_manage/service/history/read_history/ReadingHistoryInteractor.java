@@ -22,21 +22,21 @@ public class ReadingHistoryInteractor implements ReadingHistoryInputBoundary {
         try {
             // Assuming the user's ID is retrieved from the context/session
             //String userId = getCurrentUserId();
-            User user = userDataAccessObject.getUserByName(readingHistoryInputData.getUserName());
-            if (user == null) {
+            String username = readingHistoryInputData.getUserName();
+            if (!userDataAccessObject.user_exist(username)) {
                 outputBoundary.handleFailure("User not found.");
             }
 
             // Create history record and add it to the user
 
-            userDataAccessObject.addHistoryToUser(user, readingHistoryInputData.getBookName());
+            userDataAccessObject.addHistoryToUser(username, readingHistoryInputData.getBookName());
 
-            List<String> history = userDataAccessObject.getHistoryByUserId(user.getName());
+            List<String> history = userDataAccessObject.getHistoryByUserId(username);
 
             // Pass the history data to the output boundary
             ReadingHistoryOutputData outputData = new ReadingHistoryOutputData(history);
             outputBoundary.presentHistory(outputData);
-        } catch (Exception e) {
+        }catch (Exception e) {
             // Handle any exceptions and pass error messages to the output boundary
             outputBoundary.handleFailure(e.getMessage());
         }
